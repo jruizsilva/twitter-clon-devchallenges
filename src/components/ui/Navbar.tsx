@@ -1,4 +1,18 @@
-import { Box, Image, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  HStack,
+  Heading,
+  Image,
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
+  Stack,
+  VStack
+} from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import { AiFillCaretDown } from 'react-icons/ai'
 
 import { tweeterSmall } from 'assets'
 
@@ -20,12 +34,29 @@ export function Navbar(props: Props) {
           <Image alt='tweeter small' src={tweeterSmall} width='41px' />
         </Box>
         <Box>
-          <Image
-            alt='tweeter small'
-            borderRadius='8px'
-            src={`https://i.pravatar.cc/50`}
-            width='41px'
-          />
+          <Popover placement='bottom-end'>
+            <PopoverTrigger>
+              <HStack>
+                <Image
+                  alt='tweeter small'
+                  borderRadius='8px'
+                  src={`https://i.pravatar.cc/50`}
+                  width='41px'
+                />
+                <Heading size='xs' userSelect='none'>
+                  Xanthe Neal
+                </Heading>
+                <AiFillCaretDown />
+              </HStack>
+            </PopoverTrigger>
+            <PopoverContent borderRadius='12px' padding='14px' width='192px'>
+              <Link to='/profile/1'>My profile</Link>
+              <Link to='/'>Group Chat</Link>
+              <Link to='/'>Settings</Link>
+              <Divider />
+              <Link to='/'>Logout</Link>
+            </PopoverContent>
+          </Popover>
         </Box>
       </Stack>
     </>
