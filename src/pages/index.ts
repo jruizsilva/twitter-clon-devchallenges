@@ -1,2 +1,2 @@
-export * from './HomePage'
-export * from './ProfilePage'
+export * from './HomePage/HomePage'
+export * from './ProfilePage/ProfilePage'

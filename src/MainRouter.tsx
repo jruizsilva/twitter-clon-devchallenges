@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-import { ProfilePage } from './pages/ProfilePage'
+import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 
 import { HomePage } from 'pages'
 import { MainLayout } from 'components/layouts/MainLayout'
