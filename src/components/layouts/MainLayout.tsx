@@ -1,0 +1,14 @@
+import { Navbar } from 'components/ui'
+
+interface Props {
+  children: JSX.Element | JSX.Element[]
+}
+
+export function MainLayout({ children }: Props) {
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  )
+}
