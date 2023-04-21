@@ -7,12 +7,13 @@ export function ProfileImage(props: Props) {
     <>
       <Stack
         alignItems='center'
+        backgroundColor='gray.800'
         borderRadius='8px'
         height='122px'
         justifyContent='center'
-        position='relative'
+        position='absolute'
+        top='-80px'
         width='122px'
-        zIndex='1'
       >
         <Image
           alt='profile phote'

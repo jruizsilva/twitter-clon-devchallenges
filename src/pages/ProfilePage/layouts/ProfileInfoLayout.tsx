@@ -7,7 +7,7 @@ interface Props {
 export function ProfileInfoLayout({ children }: Props) {
   return (
     <>
-      <Stack alignItems='center' position='absolute' top='62px'>
+      <Stack alignItems='center' position='relative' top='-42px'>
         {children}
       </Stack>
     </>

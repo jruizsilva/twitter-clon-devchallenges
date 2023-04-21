@@ -1,4 +1,12 @@
-import { Button, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  HStack,
+  Heading,
+  Text,
+  VStack,
+  Stack
+} from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
 
 interface Props {}
@@ -7,17 +15,18 @@ export function ProfileDescription(props: Props) {
   return (
     <>
       <Stack
-        backgroundColor='#222'
+        backgroundColor='gray.700'
         borderRadius='12px'
         height={{ base: '246px' }}
-        justifyContent='center'
-        position='absolute'
-        top='149px'
+        justifyContent='end'
+        padding='16px'
         width={{ base: '345px' }}
       >
-        <VStack spacing={4}>
-          <Heading size='lg'>Daniel Jensen</Heading>
-          <HStack spacing={5}>
+        <Box alignItems='center' display='flex' flexDirection='column'>
+          <Heading marginBottom='4px' size='lg'>
+            Daniel Jensen
+          </Heading>
+          <HStack marginBottom='16px' spacing={5}>
             <HStack spacing={1}>
               <Text as='span' fontWeight='bold'>
                 2,569
@@ -31,13 +40,13 @@ export function ProfileDescription(props: Props) {
               <Text>Followers</Text>
             </HStack>
           </HStack>
-          <Text textAlign={{ base: 'center' }}>
+          <Text marginBottom='16px' textAlign={{ base: 'center' }}>
             Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
           </Text>
-          <Button colorScheme='blue' leftIcon={<MdPersonAdd />} mt={8}>
+          <Button colorScheme='blue' leftIcon={<MdPersonAdd />}>
             Follow
           </Button>
-        </VStack>
+        </Box>
       </Stack>
     </>
   )

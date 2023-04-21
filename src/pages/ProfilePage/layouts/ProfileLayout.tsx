@@ -9,7 +9,7 @@ interface Props {
 export function ProfileLayout({ children }: Props) {
   return (
     <>
-      <VStack position='relative' zIndex={-1}>
+      <VStack>
         <Image
           alt='profile background from unsplash'
           height={{
