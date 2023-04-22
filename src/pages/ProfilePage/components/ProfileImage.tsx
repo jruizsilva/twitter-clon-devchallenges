@@ -9,18 +9,32 @@ export function ProfileImage(props: Props) {
         alignItems='center'
         backgroundColor='gray.800'
         borderRadius='8px'
-        height='122px'
+        height={{
+          base: '122px',
+          md: '160px'
+        }}
         justifyContent='center'
+        left={{
+          md: '24px'
+        }}
         position='absolute'
-        top='-80px'
-        width='122px'
+        top={{
+          base: '-80px',
+          md: '-50px'
+        }}
+        width={{
+          base: '122px',
+          md: '160px'
+        }}
       >
         <Image
           alt='profile phote'
           borderRadius='8px'
-          height='116px'
-          src={`https://i.pravatar.cc/116`}
-          width='116px'
+          height={{
+            base: '116px',
+            md: '152px'
+          }}
+          src={`https://i.pravatar.cc/152`}
         />
       </Stack>
     </>

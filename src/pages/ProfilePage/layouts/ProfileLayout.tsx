@@ -1,4 +1,4 @@
-import { Image, VStack } from '@chakra-ui/react'
+import { Box, Image, VStack } from '@chakra-ui/react'
 
 import { profileBackground } from 'assets'
 
@@ -20,7 +20,13 @@ export function ProfileLayout({ children }: Props) {
           src={profileBackground}
           width='100%'
         />
-        {children}
+        <Box
+          height={{ md: '163px' }}
+          maxWidth={{ md: '1073px' }}
+          minWidth={{ md: '90%' }}
+        >
+          {children}
+        </Box>
       </VStack>
     </>
   )

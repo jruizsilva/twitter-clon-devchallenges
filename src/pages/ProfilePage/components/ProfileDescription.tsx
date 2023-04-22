@@ -5,7 +5,8 @@ import {
   Heading,
   Text,
   VStack,
-  Stack
+  Stack,
+  calc
 } from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
 
@@ -17,16 +18,46 @@ export function ProfileDescription(props: Props) {
       <Stack
         backgroundColor='gray.700'
         borderRadius='12px'
-        height={{ base: '246px' }}
-        justifyContent='end'
-        padding='16px'
-        width={{ base: '345px' }}
+        height={{ base: '246px', md: '100%' }}
+        justifyContent={{
+          base: 'end',
+          md: 'start'
+        }}
+        padding={{ base: '16px', md: '12px 24px' }}
+        width={{ base: '345px', md: '100%' }}
       >
-        <Box alignItems='center' display='flex' flexDirection='column'>
-          <Heading marginBottom='4px' size='lg'>
+        <Box
+          alignItems={{ base: 'center', md: 'end' }}
+          display='flex'
+          flexDirection={{
+            base: 'column',
+            md: 'row'
+          }}
+          flexWrap={{
+            md: 'wrap'
+          }}
+          marginLeft={{ base: '0', md: 'auto' }}
+          width={{
+            md: calc('100%').subtract('172px').toString()
+          }}
+        >
+          <Heading
+            flexBasis={{
+              md: '100%',
+              lg: 'auto'
+            }}
+            size='lg'
+          >
             Daniel Jensen
           </Heading>
-          <HStack marginBottom='16px' spacing={5}>
+          <HStack
+            flexBasis={{
+              md: '100%',
+              lg: 'auto'
+            }}
+            marginBottom={{ base: 5, md: 0 }}
+            spacing={5}
+          >
             <HStack spacing={1}>
               <Text as='span' fontWeight='bold'>
                 2,569
@@ -40,7 +71,10 @@ export function ProfileDescription(props: Props) {
               <Text>Followers</Text>
             </HStack>
           </HStack>
-          <Text marginBottom='16px' textAlign={{ base: 'center' }}>
+          <Text
+            marginBottom={{ base: 5, md: 0 }}
+            textAlign={{ base: 'center' }}
+          >
             Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
           </Text>
           <Button colorScheme='blue' leftIcon={<MdPersonAdd />}>
