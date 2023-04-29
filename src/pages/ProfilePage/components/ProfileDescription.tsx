@@ -27,6 +27,7 @@ export function ProfileDescription(props: Props) {
       >
         <Box
           alignItems={{ base: 'center', md: 'end' }}
+          columnGap={5}
           display='flex'
           flexDirection={{
             base: 'column',
@@ -36,6 +37,7 @@ export function ProfileDescription(props: Props) {
             md: 'wrap'
           }}
           marginLeft={{ base: '0', md: 'auto' }}
+          rowGap={5}
           width={{
             md: calc('100%').subtract('172px').toString()
           }}
@@ -56,8 +58,11 @@ export function ProfileDescription(props: Props) {
             </HStack>
           </HStack>
           <Text
+            flexBasis={{
+              md: '100%'
+            }}
             marginBottom={{ base: 5, md: 0 }}
-            textAlign={{ base: 'center' }}
+            textAlign={{ base: 'center', md: 'left' }}
           >
             Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
           </Text>
