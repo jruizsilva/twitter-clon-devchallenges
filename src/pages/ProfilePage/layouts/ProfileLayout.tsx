@@ -21,8 +21,8 @@ export function ProfileLayout({ children }: Props) {
           width='100%'
         />
         <Box
-          height={{ md: '163px' }}
           maxWidth={{ md: '1073px' }}
+          minHeight={{ md: '163px' }}
           minWidth={{ md: '90%' }}
         >
           {children}
