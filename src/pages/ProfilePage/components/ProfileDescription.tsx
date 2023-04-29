@@ -14,17 +14,16 @@ interface Props {}
 export function ProfileDescription(props: Props) {
   return (
     <>
-      <Stack
+      <Box
         backgroundColor='gray.700'
         borderRadius='12px'
-        height={{ base: '246px', md: '100%' }}
+        height='100%'
         justifyContent={{
           base: 'end',
           md: 'start'
         }}
-        minHeight={{ md: '163px' }}
         padding={{ base: '16px', md: '12px 24px' }}
-        width={{ base: '345px', md: '100%' }}
+        width='100%'
       >
         <Box
           alignItems={{ base: 'center', md: 'end' }}
@@ -43,20 +42,20 @@ export function ProfileDescription(props: Props) {
           }}
         >
           <Heading size='lg'>Daniel Jensen</Heading>
-          <HStack marginBottom={{ base: 5, md: 0 }} spacing={5}>
-            <HStack spacing={1}>
+          <Box marginBottom={{ base: 5, md: 0 }}>
+            <Box>
               <Text as='span' fontWeight='bold'>
                 2,569
               </Text>
               <Text>Following</Text>
-            </HStack>
-            <HStack spacing={1}>
+            </Box>
+            <Box>
               <Text as='span' fontWeight='bold'>
                 10.8K
               </Text>
               <Text>Followers</Text>
-            </HStack>
-          </HStack>
+            </Box>
+          </Box>
           <Text
             flexBasis={{
               md: '100%'
@@ -76,7 +75,7 @@ export function ProfileDescription(props: Props) {
             Follow
           </Button>
         </Box>
-      </Stack>
+      </Box>
     </>
   )
 }

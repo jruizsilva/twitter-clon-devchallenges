@@ -1,4 +1,4 @@
-import { Box, Image, VStack } from '@chakra-ui/react'
+import { Box, Image, Stack } from '@chakra-ui/react'
 
 import { profileBackground } from 'assets'
 
@@ -9,25 +9,25 @@ interface Props {
 export function ProfileLayout({ children }: Props) {
   return (
     <>
-      <VStack>
-        <Image
-          alt='profile background from unsplash'
-          height={{
-            base: '168px',
-            md: '300px'
-          }}
-          objectFit='cover'
-          src={profileBackground}
-          width='100%'
-        />
-        <Box
-          maxWidth={{ md: '1073px' }}
-          minHeight={{ md: '163px' }}
-          minWidth={{ md: '90%' }}
-        >
-          {children}
-        </Box>
-      </VStack>
+      <Image
+        alt='profile background from unsplash'
+        height={{
+          base: '168px',
+          md: '300px'
+        }}
+        objectFit='cover'
+        src={profileBackground}
+        width='100%'
+      />
+      <Box
+        alignItems='center'
+        display='flex'
+        justifyContent='center'
+        position='relative'
+        top='-42px'
+      >
+        {children}
+      </Box>
     </>
   )
 }

@@ -35,7 +35,7 @@ export function Navbar(props: Props) {
             <Heading size='xs'>Explore</Heading>
             <Heading size='xs'>Bookmarks</Heading>
           </HStack>
-          <Box>
+          <Box position='relative'>
             <Popover placement='bottom-end'>
               <PopoverTrigger>
                 <HStack>
@@ -64,7 +64,11 @@ export function Navbar(props: Props) {
                   />
                 </HStack>
               </PopoverTrigger>
-              <PopoverContent borderRadius='12px' padding='14px' width='192px'>
+              <PopoverContent
+                borderRadius='12px'
+                padding='14px'
+                width={{ base: '100%', md: '192px' }}
+              >
                 <Link to='/profile/1'>My profile</Link>
                 <Link to='/'>Group Chat</Link>
                 <Link to='/'>Settings</Link>
