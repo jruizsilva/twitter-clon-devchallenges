@@ -4,7 +4,6 @@ import {
   HStack,
   Heading,
   Text,
-  VStack,
   Stack,
   calc
 } from '@chakra-ui/react'
@@ -77,7 +76,13 @@ export function ProfileDescription(props: Props) {
           >
             Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
           </Text>
-          <Button colorScheme='blue' leftIcon={<MdPersonAdd />}>
+          <Button
+            colorScheme='blue'
+            leftIcon={<MdPersonAdd />}
+            position={{ md: 'absolute' }}
+            right={{ md: '24px' }}
+            top={{ md: '24px' }}
+          >
             Follow
           </Button>
         </Box>
