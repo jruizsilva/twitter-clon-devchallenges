@@ -11,6 +11,7 @@ export function ProfileInfoLayout({ children }: Props) {
         alignItems='center'
         height='100%'
         margin='auto'
+        maxWidth='1073px'
         position='relative'
         top='-42px'
         width='90%'
