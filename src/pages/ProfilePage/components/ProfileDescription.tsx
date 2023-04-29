@@ -22,6 +22,7 @@ export function ProfileDescription(props: Props) {
           base: 'end',
           md: 'start'
         }}
+        minHeight={{ md: '163px' }}
         padding={{ base: '16px', md: '12px 24px' }}
         width={{ base: '345px', md: '100%' }}
       >
