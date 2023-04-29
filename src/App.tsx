@@ -6,7 +6,7 @@ import { MainRouter } from 'MainRouter'
 
 export function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <MainRouter />
     </ChakraProvider>
