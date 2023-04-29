@@ -40,23 +40,8 @@ export function ProfileDescription(props: Props) {
             md: calc('100%').subtract('172px').toString()
           }}
         >
-          <Heading
-            flexBasis={{
-              md: '100%',
-              lg: 'auto'
-            }}
-            size='lg'
-          >
-            Daniel Jensen
-          </Heading>
-          <HStack
-            flexBasis={{
-              md: '100%',
-              lg: 'auto'
-            }}
-            marginBottom={{ base: 5, md: 0 }}
-            spacing={5}
-          >
+          <Heading size='lg'>Daniel Jensen</Heading>
+          <HStack marginBottom={{ base: 5, md: 0 }} spacing={5}>
             <HStack spacing={1}>
               <Text as='span' fontWeight='bold'>
                 2,569
@@ -79,9 +64,9 @@ export function ProfileDescription(props: Props) {
           <Button
             colorScheme='blue'
             leftIcon={<MdPersonAdd />}
-            position={{ md: 'absolute' }}
-            right={{ md: '24px' }}
-            top={{ md: '24px' }}
+            position={{ lg: 'absolute' }}
+            right={{ lg: '24px' }}
+            top={{ lg: '24px' }}
           >
             Follow
           </Button>
