@@ -27,7 +27,6 @@ export function ProfileDescription(props: Props) {
       >
         <Box
           alignItems={{ base: 'center', md: 'end' }}
-          columnGap={5}
           display='flex'
           flexDirection={{
             base: 'column',
@@ -36,8 +35,8 @@ export function ProfileDescription(props: Props) {
           flexWrap={{
             md: 'wrap'
           }}
+          gap={{ md: 5 }}
           marginLeft={{ base: '0', md: 'auto' }}
-          rowGap={5}
           width={{
             md: calc('100%').subtract('172px').toString()
           }}
