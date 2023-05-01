@@ -1,4 +1,6 @@
-import { Box, Image, Stack } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
+
+import { ProfileContainer } from '../components/ProfileContainer'
 
 import { profileBackground } from 'assets'
 
@@ -19,15 +21,8 @@ export function ProfileLayout({ children }: Props) {
         src={profileBackground}
         width='100%'
       />
-      <Box
-        alignItems='center'
-        display='flex'
-        justifyContent='center'
-        position='relative'
-        top='-42px'
-      >
-        {children}
-      </Box>
+
+      {children}
     </>
   )
 }
