@@ -32,7 +32,9 @@ export function ProfileDescription(props: Props) {
             md: calc('100%').subtract('172px').toString()
           }}
         >
-          <Heading size='lg'>Daniel Jensen</Heading>
+          <Heading size='lg' textAlign='center'>
+            Daniel Jensen
+          </Heading>
           <Box
             columnGap={5}
             display='flex'
