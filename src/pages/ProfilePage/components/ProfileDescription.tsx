@@ -12,6 +12,7 @@ export function ProfileDescription(props: Props) {
         maxWidth='100%'
         minHeight={{ base: '246px', md: '163px' }}
         padding={{ base: '16px', md: '12px 24px' }}
+        width='100%'
       >
         <Box
           alignItems={{ base: 'center', md: 'end' }}
