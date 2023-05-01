@@ -2,7 +2,7 @@ import { Box, Divider, Heading, Icon, Image, Text } from '@chakra-ui/react'
 import { MdFavoriteBorder, MdLoop, MdOutlineModeComment } from 'react-icons/md'
 import { BsBookmark } from 'react-icons/bs'
 
-import { ButtonIconContainer, CommentInput } from 'components/ui'
+import { ButtonIconContainer, Comment, CommentInput } from 'components/ui'
 import { profileBackground } from 'assets'
 
 interface Props {}
@@ -73,10 +73,12 @@ export function ProfileTweet(props: Props) {
               <Icon as={BsBookmark} boxSize={5} />
             </ButtonIconContainer>
           </Box>
-          <Divider opacity={0.1} />
-          {true && <CommentInput />}
-          <Divider opacity={0.1} />
         </Box>
+        <Divider opacity={0.1} />
+        {true && <CommentInput />}
+        <Divider opacity={0.1} />
+        <Comment />
+        <Comment />
       </Box>
     </>
   )
