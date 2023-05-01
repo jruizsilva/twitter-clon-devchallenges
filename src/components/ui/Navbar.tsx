@@ -35,48 +35,46 @@ export function Navbar(props: Props) {
             <Heading size='xs'>Explore</Heading>
             <Heading size='xs'>Bookmarks</Heading>
           </HStack>
-          <Box position='relative'>
-            <Popover placement='bottom-end'>
-              <PopoverTrigger>
-                <HStack>
-                  <Image
-                    alt='tweeter small'
-                    borderRadius='8px'
-                    src={`https://i.pravatar.cc/50`}
-                    width='36px'
-                  />
-                  <Heading
-                    display={{
-                      base: 'none',
-                      md: 'block'
-                    }}
-                    size='xs'
-                    userSelect='none'
-                  >
-                    Xanthe Neal
-                  </Heading>
-                  <Icon
-                    as={AiFillCaretDown}
-                    display={{
-                      base: 'none',
-                      md: 'block'
-                    }}
-                  />
-                </HStack>
-              </PopoverTrigger>
-              <PopoverContent
-                borderRadius='12px'
-                padding='14px'
-                width={{ base: '100%', md: '192px' }}
-              >
-                <Link to='/profile/1'>My profile</Link>
-                <Link to='/'>Group Chat</Link>
-                <Link to='/'>Settings</Link>
-                <Divider />
-                <Link to='/'>Logout</Link>
-              </PopoverContent>
-            </Popover>
-          </Box>
+          <Popover placement='bottom-end'>
+            <PopoverTrigger>
+              <HStack>
+                <Image
+                  alt='tweeter small'
+                  borderRadius='8px'
+                  src={`https://i.pravatar.cc/50`}
+                  width='36px'
+                />
+                <Heading
+                  display={{
+                    base: 'none',
+                    md: 'block'
+                  }}
+                  size='xs'
+                  userSelect='none'
+                >
+                  Xanthe Neal
+                </Heading>
+                <Icon
+                  as={AiFillCaretDown}
+                  display={{
+                    base: 'none',
+                    md: 'block'
+                  }}
+                />
+              </HStack>
+            </PopoverTrigger>
+            <PopoverContent
+              borderRadius='12px'
+              padding='14px'
+              width={{ base: '100%', md: '192px' }}
+            >
+              <Link to='/profile/1'>My profile</Link>
+              <Link to='/'>Group Chat</Link>
+              <Link to='/'>Settings</Link>
+              <Divider />
+              <Link to='/'>Logout</Link>
+            </PopoverContent>
+          </Popover>
         </HStack>
       </Stack>
     </>
