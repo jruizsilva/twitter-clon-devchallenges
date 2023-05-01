@@ -50,7 +50,7 @@ export function ProfileTweet(props: Props) {
           <Divider opacity={0.1} />
           <Box
             alignItems='center'
-            columnGap={1}
+            columnGap='10px'
             display='flex'
             height='50px'
             justifyContent='center'

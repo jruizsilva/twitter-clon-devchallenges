@@ -9,7 +9,7 @@ interface Props {
 export function ProfileLayout({ children }: Props) {
   return (
     <>
-      <Box height='3000px'>
+      <Box paddingBottom={60}>
         <Image
           alt='profile background from unsplash'
           height={{
