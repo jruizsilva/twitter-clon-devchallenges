@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Heading,
-  Text,
-  Stack,
-  calc
-} from '@chakra-ui/react'
+import { Box, Button, Heading, Text, calc } from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
 
 interface Props {}
@@ -17,13 +9,9 @@ export function ProfileDescription(props: Props) {
       <Box
         backgroundColor='gray.700'
         borderRadius='12px'
-        height='100%'
-        justifyContent={{
-          base: 'end',
-          md: 'start'
-        }}
+        maxWidth='100%'
+        minHeight={{ base: '246px', md: '163px' }}
         padding={{ base: '16px', md: '12px 24px' }}
-        width='100%'
       >
         <Box
           alignItems={{ base: 'center', md: 'end' }}
@@ -37,19 +25,28 @@ export function ProfileDescription(props: Props) {
           }}
           gap={{ md: 5 }}
           marginLeft={{ base: '0', md: 'auto' }}
+          marginTop={{ base: '36px', md: 0 }}
+          position='relative'
           width={{
             md: calc('100%').subtract('172px').toString()
           }}
         >
           <Heading size='lg'>Daniel Jensen</Heading>
-          <Box marginBottom={{ base: 5, md: 0 }}>
-            <Box>
+          <Box
+            columnGap={5}
+            display='flex'
+            flexWrap='wrap'
+            justifyContent='center'
+            marginBottom={{ base: 5, md: 0 }}
+            rowGap={1}
+          >
+            <Box display='flex' gap={1}>
               <Text as='span' fontWeight='bold'>
                 2,569
               </Text>
               <Text>Following</Text>
             </Box>
-            <Box>
+            <Box display='flex' gap={1}>
               <Text as='span' fontWeight='bold'>
                 10.8K
               </Text>
@@ -69,8 +66,8 @@ export function ProfileDescription(props: Props) {
             colorScheme='blue'
             leftIcon={<MdPersonAdd />}
             position={{ lg: 'absolute' }}
-            right={{ lg: '24px' }}
-            top={{ lg: '24px' }}
+            right={{ lg: 0 }}
+            top={{ lg: '4px' }}
           >
             Follow
           </Button>
