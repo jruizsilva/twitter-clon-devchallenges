@@ -10,12 +10,7 @@ interface Props {}
 export function ProfileTweet(props: Props) {
   return (
     <>
-      <Box
-        backgroundColor='gray.700'
-        borderRadius='8px'
-        marginTop='12px'
-        padding='16px'
-      >
+      <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
         <Box display='flex' gap={3} marginBottom={4}>
           <Image
             alt='profile photo'

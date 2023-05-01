@@ -8,9 +8,8 @@ export function ProfileFilter(props: Props) {
       <Box
         backgroundColor='gray.700'
         borderRadius='8px'
-        marginTop={{ base: '-30px' }}
-        maxWidth={{ base: '100%', md: '304px' }}
         p='24px'
+        width={{ base: '100%', md: '304px' }}
       >
         <Text>Tweets</Text>
         <Text>Tweets & replies</Text>

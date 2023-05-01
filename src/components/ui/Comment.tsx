@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Divider,
-  Heading,
-  Image,
-  Text
-} from '@chakra-ui/react'
+import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
 import { AiOutlineHeart } from 'react-icons/ai'
 
 interface Props {}
@@ -29,6 +21,7 @@ export function Comment(props: Props) {
             flexDirection='column'
             padding='14px'
             rowGap={1}
+            width='100%'
           >
             <Box columnGap={3} display='flex'>
               <Heading size='xs'>Waqar Bloom</Heading>

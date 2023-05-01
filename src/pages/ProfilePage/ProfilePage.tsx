@@ -26,8 +26,17 @@ export function ProfilePage(props: Props) {
             <ProfileImage />
             <ProfileDescription />
           </Box>
-          <ProfileFilter />
-          <ProfileTweet />
+          <Box
+            alignItems='start'
+            display='flex'
+            flexDirection={{ base: 'column', md: 'row' }}
+            gap={4}
+            justifyContent='space-between'
+            marginTop={{ base: '-30px' }}
+          >
+            <ProfileFilter />
+            <ProfileTweet />
+          </Box>
         </ProfileContainer>
       </ProfileLayout>
     </>
