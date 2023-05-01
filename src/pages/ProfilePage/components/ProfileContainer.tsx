@@ -7,7 +7,7 @@ interface Props {
 export function ProfileContainer({ children }: Props) {
   return (
     <>
-      <Box margin='auto' width='90%'>
+      <Box display='flex' flexDirection='column' margin='auto' width='90%'>
         {children}
       </Box>
     </>
