@@ -12,6 +12,8 @@ import {
 import { Link } from 'react-router-dom'
 import { AiFillCaretDown } from 'react-icons/ai'
 
+import { UserLogo } from './UserLogo'
+
 import { tweeterSmall } from 'assets'
 
 interface Props {}
@@ -37,12 +39,7 @@ export function Navbar(props: Props) {
           <Popover placement='bottom-end'>
             <PopoverTrigger>
               <HStack>
-                <Image
-                  alt='tweeter small'
-                  borderRadius='8px'
-                  src={`https://i.pravatar.cc/50`}
-                  width='36px'
-                />
+                <UserLogo imageSize='36' />
                 <Heading
                   display={{
                     base: 'none',

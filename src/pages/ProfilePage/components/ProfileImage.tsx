@@ -1,5 +1,7 @@
 import { Image, Stack } from '@chakra-ui/react'
 
+import { UserLogo } from 'components/ui'
+
 interface Props {}
 
 export function ProfileImage(props: Props) {
@@ -27,14 +29,16 @@ export function ProfileImage(props: Props) {
           md: '160px'
         }}
       >
-        <Image
-          alt='profile phote'
-          borderRadius='8px'
+        <UserLogo
           height={{
             base: '116px',
             md: '152px'
           }}
-          src={`https://i.pravatar.cc/152`}
+          imageSize='152'
+          width={{
+            base: '116px',
+            md: '152px'
+          }}
         />
       </Stack>
     </>

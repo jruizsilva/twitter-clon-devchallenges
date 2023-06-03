@@ -2,7 +2,12 @@ import { Box, Divider, Heading, Icon, Image, Text } from '@chakra-ui/react'
 import { MdFavoriteBorder, MdLoop, MdOutlineModeComment } from 'react-icons/md'
 import { BsBookmark } from 'react-icons/bs'
 
-import { ButtonIconContainer, Comment, CommentInput } from 'components/ui'
+import {
+  ButtonIconContainer,
+  Comment,
+  CommentInput,
+  UserLogo
+} from 'components/ui'
 import { profileBackground } from 'assets'
 
 interface Props {}
@@ -12,13 +17,7 @@ export function ProfileTweet(props: Props) {
     <>
       <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
         <Box display='flex' gap={3} marginBottom={4}>
-          <Image
-            alt='profile photo'
-            borderRadius='8px'
-            height='40px'
-            src='https://i.pravatar.cc/40'
-            width='40px'
-          />
+          <UserLogo imageSize='40' />
           <Box display='flex' flexDirection='column' rowGap={1}>
             <Heading size='sm'>Peyton Lyons</Heading>
             <Text fontSize='xs'>24 August at 20:43 </Text>

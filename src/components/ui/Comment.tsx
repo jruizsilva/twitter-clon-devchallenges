@@ -1,5 +1,7 @@
-import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, Text } from '@chakra-ui/react'
 import { AiOutlineHeart } from 'react-icons/ai'
+
+import { UserLogo } from './UserLogo'
 
 interface Props {}
 
@@ -8,12 +10,8 @@ export function Comment(props: Props) {
     <>
       <Box display='flex' flexDirection='column' paddingTop='16px' rowGap={1}>
         <Box columnGap={4} display='flex'>
-          <Image
-            borderRadius='8px'
-            height='100%'
-            src={`https://i.pravatar.cc/40`}
-            width='40px'
-          />
+          <UserLogo randomImage imageSize='40' />
+
           <Box
             backgroundColor='whiteAlpha.50'
             borderRadius='8px'

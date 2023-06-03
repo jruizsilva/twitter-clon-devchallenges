@@ -1,4 +1,6 @@
-import { Box, FormControl, Image, Input } from '@chakra-ui/react'
+import { Box, FormControl, Input } from '@chakra-ui/react'
+
+import { UserLogo } from './UserLogo'
 
 interface Props {}
 
@@ -7,12 +9,7 @@ export function CommentInput(props: Props) {
     <>
       <Box height='60px' padding='10px 0'>
         <Box alignItems='center' columnGap={4} display='flex' height='40px'>
-          <Image
-            borderRadius='8px'
-            height='100%'
-            src={`https://i.pravatar.cc/40`}
-            width='40px'
-          />
+          <UserLogo imageSize='40' />
           <FormControl height='100%'>
             <Input
               fontSize='14px'

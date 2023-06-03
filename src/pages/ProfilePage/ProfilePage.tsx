@@ -18,7 +18,6 @@ export function ProfilePage(props: Props) {
             display='flex'
             justifyContent='center'
             margin='auto'
-            maxWidth={{ base: '100%', lg: '1073px' }}
             position='relative'
             top='-42px'
             width='100%'

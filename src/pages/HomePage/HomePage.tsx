@@ -1,9 +1,13 @@
+import { CreatePost, HomeContainer } from './components'
+
 interface Props {}
 
 export function HomePage(props: Props) {
   return (
     <>
-      <h2>HomePage</h2>
+      <HomeContainer>
+        <CreatePost />
+      </HomeContainer>
     </>
   )
 }
