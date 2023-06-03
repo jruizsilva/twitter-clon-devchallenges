@@ -1,4 +1,13 @@
-import { Box, Divider, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  Text,
+  Textarea
+} from '@chakra-ui/react'
 
 import { UserLogo } from 'components/ui'
 
@@ -18,7 +27,10 @@ export function CreatePost(props: Props) {
           Tweet something
         </Text>
         <Divider />
-        <UserLogo imageSize='40' />
+        <Box marginY='8px' position='relative'>
+          <UserLogo imageSize='40' left='8px' position='absolute' top='8px' />
+          <Textarea paddingLeft='58px' placeholder='What’s happening?' />
+        </Box>
       </Box>
     </>
   )
