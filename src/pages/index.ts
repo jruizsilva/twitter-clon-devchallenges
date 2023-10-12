@@ -1,4 +1,5 @@
 export * from './HomePage/HomePage'
-export * from './ProfilePage/ProfilePage'
 export * from './LoginPage/LoginPage'
+export * from './ProfileEditPage/ProfileEditPage'
+export * from './ProfilePage/ProfilePage'
 export * from './RegisterPage/RegisterPage'

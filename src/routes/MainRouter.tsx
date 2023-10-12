@@ -1,7 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-import { ProfilePage, HomePage, LoginPage, RegisterPage } from 'pages'
 import { MainLayout } from 'components/layouts/MainLayout'
+import {
+  HomePage,
+  LoginPage,
+  ProfileEditPage,
+  ProfilePage,
+  RegisterPage
+} from 'pages'
 
 interface Props {}
 
@@ -13,6 +19,7 @@ export function MainRouter(props: Props) {
           <Routes>
             <Route element={<HomePage />} path='/home' />
             <Route element={<ProfilePage />} path='/profile/:userId' />
+            <Route element={<ProfileEditPage />} path='/profile/edit/:userId' />
             <Route element={<LoginPage />} path='/login' />
             <Route element={<RegisterPage />} path='/register' />
             <Route element={<Navigate replace to='/home' />} path='*' />

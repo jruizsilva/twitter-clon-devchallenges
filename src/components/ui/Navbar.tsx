@@ -83,7 +83,9 @@ export function Navbar(props: Props) {
                 <MenuItem as={NavLink} to={'/profile/1'}>
                   Profile
                 </MenuItem>
-                <MenuItem>New Window</MenuItem>
+                <MenuItem as={NavLink} to={'/profile/edit/1'}>
+                  Settings
+                </MenuItem>
                 <MenuDivider />
                 <MenuItem>Open...</MenuItem>
                 <MenuDivider />
