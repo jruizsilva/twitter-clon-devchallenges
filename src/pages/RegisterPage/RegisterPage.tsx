@@ -15,13 +15,10 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
-
-interface Props {}
+import { NavLink } from 'react-router-dom'
 
 export function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const { pathname } = useLocation()
 
   return (
     <Flex

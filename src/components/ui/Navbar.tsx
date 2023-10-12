@@ -1,18 +1,19 @@
 import {
   Box,
   Button,
-  Divider,
   HStack,
   Heading,
   Icon,
   Image,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
   Stack
 } from '@chakra-ui/react'
 import { AiFillCaretDown } from 'react-icons/ai'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import { UserLogo } from './UserLogo'
 
@@ -20,7 +21,7 @@ import { tweeterSmall } from 'assets'
 
 interface Props {}
 
-const user = null
+const user = true
 
 export function Navbar(props: Props) {
   const { pathname } = useLocation()
@@ -34,7 +35,7 @@ export function Navbar(props: Props) {
         paddingX='16px'
       >
         <HStack justifyContent='space-between'>
-          <HStack>
+          <HStack as={NavLink} to={'/'}>
             <Image alt='tweeter small' src={tweeterSmall} width='41px' />
             <Heading size='md'>Tweeter</Heading>
           </HStack>
@@ -55,8 +56,8 @@ export function Navbar(props: Props) {
             </Heading>
           </HStack>
           {user !== null ? (
-            <Popover placement='bottom-end'>
-              <PopoverTrigger>
+            <Menu>
+              <MenuButton>
                 <HStack>
                   <UserLogo imageSize='36' />
                   <Heading
@@ -77,18 +78,18 @@ export function Navbar(props: Props) {
                     }}
                   />
                 </HStack>
-              </PopoverTrigger>
-              <PopoverContent
-                borderRadius='12px'
-                padding='14px'
-                width={{ base: '100%', md: '192px' }}
-              >
-                <Link to='/profile/1'>My profile</Link>
-                {/* <Link to='/'>Settings</Link> */}
-                <Divider />
-                <Link to='/'>Logout</Link>
-              </PopoverContent>
-            </Popover>
+              </MenuButton>
+              <MenuList>
+                <MenuItem as={NavLink} to={'/profile/1'}>
+                  Profile
+                </MenuItem>
+                <MenuItem>New Window</MenuItem>
+                <MenuDivider />
+                <MenuItem>Open...</MenuItem>
+                <MenuDivider />
+                <MenuItem>Logout</MenuItem>
+              </MenuList>
+            </Menu>
           ) : (
             <Box display='flex' gap='16px'>
               <Button
