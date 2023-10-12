@@ -13,20 +13,24 @@ import {
 export function LoginPage() {
   return (
     <Flex
-      align={'center'}
-      // bg={useColorModeValue('gray.50', 'gray.800')}
-      justify={'center'}
-      minH={"calc('100vh - 70px')"}
+      alignItems={'center'}
+      bg={useColorModeValue('gray.50', 'gray.800')}
+      justifyContent={'center'}
+      minH={'calc(100vh - 140px)'}
     >
-      <Stack maxW={'lg'} mx={'auto'} px={6} py={12} spacing={8}>
-        <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+      <Stack maxW={'full'} mx={'auto'} w={{ base: 'full', sm: 'md', md: 'lg' }}>
+        <Stack align={'center'} mb={2}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
+            Sign in to your account
+          </Heading>
         </Stack>
         <Box
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
+          maxW={'full'}
           p={8}
           rounded={'lg'}
+          w={{ base: 'full', sm: 'md', md: 'lg' }}
         >
           <Stack spacing={4}>
             <FormControl id='email'>
@@ -38,14 +42,6 @@ export function LoginPage() {
               <Input type='password' />
             </FormControl>
             <Stack spacing={10}>
-              {/* <Stack
-                align={'start'}
-                direction={{ base: 'column', sm: 'row' }}
-                justify={'space-between'}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack> */}
               <Button
                 _hover={{
                   bg: 'blue.500'

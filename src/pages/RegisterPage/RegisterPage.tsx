@@ -23,27 +23,29 @@ export function RegisterPage() {
 
   return (
     <Flex
-      align={'center'}
+      alignItems={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
-      justify={'center'}
-      minH={"calc('100vh - 70px')"}
+      justifyContent={'center'}
+      minH={'calc(100vh - 140px)'}
     >
       <Stack
-        maxW={{ base: 'md', lg: 'lg' }}
+        alignItems={'center'}
+        justifyContent={'center'}
+        maxW={'full'}
         mx={'auto'}
-        px={6}
-        py={12}
-        spacing={8}
-        w={'full'}
+        w={{ base: 'full', sm: 'md', md: 'lg' }}
       >
-        <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign up</Heading>
+        <Stack align={'center'} mb={2}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
+            Sign up
+          </Heading>
         </Stack>
         <Box
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}
           rounded={'lg'}
+          w={'full'}
         >
           <Stack spacing={4}>
             <FormControl isRequired id='email'>
