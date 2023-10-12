@@ -1,15 +1,12 @@
 import {
-  Flex,
   Box,
+  Button,
+  Flex,
   FormControl,
   FormLabel,
-  Input,
-  Checkbox,
-  Stack,
-  Link,
-  Button,
   Heading,
-  Text,
+  Input,
+  Stack,
   useColorModeValue
 } from '@chakra-ui/react'
 
@@ -19,14 +16,11 @@ export function LoginPage() {
       align={'center'}
       // bg={useColorModeValue('gray.50', 'gray.800')}
       justify={'center'}
-      minH={'100vh'}
+      minH={"calc('100vh - 70px')"}
     >
       <Stack maxW={'lg'} mx={'auto'} px={6} py={12} spacing={8}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-          <Text color={'gray.600'} fontSize={'lg'}>
-            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
-          </Text>
         </Stack>
         <Box
           bg={useColorModeValue('white', 'gray.700')}
@@ -44,14 +38,14 @@ export function LoginPage() {
               <Input type='password' />
             </FormControl>
             <Stack spacing={10}>
-              <Stack
+              {/* <Stack
                 align={'start'}
                 direction={{ base: 'column', sm: 'row' }}
                 justify={'space-between'}
               >
                 <Checkbox>Remember me</Checkbox>
                 <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack>
+              </Stack> */}
               <Button
                 _hover={{
                   bg: 'blue.500'

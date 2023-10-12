@@ -11,8 +11,8 @@ import {
   PopoverTrigger,
   Stack
 } from '@chakra-ui/react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AiFillCaretDown } from 'react-icons/ai'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 import { UserLogo } from './UserLogo'
 
@@ -27,7 +27,12 @@ export function Navbar(props: Props) {
 
   return (
     <>
-      <Stack as='header' padding='20px 16px'>
+      <Stack
+        as='header'
+        height='70px'
+        justifyContent={'center'}
+        paddingX='16px'
+      >
         <HStack justifyContent='space-between'>
           <HStack>
             <Image alt='tweeter small' src={tweeterSmall} width='41px' />
