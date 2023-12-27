@@ -6,9 +6,12 @@ import {
   FormLabel,
   Heading,
   Input,
+  Link,
   Stack,
+  Text,
   useColorModeValue
 } from '@chakra-ui/react'
+import { NavLink } from 'react-router-dom'
 
 export function LoginPage() {
   return (
@@ -51,6 +54,14 @@ export function LoginPage() {
               >
                 Sign in
               </Button>
+            </Stack>
+            <Stack pt={6}>
+              <Text align={'center'}>
+                Don&apos;t have an account?{' '}
+                <Link as={NavLink} color={'blue.400'} to='/register'>
+                  Register
+                </Link>
+              </Text>
             </Stack>
           </Stack>
         </Box>
