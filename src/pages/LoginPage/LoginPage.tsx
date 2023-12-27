@@ -13,7 +13,13 @@ import {
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 
+import { type LoginRequest } from '../../services/authService'
+
+import { authService } from 'services/authService'
+
 export function LoginPage() {
+  const { login } = authService()
+
   return (
     <Flex
       alignItems={'center'}
@@ -51,6 +57,14 @@ export function LoginPage() {
                 }}
                 bg={'blue.400'}
                 color={'white'}
+                onClick={() => {
+                  const loginRequest: LoginRequest = {
+                    username: 'user',
+                    password: 'user'
+                  }
+
+                  login(loginRequest)
+                }}
               >
                 Sign in
               </Button>

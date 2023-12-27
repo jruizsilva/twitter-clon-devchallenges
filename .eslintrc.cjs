@@ -15,7 +15,6 @@ module.exports = {
     'standard-with-typescript',
     'prettier'
   ],
-  settings: { react: { version: 'detect' } },
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -58,6 +57,7 @@ module.exports = {
     ]
   },
   settings: {
+    react: { version: 'detect' },
     'import/resolver': {
       node: {
         paths: ['src'],
