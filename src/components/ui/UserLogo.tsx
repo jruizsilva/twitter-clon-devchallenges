@@ -13,19 +13,17 @@ export const UserLogo = ({
   ...rest
 }: ImageProps & Props) => {
   return (
-    <>
-      <Image
-        alt='profile photo'
-        borderRadius='8px'
-        height={`${imageSize}px`}
-        src={
-          randomImage === true && imageId !== undefined
-            ? `https://i.pravatar.cc/${imageSize}`
-            : `https://i.pravatar.cc/${imageSize}?img=${imageId}`
-        }
-        width={`${imageSize}px`}
-        {...rest}
-      />
-    </>
+    <Image
+      alt='profile photo'
+      borderRadius='8px'
+      height={`${imageSize}px`}
+      src={
+        randomImage === true && imageId !== undefined
+          ? `https://i.pravatar.cc/${imageSize}`
+          : `https://i.pravatar.cc/${imageSize}?img=${imageId}`
+      }
+      width={`${imageSize}px`}
+      {...rest}
+    />
   )
 }
