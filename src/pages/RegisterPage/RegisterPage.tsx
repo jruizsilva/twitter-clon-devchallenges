@@ -49,7 +49,7 @@ export function RegisterPage() {
           <Stack spacing={4}>
             <FormControl isRequired id='email'>
               <FormLabel>Username</FormLabel>
-              <Input type='email' />
+              <Input type='text' />
             </FormControl>
             <FormControl isRequired id='password'>
               <FormLabel>Password</FormLabel>

@@ -7,13 +7,17 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputRightElement,
   Link,
   Stack,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  InputGroup
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import { type LoginRequest } from '../../services/authService'
 
@@ -31,6 +35,7 @@ export function LoginPage() {
     formState: { errors, isSubmitting, isValid }
   } = useForm<FormValues>({ mode: 'onBlur' })
   const { login } = authService()
+  const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data)
@@ -92,17 +97,29 @@ export function LoginPage() {
               isInvalid={Boolean(errors.password)}
             >
               <FormLabel>Password</FormLabel>
-              <Input
-                autoComplete='none'
-                type='password'
-                {...register('password', {
-                  required: { value: true, message: 'password es requerido' },
-                  minLength: {
-                    value: 4,
-                    message: 'password debe tener al menos 4 caracteres'
-                  }
-                })}
-              />
+              <InputGroup>
+                <Input
+                  autoComplete='none'
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', {
+                    required: { value: true, message: 'password es requerido' },
+                    minLength: {
+                      value: 4,
+                      message: 'password debe tener al menos 4 caracteres'
+                    }
+                  })}
+                />
+                <InputRightElement h={'full'}>
+                  <Button
+                    variant={'ghost'}
+                    onClick={() => {
+                      setShowPassword((showPassword) => !showPassword)
+                    }}
+                  >
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
             <Stack spacing={10}>
