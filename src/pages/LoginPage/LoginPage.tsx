@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -12,7 +13,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { type LoginRequest } from '../../services/authService'
 
@@ -24,12 +25,19 @@ interface FormValues {
 }
 
 export function LoginPage() {
-  const { register, handleSubmit } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid }
+  } = useForm<FormValues>({ mode: 'onBlur' })
   const { login } = authService()
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data)
   }
+
+  console.log(errors)
+  console.log('isvalid', isValid)
 
   return (
     <Flex
@@ -59,13 +67,43 @@ export function LoginPage() {
           w={{ base: 'full', sm: 'md', md: 'lg' }}
         >
           <Stack spacing={4}>
-            <FormControl id='username'>
+            <FormControl
+              isRequired
+              id='username'
+              isInvalid={Boolean(errors.username)}
+            >
               <FormLabel>Username</FormLabel>
-              <Input type='text' {...register('username')} />
+              <Input
+                autoComplete='none'
+                type='text'
+                {...register('username', {
+                  required: { value: true, message: 'username es requerido' },
+                  minLength: {
+                    value: 4,
+                    message: 'username debe tener al menos 4 caracteres'
+                  }
+                })}
+              />
+              <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl id='password'>
+            <FormControl
+              isRequired
+              id='password'
+              isInvalid={Boolean(errors.password)}
+            >
               <FormLabel>Password</FormLabel>
-              <Input type='password' {...register('password')} />
+              <Input
+                autoComplete='none'
+                type='password'
+                {...register('password', {
+                  required: { value: true, message: 'password es requerido' },
+                  minLength: {
+                    value: 4,
+                    message: 'password debe tener al menos 4 caracteres'
+                  }
+                })}
+              />
+              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
             <Stack spacing={10}>
               <Button
@@ -74,6 +112,8 @@ export function LoginPage() {
                 }}
                 bg={'blue.400'}
                 color={'white'}
+                isDisabled={!isValid}
+                isLoading={isSubmitting}
                 type='submit'
                 onClick={() => {
                   const loginRequest: LoginRequest = {
