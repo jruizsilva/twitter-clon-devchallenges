@@ -23,26 +23,21 @@ import { type LoginRequest } from '../../services/authService'
 
 import { authService } from 'services/authService'
 
-interface FormValues {
-  username: string
-  password: string
-}
-
 export function LoginPage() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid }
-  } = useForm<FormValues>({ mode: 'onBlur' })
+  } = useForm<LoginRequest>({ mode: 'onBlur' })
   const { login } = authService()
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<LoginRequest> = (loginRequest) => {
+    console.log(loginRequest)
+    login(loginRequest)
   }
 
   console.log(errors)
-  console.log('isvalid', isValid)
 
   return (
     <Flex
@@ -132,14 +127,6 @@ export function LoginPage() {
                 isDisabled={!isValid}
                 isLoading={isSubmitting}
                 type='submit'
-                onClick={() => {
-                  const loginRequest: LoginRequest = {
-                    username: 'user',
-                    password: 'user'
-                  }
-
-                  login(loginRequest)
-                }}
               >
                 Sign in
               </Button>
