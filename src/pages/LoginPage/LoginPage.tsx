@@ -49,7 +49,7 @@ export function LoginPage() {
       alignItems={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
       justifyContent={'center'}
-      minH={'calc(100vh - 140px)'}
+      minH={'calc(100vh - 100px)'}
     >
       <Stack
         as={'form'}

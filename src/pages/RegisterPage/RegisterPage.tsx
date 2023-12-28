@@ -25,7 +25,7 @@ export function RegisterPage() {
       alignItems={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
       justifyContent={'center'}
-      minH={'calc(100vh - 140px)'}
+      minHeight={'calc(100vh - 100px)'}
     >
       <Stack
         alignItems={'center'}
@@ -47,7 +47,11 @@ export function RegisterPage() {
           w={'full'}
         >
           <Stack spacing={4}>
-            <FormControl isRequired id='email'>
+            <FormControl isRequired id='name'>
+              <FormLabel>Nombre</FormLabel>
+              <Input type='text' />
+            </FormControl>
+            <FormControl isRequired id='username'>
               <FormLabel>Username</FormLabel>
               <Input type='text' />
             </FormControl>
