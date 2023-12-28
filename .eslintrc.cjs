@@ -28,6 +28,14 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   root: true,
   rules: {
+    '@typescript-eslint/no-misused-promises': [
+      2,
+      {
+        checksVoidReturn: {
+          attributes: false
+        }
+      }
+    ],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-empty-interface': 'off',

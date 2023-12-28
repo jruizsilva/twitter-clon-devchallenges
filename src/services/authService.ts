@@ -28,12 +28,16 @@ const authService = () => {
       instance.post("/login", loginRequest).then(res => {
         console.log(res);
         console.log(res.data);
+      }).catch((error) => {
+        console.log(error)
       });
     },
     register: (registerRequest: RegisterRequest) => {
       instance.post("/register", registerRequest).then(res => {
         console.log(res);
         console.log(res.data);
+      }).catch((error) => {
+        console.log(error)
       });
     }
   }

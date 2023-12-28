@@ -12,13 +12,24 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { type LoginRequest } from '../../services/authService'
 
 import { authService } from 'services/authService'
 
+interface FormValues {
+  username: string
+  password: string
+}
+
 export function LoginPage() {
+  const { register, handleSubmit } = useForm()
   const { login } = authService()
+
+  const onSubmit = (data: any) => {
+    console.log(data)
+  }
 
   return (
     <Flex
@@ -27,7 +38,13 @@ export function LoginPage() {
       justifyContent={'center'}
       minH={'calc(100vh - 140px)'}
     >
-      <Stack maxW={'full'} mx={'auto'} w={{ base: 'full', sm: 'md', md: 'lg' }}>
+      <Stack
+        as={'form'}
+        maxW={'full'}
+        mx={'auto'}
+        w={{ base: 'full', sm: 'md', md: 'lg' }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Stack align={'center'} mb={2}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign in to your account
@@ -42,13 +59,13 @@ export function LoginPage() {
           w={{ base: 'full', sm: 'md', md: 'lg' }}
         >
           <Stack spacing={4}>
-            <FormControl id='email'>
-              <FormLabel>Email address</FormLabel>
-              <Input type='email' />
+            <FormControl id='username'>
+              <FormLabel>Username</FormLabel>
+              <Input type='text' {...register('username')} />
             </FormControl>
             <FormControl id='password'>
               <FormLabel>Password</FormLabel>
-              <Input type='password' />
+              <Input type='password' {...register('password')} />
             </FormControl>
             <Stack spacing={10}>
               <Button
@@ -57,6 +74,7 @@ export function LoginPage() {
                 }}
                 bg={'blue.400'}
                 color={'white'}
+                type='submit'
                 onClick={() => {
                   const loginRequest: LoginRequest = {
                     username: 'user',
