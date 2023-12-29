@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { NavLink, useLocation } from 'react-router-dom'
-import { ChevronDownIcon } from '@chakra-ui/icons'
 
 import { UserLogo } from './UserLogo'
 
@@ -64,7 +63,7 @@ export function Navbar(props: Props) {
           </Heading>
         </HStack>
 
-        <Box>
+        <Box display={'flex'}>
           {user !== null ? (
             <Menu>
               <MenuButton>
