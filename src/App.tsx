@@ -4,14 +4,9 @@ import { useEffect } from 'react'
 import theme from './theme/theme'
 
 import { MainRouter } from 'routes/MainRouter'
+import { userService } from 'services/userService'
 
 export function App() {
-  useEffect(() => {
-    const jwt = localStorage.getItem('AUTH_TOKEN')
-
-    console.log(jwt)
-  })
-
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />

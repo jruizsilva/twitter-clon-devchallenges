@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { NavLink, useLocation } from 'react-router-dom'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 
 import { UserLogo } from './UserLogo'
 
@@ -24,9 +25,11 @@ interface Props {}
 
 export function Navbar(props: Props) {
   const { pathname } = useLocation()
-  const { user } = useAuthStore()
+  const { user, setUser } = useAuthStore()
 
-  // console.log(user)
+  const logout = () => {
+    localStorage.removeItem('AUTH_TOKEN')
+  }
 
   return (
     <Stack
@@ -60,63 +63,73 @@ export function Navbar(props: Props) {
             </Button>
           </Heading>
         </HStack>
-        {user !== null ? (
-          <Menu>
-            <MenuButton>
-              <HStack>
-                <UserLogo imageSize='36' />
-                <Heading
-                  display={{
-                    base: 'none',
-                    md: 'block'
+
+        <Box>
+          {user !== null ? (
+            <Menu>
+              <MenuButton>
+                <HStack>
+                  <UserLogo imageSize='36' />
+                  <Heading
+                    display={{
+                      base: 'none',
+                      md: 'block'
+                    }}
+                    size='xs'
+                    userSelect='none'
+                  >
+                    {user.name}
+                  </Heading>
+                  <Icon
+                    as={AiFillCaretDown}
+                    display={{
+                      base: 'none',
+                      md: 'block'
+                    }}
+                  />
+                </HStack>
+              </MenuButton>
+              <MenuList>
+                <MenuItem as={NavLink} to={'/profile/1'}>
+                  Profile
+                </MenuItem>
+                <MenuItem as={NavLink} to={'/profile/edit/1'}>
+                  Settings
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem>Open...</MenuItem>
+                <MenuDivider />
+                <MenuItem
+                  onClick={() => {
+                    logout()
+                    setUser(null)
                   }}
-                  size='xs'
-                  userSelect='none'
                 >
-                  Xanthe Neal
-                </Heading>
-                <Icon
-                  as={AiFillCaretDown}
-                  display={{
-                    base: 'none',
-                    md: 'block'
-                  }}
-                />
-              </HStack>
-            </MenuButton>
-            <MenuList>
-              <MenuItem as={NavLink} to={'/profile/1'}>
-                Profile
-              </MenuItem>
-              <MenuItem as={NavLink} to={'/profile/edit/1'}>
-                Settings
-              </MenuItem>
-              <MenuDivider />
-              <MenuItem>Open...</MenuItem>
-              <MenuDivider />
-              <MenuItem>Logout</MenuItem>
-            </MenuList>
-          </Menu>
-        ) : (
-          <Box display='flex' gap='16px'>
-            <Button
-              as={NavLink}
-              isActive={pathname === '/login'}
-              to='/login'
-              variant='link'
-            >
-              Login
-            </Button>
-            <Button
-              as={NavLink}
-              isActive={pathname === '/register'}
-              to='/register'
-              variant='link'
-            >
-              Register
-            </Button>
-          </Box>
-        )}
+                  Logout
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <Box display='flex' gap='16px'>
+              <Button
+                as={NavLink}
+                isActive={pathname === '/login'}
+                to='/login'
+                variant='link'
+              >
+                Login
+              </Button>
+              <Button
+                as={NavLink}
+                isActive={pathname === '/register'}
+                to='/register'
+                variant='link'
+              >
+                Register
+              </Button>
+            </Box>
+          )}
+        </Box>
       </HStack>
     </Stack>
   )

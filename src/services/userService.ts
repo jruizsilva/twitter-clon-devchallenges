@@ -21,16 +21,17 @@ const userService = () => {
       try {
         const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
 
-        console.log("getUserData", AUTH_TOKEN)
-        // Alter defaults after instance has been created
         if (AUTH_TOKEN !== null) {
           instance.defaults.headers.common.Authorization = "Bearer " + AUTH_TOKEN;
-        }
-        const response = await instance.get<User>("/profile")
-        const user = response.data
+          const response = await instance.get<User>("/profile")
+          const user = response.data
 
-        return user
+          return user
+        }
+
+        return null
       } catch (err) {
+        localStorage.removeItem("AUTH_TOKEN")
         console.log(err)
       }
     }
