@@ -6,6 +6,7 @@ import {
   Center,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   IconButton,
@@ -13,16 +14,46 @@ import {
   Stack,
   useColorModeValue
 } from '@chakra-ui/react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+
+import { useAuthStore } from 'business/auth/useAuthStore'
+
+interface FormData {
+  name: string
+  description: string
+}
 
 export function ProfileEditPage() {
+  const { user } = useAuthStore()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+    reset
+  } = useForm<FormData>({
+    mode: 'onBlur',
+    defaultValues: {
+      name: user?.name,
+      description: user?.description
+    }
+  })
+
+  const onSubmit: SubmitHandler<FormData> = async (loginRequest) => {
+    reset()
+  }
+  const onCancel = () => {
+    reset()
+  }
+
   return (
     <Flex
       align={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
       justify={'center'}
-      minH={'100vh'}
+      minH={'100vh - 100px'}
     >
       <Stack
+        as={'form'}
         bg={useColorModeValue('white', 'gray.700')}
         boxShadow={'lg'}
         maxW={'md'}
@@ -31,11 +62,12 @@ export function ProfileEditPage() {
         rounded={'xl'}
         spacing={4}
         w={'full'}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Heading fontSize={{ base: '2xl', sm: '3xl' }} lineHeight={1.1}>
           User Profile Edit
         </Heading>
-        <FormControl id='userName'>
+        <FormControl id='userIcon'>
           <FormLabel>User Icon</FormLabel>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
@@ -56,30 +88,44 @@ export function ProfileEditPage() {
             </Center>
           </Stack>
         </FormControl>
-        <FormControl isRequired id='userName'>
-          <FormLabel>User name</FormLabel>
+        <FormControl id='name' isInvalid={Boolean(errors.name)}>
+          <FormLabel>Name</FormLabel>
           <Input
             _placeholder={{ color: 'gray.500' }}
-            placeholder='UserName'
+            placeholder='Name'
             type='text'
+            {...register('name', {
+              minLength: {
+                value: 4,
+                message: 'name debe tener al menos 4 caracteres'
+              }
+            })}
           />
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isRequired id='email'>
-          <FormLabel>Email address</FormLabel>
+        <FormControl id='description' isInvalid={Boolean(errors.description)}>
+          <FormLabel>Description</FormLabel>
           <Input
             _placeholder={{ color: 'gray.500' }}
-            placeholder='your-email@example.com'
-            type='email'
+            placeholder='Description'
+            type='text'
+            {...register('description', {
+              minLength: {
+                value: 4,
+                message: 'description debe tener al menos 4 caracteres'
+              }
+            })}
           />
+          <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isRequired id='password'>
+        {/* <FormControl isRequired id='password'>
           <FormLabel>Password</FormLabel>
           <Input
             _placeholder={{ color: 'gray.500' }}
-            placeholder='password'
+            placeholder='Password'
             type='password'
           />
-        </FormControl>
+        </FormControl> */}
         <Stack direction={['column', 'row']} spacing={6}>
           <Button
             _hover={{
@@ -88,6 +134,9 @@ export function ProfileEditPage() {
             bg={'red.400'}
             color={'white'}
             w='full'
+            onClick={() => {
+              onCancel()
+            }}
           >
             Cancel
           </Button>
@@ -97,6 +146,9 @@ export function ProfileEditPage() {
             }}
             bg={'blue.400'}
             color={'white'}
+            isDisabled={!isValid}
+            isLoading={isSubmitting}
+            type='submit'
             w='full'
           >
             Submit

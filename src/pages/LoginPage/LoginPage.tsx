@@ -77,7 +77,7 @@ export function LoginPage() {
             >
               <FormLabel>Username</FormLabel>
               <Input
-                autoComplete='none'
+                autoComplete='off'
                 type='text'
                 {...register('username', {
                   required: { value: true, message: 'username es requerido' },
@@ -97,7 +97,7 @@ export function LoginPage() {
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
-                  autoComplete='none'
+                  autoComplete='off'
                   type={showPassword ? 'text' : 'password'}
                   {...register('password', {
                     required: {

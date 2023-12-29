@@ -68,7 +68,7 @@ export function RegisterPage() {
             <FormControl isRequired id='name' isInvalid={Boolean(errors.name)}>
               <FormLabel>Nombre</FormLabel>
               <Input
-                autoComplete='none'
+                autoComplete='off'
                 type='text'
                 {...register('name', {
                   required: { value: true, message: 'name es requerido' },
@@ -87,7 +87,7 @@ export function RegisterPage() {
             >
               <FormLabel>Username</FormLabel>
               <Input
-                autoComplete='none'
+                autoComplete='off'
                 type='text'
                 {...register('username', {
                   required: { value: true, message: 'username es requerido' },
@@ -107,7 +107,7 @@ export function RegisterPage() {
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
-                  autoComplete='none'
+                  autoComplete='off'
                   type={showPassword ? 'text' : 'password'}
                   {...register('password', {
                     required: { value: true, message: 'password es requerido' },
