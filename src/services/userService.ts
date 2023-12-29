@@ -24,13 +24,15 @@ const userService = () => {
 
         if (AUTH_TOKEN !== null) {
           instance.defaults.headers.common.Authorization = "Bearer " + AUTH_TOKEN;
-          const response = await instance.get<User>("/profile")
-          const user = response.data
+        }
+        const response = await instance.get<User>("/profile")
+        const user = response.data
 
-          return user
+        if (user === undefined) {
+          throw new Error("Session invalid")
         }
 
-        return null
+        return user
       } catch (err) {
         console.log(err)
       }

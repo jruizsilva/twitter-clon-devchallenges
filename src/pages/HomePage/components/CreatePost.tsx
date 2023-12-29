@@ -11,6 +11,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { UserLogo } from 'components/ui'
 import { type Post, postService } from 'services/postService'
+import { usePostsStore } from 'store'
 
 interface Props {}
 
@@ -22,9 +23,17 @@ export function CreatePost(props: Props) {
     reset
   } = useForm<Post>({ mode: 'onBlur' })
   const { createOnePost } = postService()
+  const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<Post> = async (post: Post) => {
-    createOnePost(post)
+    const postCreated = await createOnePost(post)
+
+    console.log(postCreated)
+
+    if (postCreated !== undefined) {
+      addPost(postCreated)
+    }
+
     reset()
   }
 
