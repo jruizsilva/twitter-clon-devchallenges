@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { type Post } from './postService';
 
+
 export interface User {
   id: number;
   name: string;
@@ -31,7 +32,6 @@ const userService = () => {
 
         return null
       } catch (err) {
-        localStorage.removeItem("AUTH_TOKEN")
         console.log(err)
       }
     }
