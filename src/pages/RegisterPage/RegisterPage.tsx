@@ -25,17 +25,16 @@ export function RegisterPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid }
+    formState: { errors, isSubmitting, isValid },
+    reset
   } = useForm<RegisterRequest>({ mode: 'onBlur' })
   const { registerUser } = authService()
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<RegisterRequest> = (loginRequest) => {
-    console.log(loginRequest)
     registerUser(loginRequest)
+    reset()
   }
-
-  console.log(errors)
 
   return (
     <Flex

@@ -24,7 +24,7 @@ interface Props {}
 
 export function Navbar(props: Props) {
   const { pathname } = useLocation()
-  const { count, inc, user } = useStore()
+  const { user } = useStore()
 
   console.log(user)
 

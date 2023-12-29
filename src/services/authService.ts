@@ -10,6 +10,9 @@ export interface RegisterRequest {
   name: string
   description?: string
 }
+interface AuthResponse {
+  jwt: string
+}
 
 const authService = () => {
   const instance = axios.create({
@@ -25,17 +28,19 @@ const authService = () => {
 
   return {
     loginUser: (loginRequest: LoginRequest) => {
-      instance.post("/login", loginRequest).then(res => {
-        console.log(res);
-        console.log(res.data);
+      instance.post<AuthResponse>("/login", loginRequest).then(res => {
+        const AUTH_TOKEN = res.data.jwt;
+
+        localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
       }).catch((error) => {
         console.log(error)
       });
     },
     registerUser: (registerRequest: RegisterRequest) => {
       instance.post("/register", registerRequest).then(res => {
-        console.log(res);
-        console.log(res.data);
+        const AUTH_TOKEN = res.data.jwt;
+
+        localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
       }).catch((error) => {
         console.log(error)
       });

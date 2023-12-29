@@ -27,17 +27,16 @@ export function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid }
+    formState: { errors, isSubmitting, isValid },
+    reset
   } = useForm<LoginRequest>({ mode: 'onBlur' })
   const { loginUser } = authService()
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<LoginRequest> = (loginRequest) => {
-    console.log(loginRequest)
     loginUser(loginRequest)
+    reset()
   }
-
-  console.log(errors)
 
   return (
     <Flex
