@@ -14,11 +14,12 @@ import {
 } from '@chakra-ui/react'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { NavLink, useLocation } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 import { UserLogo } from './UserLogo'
 
 import { tweeterSmall } from 'assets'
-import { useAuthStore } from 'store'
+import { useAuthStore } from 'business/auth/useAuthStore'
 
 interface Props {}
 

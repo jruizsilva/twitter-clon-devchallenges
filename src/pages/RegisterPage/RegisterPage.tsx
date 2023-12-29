@@ -19,7 +19,7 @@ import { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
-import { type RegisterRequest, authService } from 'services/authService'
+import { type RegisterRequest, useAuth } from 'business/auth/useAuth'
 
 export function RegisterPage() {
   const {
@@ -28,7 +28,7 @@ export function RegisterPage() {
     formState: { errors, isSubmitting, isValid },
     reset
   } = useForm<RegisterRequest>({ mode: 'onBlur' })
-  const { registerUser } = authService()
+  const { registerUser } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<RegisterRequest> = (loginRequest) => {

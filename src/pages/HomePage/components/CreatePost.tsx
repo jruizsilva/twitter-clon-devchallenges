@@ -10,8 +10,8 @@ import {
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { UserLogo } from 'components/ui'
-import { type Post, postService } from 'services/postService'
-import { usePostsStore } from 'store'
+import { type Post, usePost } from 'business/posts/usePost'
+import { usePostsStore } from 'business/posts/usePostsStore'
 
 interface Props {}
 
@@ -22,7 +22,7 @@ export function CreatePost(props: Props) {
     formState: { errors, isValid, isSubmitting },
     reset
   } = useForm<Post>({ mode: 'onBlur' })
-  const { createOnePost } = postService()
+  const { createOnePost } = usePost()
   const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<Post> = async (post: Post) => {

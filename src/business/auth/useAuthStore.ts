@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { type User } from "services/userService";
+import { type User } from "business/user/useUser";
 
 interface AuthStore {
   user: User | null;

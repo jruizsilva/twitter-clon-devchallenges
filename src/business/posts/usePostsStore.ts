@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import { type Post } from "services/postService"
+import { type Post } from "business/posts/usePost"
 
 interface PostsStore {
   posts: Post[] | null

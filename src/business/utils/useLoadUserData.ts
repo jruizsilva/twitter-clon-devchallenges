@@ -1,11 +1,12 @@
+
 import toast from 'react-hot-toast'
 
-import { userService } from 'services/userService'
-import { useAuthStore } from 'store'
+import { useUser } from 'business/user/useUser'
+import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function useLoadUserData() {
   const { setUser } = useAuthStore()
-  const { getUserData } = userService()
+  const { getUserData } = useUser()
 
   return {
     loadUserData: async () => {
@@ -14,7 +15,7 @@ export function useLoadUserData() {
 
         if (user !== null && user !== undefined) {
           setUser(user)
-          toast.success('Successfully login')
+          toast.success('Successfully login!')
         }
 
         return { user }

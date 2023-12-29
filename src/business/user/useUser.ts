@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { type Post } from './postService';
+import { type Post } from '../posts/usePost';
+
 
 
 export interface User {
@@ -10,7 +11,7 @@ export interface User {
   posts: Post[];
 }
 
-const userService = () => {
+const useUser = () => {
   const instance = axios.create({
     baseURL: 'http://localhost:8080/users'
   });
@@ -24,15 +25,13 @@ const userService = () => {
 
         if (AUTH_TOKEN !== null) {
           instance.defaults.headers.common.Authorization = "Bearer " + AUTH_TOKEN;
-        }
-        const response = await instance.get<User>("/profile")
-        const user = response.data
+          const response = await instance.get<User>("/profile")
+          const user = response.data
 
-        if (user === undefined) {
-          throw new Error("Session invalid")
+          return user
         }
 
-        return user
+        return null
       } catch (err) {
         console.log(err)
       }
@@ -40,4 +39,4 @@ const userService = () => {
   }
 }
 
-export { userService }
+export { useUser }

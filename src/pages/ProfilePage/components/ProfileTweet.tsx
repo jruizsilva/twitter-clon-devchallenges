@@ -9,7 +9,7 @@ import {
   UserLogo
 } from 'components/ui'
 import { profileBackground } from 'assets'
-import { type Post } from 'services/postService'
+import { type Post } from 'business/posts/usePost'
 
 interface Props {
   urlImage?: string

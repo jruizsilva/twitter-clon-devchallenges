@@ -1,4 +1,8 @@
 import axios from 'axios';
+import toast from 'react-hot-toast'
+
+import { useLoadUserData } from 'business/utils/useLoadUserData';
+
 
 export interface LoginRequest {
   username: string
@@ -14,7 +18,9 @@ interface AuthResponse {
   jwt: string
 }
 
-const authService = () => {
+const useAuth = () => {
+  const { loadUserData } = useLoadUserData()
+
   const instance = axios.create({
     baseURL: 'http://localhost:8080/auth'
   });
@@ -26,7 +32,7 @@ const authService = () => {
         const AUTH_TOKEN = response.data.jwt;
 
         localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
-
+        loadUserData()
       } catch (err) {
         console.log(err)
 
@@ -38,6 +44,7 @@ const authService = () => {
         const AUTH_TOKEN = response.data.jwt;
 
         localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
+        loadUserData()
       } catch (err) {
         console.log(err)
 
@@ -46,4 +53,4 @@ const authService = () => {
   }
 }
 
-export { authService };
+export { useAuth };

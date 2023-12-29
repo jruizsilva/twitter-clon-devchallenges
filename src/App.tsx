@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import theme from './theme/theme'
 
 import { MainRouter } from 'routes/MainRouter'
-import { useLoadUserData } from 'hooks/useGetUserData'
+import { useLoadUserData } from 'business/utils/useLoadUserData'
 
 export function App() {
   const { loadUserData } = useLoadUserData()

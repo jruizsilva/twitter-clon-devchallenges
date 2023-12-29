@@ -4,13 +4,13 @@ import { useCallback, useEffect } from 'react'
 import { CreatePost, HomeContainer } from './components'
 
 import { ProfileTweet } from 'pages/ProfilePage/components/ProfileTweet'
-import { usePostsStore } from 'store'
-import { postService } from 'services/postService'
+import { usePost } from 'business/posts/usePost'
+import { usePostsStore } from 'business/posts/usePostsStore'
 
 interface Props {}
 
 export function HomePage(props: Props) {
-  const { findAll } = postService()
+  const { findAll } = usePost()
   const { posts, setPosts } = usePostsStore()
 
   const getPostsAndSave = useCallback(() => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { type User } from './userService';
+import { type User } from '../user/useUser';
 
 export interface Post {
   id: number;
@@ -9,7 +9,7 @@ export interface Post {
   author: User;
 }
 
-const postService = () => {
+const usePost = () => {
   const instance = axios.create({
     baseURL: 'http://localhost:8080/posts'
   });
@@ -43,4 +43,4 @@ const postService = () => {
   }
 }
 
-export { postService };
+export { usePost };

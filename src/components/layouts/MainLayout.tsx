@@ -1,3 +1,5 @@
+import { Toaster } from 'react-hot-toast'
+
 import { Navbar } from 'components/ui'
 import { Footer } from 'components/ui/Footer'
 
@@ -11,6 +13,9 @@ export function MainLayout({ children }: Props) {
       <Navbar />
       {children}
       <Footer />
+      <div>
+        <Toaster />
+      </div>
     </>
   )
 }
