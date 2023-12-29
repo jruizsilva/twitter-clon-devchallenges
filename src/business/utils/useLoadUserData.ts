@@ -15,7 +15,7 @@ export function useLoadUserData() {
 
         if (user !== null && user !== undefined) {
           setUser(user)
-          toast.success('Successfully login!')
+          toast.success('Successfully login!', { id: "login" })
         }
 
         return { user }

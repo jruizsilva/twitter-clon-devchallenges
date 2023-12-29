@@ -1,9 +1,13 @@
 import { Box, Button, Heading, Text, calc } from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
 
+import { useAuthStore } from 'business/auth/useAuthStore'
+
 interface Props {}
 
 export function ProfileDescription(props: Props) {
+  const { user } = useAuthStore()
+
   return (
     <Box
       backgroundColor='gray.700'
@@ -32,7 +36,7 @@ export function ProfileDescription(props: Props) {
         }}
       >
         <Heading size='lg' textAlign='center'>
-          Daniel Jensen
+          {user?.name}
         </Heading>
         <Box
           columnGap={5}
@@ -62,7 +66,7 @@ export function ProfileDescription(props: Props) {
           marginBottom={{ base: 5, md: 0 }}
           textAlign={{ base: 'center', md: 'left' }}
         >
-          Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
+          {user?.description}
         </Text>
         {/* Agregar funcionalidad seguir usuarios */}
         <Button

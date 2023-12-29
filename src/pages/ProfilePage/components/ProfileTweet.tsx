@@ -10,19 +10,21 @@ import {
 } from 'components/ui'
 import { profileBackground } from 'assets'
 import { type Post } from 'business/posts/usePost'
+import { type User } from 'business/user/useUser'
 
 interface Props {
   urlImage?: string
   post: Post
+  author: User | null
 }
 
-export function ProfileTweet({ urlImage, post }: Readonly<Props>) {
+export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
   return (
     <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
       <Box display='flex' gap={3} marginBottom={4}>
         <UserLogo imageSize='40' />
         <Box display='flex' flexDirection='column' rowGap={1}>
-          <Heading size='sm'>{post.author.name}</Heading>
+          <Heading size='sm'>{author?.name}</Heading>
           <Text fontSize='xs'>{post.createdAt}</Text>
         </Box>
       </Box>

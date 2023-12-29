@@ -5,10 +5,15 @@ import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileFilter } from './components/ProfileFilter'
 import { ProfileTweet } from './components/ProfileTweet'
+import { ProfileTweetList } from './components/ProfileTweetList'
+
+import { useAuthStore } from 'business/auth/useAuthStore'
 
 interface Props {}
 
 export function ProfilePage(props: Props) {
+  const { user } = useAuthStore()
+
   return (
     <ProfileLayout>
       <ProfileContainer>
@@ -33,7 +38,7 @@ export function ProfilePage(props: Props) {
           marginTop={{ base: '-30px' }}
         >
           <ProfileFilter />
-          <ProfileTweet />
+          <ProfileTweetList author={user} posts={user?.posts} />
         </Box>
       </ProfileContainer>
     </ProfileLayout>
