@@ -19,31 +19,29 @@ const authService = () => {
     baseURL: 'http://localhost:8080/auth'
   });
 
-  const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
-
-  // Alter defaults after instance has been created
-  if (AUTH_TOKEN !== null) {
-    instance.defaults.headers.common.Authorization = AUTH_TOKEN;
-  }
-
   return {
-    loginUser: (loginRequest: LoginRequest) => {
-      instance.post<AuthResponse>("/login", loginRequest).then(res => {
-        const AUTH_TOKEN = res.data.jwt;
+    loginUser: async (loginRequest: LoginRequest) => {
+      try {
+        const response = await instance.post<AuthResponse>("/login", loginRequest)
+        const AUTH_TOKEN = response.data.jwt;
 
         localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
-      }).catch((error) => {
-        console.log(error)
-      });
+
+      } catch (err) {
+        console.log(err)
+
+      }
     },
-    registerUser: (registerRequest: RegisterRequest) => {
-      instance.post("/register", registerRequest).then(res => {
-        const AUTH_TOKEN = res.data.jwt;
+    registerUser: async (registerRequest: RegisterRequest) => {
+      try {
+        const response = await instance.post("/register", registerRequest)
+        const AUTH_TOKEN = response.data.jwt;
 
         localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
-      }).catch((error) => {
-        console.log(error)
-      });
+      } catch (err) {
+        console.log(err)
+
+      }
     }
   }
 }

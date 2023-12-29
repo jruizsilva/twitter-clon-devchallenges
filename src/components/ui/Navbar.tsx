@@ -18,15 +18,15 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { UserLogo } from './UserLogo'
 
 import { tweeterSmall } from 'assets'
-import { useStore } from 'store'
+import { useAuthStore } from 'store'
 
 interface Props {}
 
 export function Navbar(props: Props) {
   const { pathname } = useLocation()
-  const { user } = useStore()
+  const { user } = useAuthStore()
 
-  console.log(user)
+  // console.log(user)
 
   return (
     <Stack

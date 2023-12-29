@@ -5,14 +5,8 @@ import { type Post } from './postService';
 export interface User {
   id: number;
   name: string;
-  description?: string;
-}
-interface ResponseData {
-  id: number;
-  name: string;
   description: string;
   posts: Post[];
-
 }
 
 const userService = () => {
@@ -20,15 +14,27 @@ const userService = () => {
     baseURL: 'http://localhost:8080/users'
   });
 
+
+
   return {
-    getUserData: () => {
-      instance.get<ResponseData>("/profile").then(res => {
-        console.log(res.data)
-      }).catch((error) => {
-        console.log(error)
-      });
+    getUserData: async () => {
+      try {
+        const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
+
+        console.log("getUserData", AUTH_TOKEN)
+        // Alter defaults after instance has been created
+        if (AUTH_TOKEN !== null) {
+          instance.defaults.headers.common.Authorization = "Bearer " + AUTH_TOKEN;
+        }
+        const response = await instance.get<User>("/profile")
+        const user = response.data
+
+        return user
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
 
-export { userService };
+export { userService }

@@ -16,12 +16,14 @@ import {
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import { type LoginRequest } from '../../services/authService'
 
 import { authService } from 'services/authService'
+import { userService } from 'services/userService'
+import { useAuthStore } from 'store'
 
 export function LoginPage() {
   const {
@@ -31,10 +33,20 @@ export function LoginPage() {
     reset
   } = useForm<LoginRequest>({ mode: 'onBlur' })
   const { loginUser } = authService()
+  const { getUserData } = userService()
+  const { setUser } = useAuthStore()
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit: SubmitHandler<LoginRequest> = (loginRequest) => {
-    loginUser(loginRequest)
+  const onSubmit: SubmitHandler<LoginRequest> = async (loginRequest) => {
+    await loginUser(loginRequest)
+    const user = await getUserData()
+
+    if (user !== undefined) {
+      setUser(user)
+    } else {
+      throw new Error('user is undefined')
+    }
+
     reset()
   }
 

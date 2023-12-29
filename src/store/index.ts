@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 
-type Store = {
+import { type User } from 'services/userService';
+
+type AuthStore = {
   count: number,
   inc: () => void
   user: {
@@ -8,16 +10,14 @@ type Store = {
     name: string;
     description: string;
   } | null;
-  setUser: () => void
+  setUser: (user: User) => void
 }
 
-export const useStore = create<Store>()((set) => ({
+export const useAuthStore = create<AuthStore>()((set) => ({
   count: 1,
   user: null,
   inc: () => { set((state) => ({ count: state.count + 1 })); },
-  setUser: () => {
-    set((state) => ({})
-    )
+  setUser: (user: User) => {
+    set(() => ({ user }));
   }
-
 }))
