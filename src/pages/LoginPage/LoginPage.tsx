@@ -29,12 +29,12 @@ export function LoginPage() {
     handleSubmit,
     formState: { errors, isSubmitting, isValid }
   } = useForm<LoginRequest>({ mode: 'onBlur' })
-  const { login } = authService()
+  const { loginUser } = authService()
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<LoginRequest> = (loginRequest) => {
     console.log(loginRequest)
-    login(loginRequest)
+    loginUser(loginRequest)
   }
 
   console.log(errors)
@@ -126,6 +126,7 @@ export function LoginPage() {
                 color={'white'}
                 isDisabled={!isValid}
                 isLoading={isSubmitting}
+                size='lg'
                 type='submit'
               >
                 Sign in

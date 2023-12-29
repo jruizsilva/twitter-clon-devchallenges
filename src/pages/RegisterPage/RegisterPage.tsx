@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -15,10 +16,26 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
+import { type RegisterRequest, authService } from 'services/authService'
+
 export function RegisterPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid }
+  } = useForm<RegisterRequest>({ mode: 'onBlur' })
+  const { registerUser } = authService()
   const [showPassword, setShowPassword] = useState(false)
+
+  const onSubmit: SubmitHandler<RegisterRequest> = (loginRequest) => {
+    console.log(loginRequest)
+    registerUser(loginRequest)
+  }
+
+  console.log(errors)
 
   return (
     <Flex
@@ -29,10 +46,12 @@ export function RegisterPage() {
     >
       <Stack
         alignItems={'center'}
+        as={'form'}
         justifyContent={'center'}
         maxW={'full'}
         mx={'auto'}
         w={{ base: 'full', sm: 'md', md: 'lg' }}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Stack align={'center'} mb={2}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
@@ -47,18 +66,58 @@ export function RegisterPage() {
           w={'full'}
         >
           <Stack spacing={4}>
-            <FormControl isRequired id='name'>
+            <FormControl isRequired id='name' isInvalid={Boolean(errors.name)}>
               <FormLabel>Nombre</FormLabel>
-              <Input type='text' />
+              <Input
+                autoComplete='none'
+                type='text'
+                {...register('name', {
+                  required: { value: true, message: 'name es requerido' },
+                  minLength: {
+                    value: 4,
+                    message: 'name debe tener al menos 4 caracteres'
+                  }
+                })}
+              />
+              <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl isRequired id='username'>
+            <FormControl
+              isRequired
+              id='username'
+              isInvalid={Boolean(errors.username)}
+            >
               <FormLabel>Username</FormLabel>
-              <Input type='text' />
+              <Input
+                autoComplete='none'
+                type='text'
+                {...register('username', {
+                  required: { value: true, message: 'username es requerido' },
+                  minLength: {
+                    value: 4,
+                    message: 'username debe tener al menos 4 caracteres'
+                  }
+                })}
+              />
+              <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl isRequired id='password'>
+            <FormControl
+              isRequired
+              id='password'
+              isInvalid={Boolean(errors.password)}
+            >
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input
+                  autoComplete='none'
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', {
+                    required: { value: true, message: 'password es requerido' },
+                    minLength: {
+                      value: 4,
+                      message: 'password debe tener al menos 4 caracteres'
+                    }
+                  })}
+                />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -70,6 +129,7 @@ export function RegisterPage() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
             <Stack pt={2} spacing={10}>
               <Button
@@ -78,8 +138,11 @@ export function RegisterPage() {
                 }}
                 bg={'blue.400'}
                 color={'white'}
+                isDisabled={!isValid}
+                isLoading={isSubmitting}
                 loadingText='Submitting'
                 size='lg'
+                type='submit'
               >
                 Sign up
               </Button>

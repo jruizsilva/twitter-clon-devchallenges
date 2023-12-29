@@ -24,7 +24,7 @@ const authService = () => {
   }
 
   return {
-    login: (loginRequest: LoginRequest) => {
+    loginUser: (loginRequest: LoginRequest) => {
       instance.post("/login", loginRequest).then(res => {
         console.log(res);
         console.log(res.data);
@@ -32,7 +32,7 @@ const authService = () => {
         console.log(error)
       });
     },
-    register: (registerRequest: RegisterRequest) => {
+    registerUser: (registerRequest: RegisterRequest) => {
       instance.post("/register", registerRequest).then(res => {
         console.log(res);
         console.log(res.data);
