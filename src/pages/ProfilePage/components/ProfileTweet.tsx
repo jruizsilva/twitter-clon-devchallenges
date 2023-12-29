@@ -9,26 +9,25 @@ import {
   UserLogo
 } from 'components/ui'
 import { profileBackground } from 'assets'
+import { type Post } from 'services/postService'
 
 interface Props {
   urlImage?: string
+  post: Post
 }
 
-export function ProfileTweet({ urlImage }: Readonly<Props>) {
+export function ProfileTweet({ urlImage, post }: Readonly<Props>) {
   return (
     <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
       <Box display='flex' gap={3} marginBottom={4}>
         <UserLogo imageSize='40' />
         <Box display='flex' flexDirection='column' rowGap={1}>
-          <Heading size='sm'>Peyton Lyons</Heading>
-          <Text fontSize='xs'>24 August at 20:43 </Text>
+          <Heading size='sm'>{post.author.name}</Heading>
+          <Text fontSize='xs'>{post.createdAt}</Text>
         </Box>
       </Box>
       <Box>
-        <Text marginBottom='8px'>
-          Traveling – it leaves you speechless, then turns you into a
-          storyteller.
-        </Text>
+        <Text marginBottom='8px'>{post.content}</Text>
         {urlImage !== undefined && urlImage.length > 0 && (
           <Image
             borderRadius='8px'
