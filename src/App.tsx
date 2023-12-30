@@ -9,7 +9,7 @@ import { useUser } from 'business/user/useUser'
 import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function App() {
-  const { getUserDataFromAuthToken } = useUser()
+  const { fetchUserData } = useUser()
   const { setUser } = useAuthStore()
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function App() {
       return
     }
 
-    getUserDataFromAuthToken(AUTH_TOKEN)
+    fetchUserData()
       .then((user) => {
         setUser(user)
         toast.success('Successfully login!', { id: 'login' })

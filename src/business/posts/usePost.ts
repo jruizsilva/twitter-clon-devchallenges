@@ -1,6 +1,6 @@
-import axios from 'axios';
-
 import { type User } from '../user/useUser';
+
+import { protectedInstance, publicInstance } from 'business/api/axiosInstances';
 
 export interface Post {
   id: number;
@@ -10,37 +10,20 @@ export interface Post {
 }
 
 const usePost = () => {
-  const instance = axios.create({
-    baseURL: 'http://localhost:8080/posts'
-  });
-
   return {
     findAll: async () => {
-      try {
-        const response = await instance.get<Post[]>("");
-        const posts = response.data;
+      const response = await publicInstance.get<Post[]>("/posts");
+      const posts = response.data;
 
-        return posts
-      } catch (err) {
-        console.log(err)
-      }
+      return posts
     },
     createOnePost: async (postRequest: Post) => {
-      const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
+      const response = await protectedInstance.post<Post>("/posts", postRequest);
+      const post = response.data;
 
-      if (AUTH_TOKEN !== null) {
-        instance.defaults.headers.common.Authorization = "Bearer " + AUTH_TOKEN;
-      }
-      try {
-        const response = await instance.post<Post>("", postRequest);
-        const post = response.data;
-
-        return post
-      } catch (err) {
-        console.log(err)
-      }
+      return post
     }
   }
 }
 
-export { usePost };
+export { usePost }

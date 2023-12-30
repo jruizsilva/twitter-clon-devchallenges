@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { publicInstance } from 'business/api/axiosInstances';
+
 export interface LoginRequest {
   username: string
   password: string
@@ -15,20 +17,15 @@ interface AuthResponse {
 }
 
 const useAuth = () => {
-
-  const instance = axios.create({
-    baseURL: 'http://localhost:8080/auth'
-  });
-
   return {
     loginUser: async (loginRequest: LoginRequest) => {
-      const response = await instance.post<AuthResponse>("/login", loginRequest)
+      const response = await publicInstance.post<AuthResponse>("/auth/login", loginRequest)
       const AUTH_TOKEN = response.data.jwt;
 
       return AUTH_TOKEN;
     },
     registerUser: async (registerRequest: RegisterRequest) => {
-      const response = await instance.post<AuthResponse>("/register", registerRequest)
+      const response = await publicInstance.post<AuthResponse>("/auth/register", registerRequest)
       const AUTH_TOKEN = response.data.jwt;
 
       return AUTH_TOKEN;

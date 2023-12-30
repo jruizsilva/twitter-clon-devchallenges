@@ -34,14 +34,14 @@ export function RegisterPage() {
   const { registerUser } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const { setUser } = useAuthStore()
-  const { getUserDataFromAuthToken } = useUser()
+  const { fetchUserData } = useUser()
 
   const onSubmit: SubmitHandler<RegisterRequest> = async (loginRequest) => {
     try {
       const AUTH_TOKEN = await registerUser(loginRequest)
 
       localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
-      const user = await getUserDataFromAuthToken(AUTH_TOKEN)
+      const user = await fetchUserData()
 
       setUser(user)
       toast.success('Successfully login!', { id: 'login' })

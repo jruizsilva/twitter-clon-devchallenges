@@ -8,6 +8,7 @@ import {
   Textarea
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 import { UserLogo } from 'components/ui'
 import { type Post, usePost } from 'business/posts/usePost'
@@ -26,15 +27,18 @@ export function CreatePost(props: Props) {
   const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<Post> = async (post: Post) => {
-    const postCreated = await createOnePost(post)
+    try {
+      const postCreated = await createOnePost(post)
 
-    console.log(postCreated)
-
-    if (postCreated !== undefined) {
       addPost(postCreated)
-    }
 
-    reset()
+      reset()
+    } catch (err) {
+      console.error(err)
+      if (err instanceof Error) {
+        toast.error(err.message)
+      }
+    }
   }
 
   return (

@@ -41,7 +41,9 @@ export function HomePage(props: Props) {
         <CreatePost />
         {posts !== null &&
           posts?.length > 0 &&
-          posts.map((post) => <ProfileTweet key={post.id} post={post} />)}
+          posts.map((post) => (
+            <ProfileTweet key={post.id} author={post.author} post={post} />
+          ))}
       </Box>
     </HomeContainer>
   )

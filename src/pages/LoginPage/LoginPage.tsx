@@ -35,7 +35,7 @@ export function LoginPage() {
   } = useForm<LoginRequest>({ mode: 'onBlur' })
   const { loginUser } = useAuth()
   const { setUser } = useAuthStore()
-  const { getUserDataFromAuthToken } = useUser()
+  const { fetchUserData } = useUser()
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<LoginRequest> = async (loginRequest) => {
@@ -43,7 +43,7 @@ export function LoginPage() {
       const AUTH_TOKEN = await loginUser(loginRequest)
 
       localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
-      const user = await getUserDataFromAuthToken(AUTH_TOKEN)
+      const user = await fetchUserData()
 
       setUser(user)
 
