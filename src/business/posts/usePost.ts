@@ -11,13 +11,13 @@ export interface Post {
 
 const usePost = () => {
   return {
-    findAll: async () => {
+    fetchAllPosts: async () => {
       const response = await publicInstance.get<Post[]>("/posts");
       const posts = response.data;
 
       return posts
     },
-    createOnePost: async (postRequest: Post) => {
+    fetchCreateOnePost: async (postRequest: Post) => {
       const response = await protectedInstance.post<Post>("/posts", postRequest);
       const post = response.data;
 

@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { NavLink, useLocation } from 'react-router-dom'
-import toast from 'react-hot-toast'
 
 import { UserLogo } from './UserLogo'
 

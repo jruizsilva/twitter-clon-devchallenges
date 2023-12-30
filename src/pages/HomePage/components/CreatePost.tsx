@@ -23,12 +23,12 @@ export function CreatePost(props: Props) {
     formState: { errors, isValid, isSubmitting },
     reset
   } = useForm<Post>({ mode: 'onBlur' })
-  const { createOnePost } = usePost()
+  const { fetchCreateOnePost } = usePost()
   const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<Post> = async (post: Post) => {
     try {
-      const postCreated = await createOnePost(post)
+      const postCreated = await fetchCreateOnePost(post)
 
       addPost(postCreated)
 

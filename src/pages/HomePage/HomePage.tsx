@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { CreatePost, HomeContainer } from './components'
 
@@ -10,24 +10,17 @@ import { usePostsStore } from 'business/posts/usePostsStore'
 interface Props {}
 
 export function HomePage(props: Props) {
-  const { findAll } = usePost()
+  const { fetchAllPosts } = usePost()
   const { posts, setPosts } = usePostsStore()
 
-  const getPostsAndSave = useCallback(() => {
-    findAll()
+  useEffect(() => {
+    fetchAllPosts()
       .then((postsData) => {
-        console.log(postsData)
-        if (postsData !== null && postsData !== undefined) {
-          setPosts(postsData)
-        }
+        setPosts(postsData)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [])
-
-  useEffect(() => {
-    getPostsAndSave()
   }, [])
 
   return (
