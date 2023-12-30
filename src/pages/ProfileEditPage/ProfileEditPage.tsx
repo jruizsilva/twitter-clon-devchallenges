@@ -59,7 +59,8 @@ export function ProfileEditPage() {
     }
   }
   const onCancel = () => {
-    reset()
+    setValue('name', user?.name)
+    setValue('description', user?.description)
   }
 
   return (
