@@ -15,22 +15,22 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+
+import { useUser, type UpdateUserRequest } from '../../business/user/useUser'
 
 import { useAuthStore } from 'business/auth/useAuthStore'
 
-interface FormData {
-  name: string
-  description: string
-}
-
 export function ProfileEditPage() {
-  const { user } = useAuthStore()
+  const { user, setUser } = useAuthStore()
+  const { updateUser } = useUser()
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
+    setValue,
     reset
-  } = useForm<FormData>({
+  } = useForm<UpdateUserRequest>({
     mode: 'onBlur',
     defaultValues: {
       name: user?.name,
@@ -38,8 +38,25 @@ export function ProfileEditPage() {
     }
   })
 
-  const onSubmit: SubmitHandler<FormData> = async (loginRequest) => {
-    reset()
+  const onSubmit: SubmitHandler<UpdateUserRequest> = async (
+    updateUserRequest: UpdateUserRequest
+  ) => {
+    try {
+      const userUpdated = await updateUser(updateUserRequest)
+
+      setUser(userUpdated)
+      toast.success('Update successfuly')
+      setValue('name', userUpdated.name)
+      setValue('description', userUpdated.description)
+    } catch (err: any) {
+      const errorMessage =
+        err.response.data.message !== null
+          ? err.response.data.message
+          : err.message
+
+      toast.error(errorMessage)
+      console.log(err)
+    }
   }
   const onCancel = () => {
     reset()

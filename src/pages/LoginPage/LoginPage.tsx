@@ -50,7 +50,12 @@ export function LoginPage() {
       toast.success('Successfully login!', { id: 'login' })
       reset()
     } catch (err: any) {
-      toast.error(err.response.data.message)
+      const errorMessage =
+        err.response.data.message !== null
+          ? err.response.data.message
+          : err.message
+
+      toast.error(errorMessage)
       localStorage.removeItem('AUTH_TOKEN')
       console.log(err)
     }

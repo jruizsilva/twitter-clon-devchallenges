@@ -9,6 +9,11 @@ export interface User {
   posts: Post[];
 }
 
+export interface UpdateUserRequest {
+  name?: string
+  description?: string
+}
+
 const useUser = () => {
   return {
     fetchUserData: async () => {
@@ -16,6 +21,14 @@ const useUser = () => {
       const user = response.data;
 
       return user
+    },
+    updateUser: async (updateUserRequest: UpdateUserRequest) => {
+      const response = await protectedInstance.patch<User>("/users", updateUserRequest)
+
+      console.log(response)
+      const userUpdated = response.data;
+
+      return userUpdated
     }
   }
 }
