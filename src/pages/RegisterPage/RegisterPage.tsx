@@ -44,6 +44,7 @@ export function RegisterPage() {
       const user = await getUserDataFromAuthToken(AUTH_TOKEN)
 
       setUser(user)
+      toast.success('Successfully login!', { id: 'login' })
 
       reset()
     } catch (err: any) {

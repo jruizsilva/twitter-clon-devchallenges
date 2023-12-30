@@ -1,5 +1,6 @@
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 import theme from './theme/theme'
 
@@ -21,6 +22,7 @@ export function App() {
     getUserDataFromAuthToken(AUTH_TOKEN)
       .then((user) => {
         setUser(user)
+        toast.success('Successfully login!', { id: 'login' })
       })
       .catch((err) => {
         console.log(err)
