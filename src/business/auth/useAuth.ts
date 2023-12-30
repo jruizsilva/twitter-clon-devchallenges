@@ -1,8 +1,4 @@
 import axios from 'axios';
-import toast from 'react-hot-toast'
-
-import { useLoadUserData } from 'business/utils/useLoadUserData';
-
 
 export interface LoginRequest {
   username: string
@@ -19,7 +15,6 @@ interface AuthResponse {
 }
 
 const useAuth = () => {
-  const { loadUserData } = useLoadUserData()
 
   const instance = axios.create({
     baseURL: 'http://localhost:8080/auth'
@@ -27,28 +22,16 @@ const useAuth = () => {
 
   return {
     loginUser: async (loginRequest: LoginRequest) => {
-      try {
-        const response = await instance.post<AuthResponse>("/login", loginRequest)
-        const AUTH_TOKEN = response.data.jwt;
+      const response = await instance.post<AuthResponse>("/login", loginRequest)
+      const AUTH_TOKEN = response.data.jwt;
 
-        localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
-        loadUserData()
-      } catch (err) {
-        console.log(err)
-
-      }
+      return AUTH_TOKEN;
     },
     registerUser: async (registerRequest: RegisterRequest) => {
-      try {
-        const response = await instance.post("/register", registerRequest)
-        const AUTH_TOKEN = response.data.jwt;
+      const response = await instance.post<AuthResponse>("/register", registerRequest)
+      const AUTH_TOKEN = response.data.jwt;
 
-        localStorage.setItem("AUTH_TOKEN", AUTH_TOKEN)
-        loadUserData()
-      } catch (err) {
-        console.log(err)
-
-      }
+      return AUTH_TOKEN;
     }
   }
 }

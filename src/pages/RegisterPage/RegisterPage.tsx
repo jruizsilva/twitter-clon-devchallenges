@@ -18,8 +18,11 @@ import {
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 import { type RegisterRequest, useAuth } from 'business/auth/useAuth'
+import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUser } from 'business/user/useUser'
 
 export function RegisterPage() {
   const {
@@ -30,10 +33,24 @@ export function RegisterPage() {
   } = useForm<RegisterRequest>({ mode: 'onBlur' })
   const { registerUser } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
+  const { setUser } = useAuthStore()
+  const { getUserDataFromAuthToken } = useUser()
 
-  const onSubmit: SubmitHandler<RegisterRequest> = (loginRequest) => {
-    registerUser(loginRequest)
-    reset()
+  const onSubmit: SubmitHandler<RegisterRequest> = async (loginRequest) => {
+    try {
+      const AUTH_TOKEN = await registerUser(loginRequest)
+
+      localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
+      const user = await getUserDataFromAuthToken(AUTH_TOKEN)
+
+      setUser(user)
+
+      reset()
+    } catch (err: any) {
+      toast.error(err.response.data.message)
+      localStorage.removeItem('AUTH_TOKEN')
+      console.log(err)
+    }
   }
 
   return (

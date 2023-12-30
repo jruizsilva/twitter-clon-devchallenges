@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import { type Post } from '../posts/usePost';
 
-
-
 export interface User {
   id: number;
   name: string;
@@ -19,24 +17,25 @@ const useUser = () => {
 
 
   return {
-    getUserData: async () => {
-      try {
-        const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
-
-        if (AUTH_TOKEN !== null) {
-          instance.defaults.headers.common.Authorization = "Bearer " + AUTH_TOKEN;
-          const response = await instance.get<User>("/profile")
-          const user = response.data
-
-          return user
-        }
+    getUserDataFromAuthToken: async (AUTH_TOKEN: string) => {
+      return await new Promise<User>((resolve, reject) => {
+        instance.defaults.headers.common.Authorization = `Bearer ${AUTH_TOKEN}`;
+        instance.get<User>("/profile")
+          .then((response) => { resolve(response.data); })
+          .catch(err => {
+            if (err instanceof Error) {
+              console.error(err)
+              reject(err.message)
+            }
+            console.error(err)
+            reject(new Error("Error in getUserDataFromAuthToken"));
+          })
 
         return null
-      } catch (err) {
-        console.log(err)
-      }
+      })
     }
   }
 }
+
 
 export { useUser }

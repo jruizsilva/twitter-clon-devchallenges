@@ -18,11 +18,13 @@ import { NavLink } from 'react-router-dom'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import toast from 'react-hot-toast'
 
 import { type LoginRequest } from '../../business/auth/useAuth'
 
 import { useAuth } from 'business/auth/useAuth'
-import { useLoadUserData } from 'business/utils/useLoadUserData'
+import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUser } from 'business/user/useUser'
 
 export function LoginPage() {
   const {
@@ -32,14 +34,26 @@ export function LoginPage() {
     reset
   } = useForm<LoginRequest>({ mode: 'onBlur' })
   const { loginUser } = useAuth()
+  const { setUser } = useAuthStore()
+  const { getUserDataFromAuthToken } = useUser()
   const [showPassword, setShowPassword] = useState(false)
-  const { loadUserData } = useLoadUserData()
 
   const onSubmit: SubmitHandler<LoginRequest> = async (loginRequest) => {
-    await loginUser(loginRequest)
-    loadUserData()
+    try {
+      const AUTH_TOKEN = await loginUser(loginRequest)
 
-    reset()
+      localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
+      const user = await getUserDataFromAuthToken(AUTH_TOKEN)
+
+      setUser(user)
+
+      toast.success('Successfully login!', { id: 'login' })
+      reset()
+    } catch (err: any) {
+      toast.error(err.response.data.message)
+      localStorage.removeItem('AUTH_TOKEN')
+      console.log(err)
+    }
   }
 
   return (

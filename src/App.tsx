@@ -4,13 +4,28 @@ import { useEffect } from 'react'
 import theme from './theme/theme'
 
 import { MainRouter } from 'routes/MainRouter'
-import { useLoadUserData } from 'business/utils/useLoadUserData'
+import { useUser } from 'business/user/useUser'
+import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function App() {
-  const { loadUserData } = useLoadUserData()
+  const { getUserDataFromAuthToken } = useUser()
+  const { setUser } = useAuthStore()
 
   useEffect(() => {
-    loadUserData()
+    const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
+
+    if (AUTH_TOKEN === null) {
+      return
+    }
+
+    getUserDataFromAuthToken(AUTH_TOKEN)
+      .then((user) => {
+        setUser(user)
+      })
+      .catch((err) => {
+        console.log(err)
+        localStorage.removeItem('AUTH_TOKEN')
+      })
   }, [])
 
   return (
