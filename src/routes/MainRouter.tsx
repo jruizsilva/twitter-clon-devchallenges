@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { PrivateRoutes } from './PrivateRoutes'
-import { RedirectWhenUserLogin } from './RedirectWhenUserLogin'
+import { RedirectToHomeWhenUserLogin } from './RedirectToHomeWhenUserLogin'
 
 import { MainLayout } from 'components/layouts/MainLayout'
 import {
@@ -25,7 +25,7 @@ export function MainRouter(props: Props) {
             <Route element={<ProfileEditPage />} path='/profile/edit' />
             <Route element={<PeoplePage />} path='/people' />
           </Route>
-          <Route element={<RedirectWhenUserLogin />}>
+          <Route element={<RedirectToHomeWhenUserLogin />}>
             <Route element={<LoginPage />} path='/login' />
             <Route element={<RegisterPage />} path='/register' />
           </Route>
