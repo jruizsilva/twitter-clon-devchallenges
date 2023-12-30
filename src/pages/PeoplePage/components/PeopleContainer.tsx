@@ -12,7 +12,8 @@ export function PeopleContainer({ children }: Props) {
       flexDirection='column'
       margin='auto'
       maxWidth='745px'
-      py={'48px'}
+      pb={'96px'}
+      pt={'48px'}
       width={{ base: '95%' }}
     >
       {children}

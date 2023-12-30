@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 
 import { UserLogo } from 'components/ui'
 import { type Post, usePost } from 'business/posts/usePost'
-import { usePostsStore } from 'business/posts/usePostsStore'
+import { usePostsStore } from 'business/posts/usePostStore'
 
 interface Props {}
 

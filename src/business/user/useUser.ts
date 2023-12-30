@@ -6,6 +6,7 @@ export interface User {
   id: number;
   name: string;
   description: string;
+  username: string
   posts: Post[];
 }
 
@@ -29,6 +30,12 @@ const useUser = () => {
       const userUpdated = response.data;
 
       return userUpdated
+    },
+    fetchAllUsers: async () => {
+      const response = await protectedInstance.get<User[]>("/users")
+      const users = response.data;
+
+      return users
     }
   }
 }

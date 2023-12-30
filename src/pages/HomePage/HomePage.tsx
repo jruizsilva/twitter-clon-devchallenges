@@ -5,7 +5,7 @@ import { CreatePost, HomeContainer } from './components'
 
 import { ProfileTweet } from 'pages/ProfilePage/components/ProfileTweet'
 import { usePost } from 'business/posts/usePost'
-import { usePostsStore } from 'business/posts/usePostsStore'
+import { usePostsStore } from 'business/posts/usePostStore'
 
 interface Props {}
 

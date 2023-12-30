@@ -2,9 +2,13 @@ import { Box } from '@chakra-ui/react'
 
 import { CardPeople } from './CardPeople'
 
-interface Props {}
+import { type User } from 'business/user/useUser'
 
-export function ListCardPeople(props: Props): JSX.Element {
+interface Props {
+  users: User[] | null
+}
+
+export function ListCardPeople({ users }: Props): JSX.Element {
   return (
     <Box
       display={'flex'}
@@ -15,10 +19,9 @@ export function ListCardPeople(props: Props): JSX.Element {
       pt='48px'
       width={'100%'}
     >
-      <CardPeople />
-      <CardPeople />
-      <CardPeople />
-      <CardPeople />
+      {users !== null &&
+        users.length > 0 &&
+        users.map((user) => <CardPeople key={user.id} user={user} />)}
     </Box>
   )
 }

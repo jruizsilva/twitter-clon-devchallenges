@@ -5,13 +5,16 @@ import {
   Stack,
   Button,
   Box,
-  Text,
-  AvatarBadge
+  Text
 } from '@chakra-ui/react'
 
-interface Props {}
+import { type User } from 'business/user/useUser'
 
-export function CardPeople(props: Props): JSX.Element {
+interface Props {
+  user: User | null
+}
+
+export function CardPeople({ user }: Props): JSX.Element {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -42,17 +45,17 @@ export function CardPeople(props: Props): JSX.Element {
         }
       />
       <Heading fontFamily={'body'} fontSize={'2xl'}>
-        Lindsey James
+        {user?.name}
       </Heading>
       <Text color={'gray.500'} fontWeight={600} mb={4}>
-        @lindsey_jam3s
+        @{user?.username}
       </Text>
       <Text
         color={useColorModeValue('gray.700', 'gray.400')}
         px={3}
         textAlign={'center'}
       >
-        Actress, musician, songwriter and artist. PM for work inquires or
+        {user?.description}
       </Text>
 
       <Stack direction={'row'} mt={8} spacing={4}>
