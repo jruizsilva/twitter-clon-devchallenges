@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { publicInstance } from 'business/api/axiosInstances';
 
 export interface LoginRequest {

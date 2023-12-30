@@ -45,7 +45,10 @@ export function ProfileEditPage() {
       const userUpdated = await updateUser(updateUserRequest)
 
       setUser(userUpdated)
-      toast.success('Update successfuly')
+      toast.success('Update successfuly!', {
+        id: 'update',
+        position: 'bottom-right'
+      })
       setValue('name', userUpdated.name)
       setValue('description', userUpdated.description)
     } catch (err: any) {

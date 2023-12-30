@@ -43,8 +43,10 @@ export function RegisterPage() {
       localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
       const user = await fetchUserData()
 
-      setUser(user)
-      toast.success('Successfully login!', { id: 'login' })
+      toast.success('Successfully login!', {
+        id: 'login',
+        position: 'bottom-right'
+      })
 
       reset()
     } catch (err: any) {

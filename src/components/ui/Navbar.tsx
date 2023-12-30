@@ -42,7 +42,7 @@ export function Navbar(props: Props) {
       zIndex={'10'}
     >
       <HStack justifyContent='space-between'>
-        <HStack as={NavLink} to={'/'}>
+        <HStack as={NavLink} to={'/home'}>
           <Image alt='tweeter small' src={tweeterSmall} width='41px' />
           <Heading size='md'>Tweeter</Heading>
         </HStack>
@@ -55,10 +55,21 @@ export function Navbar(props: Props) {
             <Button
               as={NavLink}
               isActive={pathname === '/home'}
-              to='/'
+              to='/home'
               variant='link'
             >
               Home
+            </Button>
+          </Heading>
+
+          <Heading size='xs'>
+            <Button
+              as={NavLink}
+              isActive={pathname === '/people'}
+              to='/people'
+              variant='link'
+            >
+              People
             </Button>
           </Heading>
         </HStack>
@@ -89,10 +100,10 @@ export function Navbar(props: Props) {
                 </HStack>
               </MenuButton>
               <MenuList>
-                <MenuItem as={NavLink} to={'/profile/1'}>
+                <MenuItem as={NavLink} to={'/profile'}>
                   Profile
                 </MenuItem>
-                <MenuItem as={NavLink} to={'/profile/edit/1'}>
+                <MenuItem as={NavLink} to={'/profile/edit'}>
                   Settings
                 </MenuItem>
                 <MenuDivider />

@@ -47,7 +47,10 @@ export function LoginPage() {
 
       setUser(user)
 
-      toast.success('Successfully login!', { id: 'login' })
+      toast.success('Successfully login!', {
+        id: 'login',
+        position: 'bottom-right'
+      })
       reset()
     } catch (err: any) {
       const errorMessage =

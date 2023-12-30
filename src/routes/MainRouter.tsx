@@ -11,6 +11,7 @@ import {
   ProfilePage,
   RegisterPage
 } from 'pages'
+import { PeoplePage } from 'pages/PeoplePage/PeoplePage'
 
 interface Props {}
 
@@ -20,8 +21,9 @@ export function MainRouter(props: Props) {
       <MainLayout>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route element={<ProfilePage />} path='/profile/:userId' />
-            <Route element={<ProfileEditPage />} path='/profile/edit/:userId' />
+            <Route element={<ProfilePage />} path='/profile' />
+            <Route element={<ProfileEditPage />} path='/profile/edit' />
+            <Route element={<PeoplePage />} path='/people' />
           </Route>
           <Route element={<RedirectWhenUserLogin />}>
             <Route element={<LoginPage />} path='/login' />

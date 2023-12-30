@@ -22,7 +22,10 @@ export function App() {
     fetchUserData()
       .then((user) => {
         setUser(user)
-        toast.success('Successfully login!', { id: 'login' })
+        toast.success('Successfully login!', {
+          id: 'login',
+          position: 'bottom-right'
+        })
       })
       .catch((err) => {
         console.log(err)
