@@ -21,12 +21,7 @@ import {
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
 
-import {
-  ButtonIconContainer,
-  Comment,
-  CommentInput,
-  UserLogo
-} from 'components/ui'
+import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
 import { type Post } from 'business/posts/usePost'
 import { type User } from 'business/user/useUser'
@@ -90,9 +85,10 @@ export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
           marginBottom={2}
           marginTop={3}
         >
-          <Text fontSize='xs'>449 Comments</Text>
-          <Text fontSize='xs'>59k Retweets</Text>
-          <Text fontSize='xs'>234 Saved</Text>
+          <Text fontSize='xs'>0 Comments</Text>
+          <Text fontSize='xs'>0 Retweets</Text>
+          <Text fontSize='xs'>0 Likes</Text>
+          <Text fontSize='xs'>0 Saved</Text>
         </Box>
         <Divider opacity={0.1} />
         <Box
@@ -102,25 +98,25 @@ export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
           height='50px'
           justifyContent='center'
         >
-          <ButtonIconContainer>
+          <ButtonIconContainer isDisabled>
             <Icon as={MdOutlineModeComment} boxSize={5} />
           </ButtonIconContainer>
-          <ButtonIconContainer isActive>
+          <ButtonIconContainer isActive isDisabled colorScheme='green'>
             <Icon as={MdLoop} boxSize={5} />
           </ButtonIconContainer>
-          <ButtonIconContainer>
+          <ButtonIconContainer isDisabled colorScheme='red'>
             <Icon as={MdFavoriteBorder} boxSize={5} />
           </ButtonIconContainer>
-          <ButtonIconContainer>
+          <ButtonIconContainer isDisabled colorScheme='cyan'>
             <Icon as={BsBookmark} boxSize={5} />
           </ButtonIconContainer>
         </Box>
       </Box>
       <Divider opacity={0.1} />
-      {true && <CommentInput />}
+      {/* {true && <CommentInput />}
       <Divider opacity={0.1} />
       <Comment />
-      <Comment />
+      <Comment /> */}
     </Box>
   )
 }
