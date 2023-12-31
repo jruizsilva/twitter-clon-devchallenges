@@ -28,8 +28,7 @@ export function ProfileEditPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-    setValue,
-    reset
+    setValue
   } = useForm<UpdateUserRequest>({
     mode: 'onBlur',
     defaultValues: {
