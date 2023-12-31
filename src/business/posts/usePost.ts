@@ -22,6 +22,9 @@ const usePost = () => {
       const post = response.data;
 
       return post
+    },
+    fetchDeletePostById: async (postId: string) => {
+      await protectedInstance.delete<Post>(`/posts/${postId}`);
     }
   }
 }

@@ -20,6 +20,7 @@ import {
   MdDelete
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
+import toast from 'react-hot-toast'
 
 import {
   ButtonIconContainer,
@@ -28,8 +29,9 @@ import {
   UserLogo
 } from 'components/ui'
 import { profileBackground } from 'assets'
-import { type Post } from 'business/posts/usePost'
+import { usePost, type Post } from 'business/posts/usePost'
 import { type User } from 'business/user/useUser'
+import { usePostsStore } from 'business/posts/usePostStore'
 
 interface Props {
   urlImage?: string
@@ -38,6 +40,20 @@ interface Props {
 }
 
 export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
+  const { fetchDeletePostById } = usePost()
+  const { deletePostById } = usePostsStore()
+  const handleDelete = (postId: number) => {
+    console.log('handleDelete')
+    fetchDeletePostById(postId.toString())
+      .then(() => {
+        deletePostById(postId)
+        toast.success('Post deleted')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
       <Box display='flex' gap={3} marginBottom={4}>
@@ -59,7 +75,12 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
               <MenuItem icon={<MdOutlineEdit fontSize={'16px'} />}>
                 Edit post
               </MenuItem>
-              <MenuItem icon={<MdDelete fontSize={'16px'} />}>
+              <MenuItem
+                icon={<MdDelete fontSize={'16px'} />}
+                onClick={() => {
+                  handleDelete(post.id)
+                }}
+              >
                 Delete post
               </MenuItem>
             </MenuList>
@@ -77,8 +98,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
             width='100%'
           />
         )}
-        {/* TODO agregar seccion comentarios */}
-        {/* <Box
+        <Box
           display='flex'
           gap={4}
           justifyContent='end'
@@ -89,9 +109,9 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           <Text fontSize='xs'>0 Retweets</Text>
           <Text fontSize='xs'>0 Likes</Text>
           <Text fontSize='xs'>0 Saved</Text>
-        </Box> */}
+        </Box>
         <Divider opacity={0.1} />
-        {/* <Box
+        <Box
           alignItems='center'
           columnGap='10px'
           display='flex'
@@ -110,7 +130,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           <ButtonIconContainer isDisabled colorScheme='cyan'>
             <Icon as={BsBookmark} boxSize={5} />
           </ButtonIconContainer>
-        </Box> */}
+        </Box>
       </Box>
       <Divider opacity={0.1} />
       {/* {true && <CommentInput />}

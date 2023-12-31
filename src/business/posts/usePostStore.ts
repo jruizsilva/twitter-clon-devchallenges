@@ -5,7 +5,8 @@ import { type Post } from "business/posts/usePost"
 interface PostsStore {
   posts: Post[] | null
   setPosts: (posts: Post[] | null) => void
-  addPost: (post: Post) => void
+  addPost: (post: Post) => void,
+  deletePostById: (postId: number) => void
 }
 
 export const usePostsStore = create<PostsStore>()((set) => ({
@@ -16,6 +17,12 @@ export const usePostsStore = create<PostsStore>()((set) => ({
   addPost: (post: Post) => {
     set((state) => ({
       posts: [post, ...(state.posts as Post[])]
+    })
+    )
+  },
+  deletePostById: (postId: number) => {
+    set((state) => ({
+      posts: state.posts?.filter(post => post.id !== postId)
     })
     )
   }
