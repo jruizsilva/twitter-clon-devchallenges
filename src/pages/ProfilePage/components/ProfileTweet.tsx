@@ -1,6 +1,25 @@
-import { Box, Divider, Heading, Icon, Image, Text } from '@chakra-ui/react'
-import { MdFavoriteBorder, MdLoop, MdOutlineModeComment } from 'react-icons/md'
+import {
+  Box,
+  Divider,
+  Heading,
+  Icon,
+  IconButton,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text
+} from '@chakra-ui/react'
 import { BsBookmark } from 'react-icons/bs'
+import {
+  MdOutlineModeComment,
+  MdLoop,
+  MdFavoriteBorder,
+  MdOutlineEdit,
+  MdDelete
+} from 'react-icons/md'
+import { TbDots } from 'react-icons/tb'
 
 import {
   ButtonIconContainer,
@@ -20,12 +39,36 @@ interface Props {
 
 export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
   return (
-    <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
+    <Box
+      backgroundColor='gray.700'
+      borderRadius='8px'
+      padding='16px'
+      position={'relative'}
+    >
       <Box display='flex' gap={3} marginBottom={4}>
         <UserLogo imageSize='40' />
-        <Box display='flex' flexDirection='column' rowGap={1}>
+        <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
           <Heading size='sm'>{author?.name}</Heading>
           <Text fontSize='xs'>{post.createdAt}</Text>
+        </Box>
+        <Box position={'absolute'} right={'8px'} top={'8px'}>
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              icon={<TbDots fontSize={'20px'} />}
+              rounded={'full'}
+              size={'sm'}
+              variant='ghost'
+            />
+            <MenuList>
+              <MenuItem icon={<MdOutlineEdit fontSize={'16px'} />}>
+                Edit post
+              </MenuItem>
+              <MenuItem icon={<MdDelete fontSize={'16px'} />}>
+                Delete post
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
       </Box>
       <Box>
@@ -40,7 +83,7 @@ export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
           />
         )}
         {/* TODO agregar seccion comentarios */}
-        {/* <Box
+        <Box
           display='flex'
           gap={4}
           justifyContent='end'
@@ -71,13 +114,13 @@ export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
           <ButtonIconContainer>
             <Icon as={BsBookmark} boxSize={5} />
           </ButtonIconContainer>
-        </Box> */}
+        </Box>
       </Box>
-      {/* <Divider opacity={0.1} />
+      <Divider opacity={0.1} />
       {true && <CommentInput />}
       <Divider opacity={0.1} />
       <Comment />
-      <Comment /> */}
+      <Comment />
     </Box>
   )
 }

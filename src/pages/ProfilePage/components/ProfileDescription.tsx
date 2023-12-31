@@ -35,9 +35,15 @@ export function ProfileDescription(props: Props) {
           md: calc('100%').subtract('172px').toString()
         }}
       >
-        <Heading size='lg' textAlign='center'>
-          {user?.name}
-        </Heading>
+        <Box>
+          <Heading display={'inline-block'} size='lg' textAlign='center'>
+            {user?.name}
+          </Heading>{' '}
+          <Text color={'gray.500'} display={'inline-block'} fontWeight={600}>
+            @{user?.username}
+          </Text>
+        </Box>
+
         <Box
           columnGap={5}
           display='flex'
