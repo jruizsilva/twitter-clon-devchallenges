@@ -29,9 +29,9 @@ export function MainRouter(props: Props) {
             <Route element={<LoginPage />} path='/login' />
             <Route element={<RegisterPage />} path='/register' />
           </Route>
-          <Route element={<HomePage />} path='/home' />
+          <Route element={<HomePage />} path='/' />
 
-          <Route element={<Navigate replace to='/home' />} path='*' />
+          <Route element={<Navigate replace to='/' />} path='*' />
         </Routes>
       </MainLayout>
     </BrowserRouter>

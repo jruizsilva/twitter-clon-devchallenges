@@ -42,7 +42,7 @@ export function Navbar(props: Props) {
       zIndex={'10'}
     >
       <HStack justifyContent='space-between'>
-        <HStack as={NavLink} to={'/home'}>
+        <HStack as={NavLink} to={''}>
           <Image alt='tweeter small' src={tweeterSmall} width='41px' />
           <Heading size='md'>Tweeter</Heading>
         </HStack>
@@ -54,8 +54,8 @@ export function Navbar(props: Props) {
           <Heading size='xs'>
             <Button
               as={NavLink}
-              isActive={pathname === '/home'}
-              to='/home'
+              isActive={pathname === '/'}
+              to='/'
               variant='link'
             >
               Home

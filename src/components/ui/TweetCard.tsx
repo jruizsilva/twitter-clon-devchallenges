@@ -21,7 +21,12 @@ import {
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
 
-import { ButtonIconContainer, UserLogo } from 'components/ui'
+import {
+  ButtonIconContainer,
+  Comment,
+  CommentInput,
+  UserLogo
+} from 'components/ui'
 import { profileBackground } from 'assets'
 import { type Post } from 'business/posts/usePost'
 import { type User } from 'business/user/useUser'
@@ -34,19 +39,14 @@ interface Props {
 
 export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
   return (
-    <Box
-      backgroundColor='gray.700'
-      borderRadius='8px'
-      padding='16px'
-      position={'relative'}
-    >
+    <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
       <Box display='flex' gap={3} marginBottom={4}>
         <UserLogo imageSize='40' />
         <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
           <Heading size='sm'>{author?.name}</Heading>
           <Text fontSize='xs'>{post.createdAt}</Text>
         </Box>
-        <Box position={'absolute'} right={'8px'} top={'8px'}>
+        <Box mr={'-8px'} mt={'-8px'}>
           <Menu>
             <MenuButton
               as={IconButton}
@@ -78,7 +78,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           />
         )}
         {/* TODO agregar seccion comentarios */}
-        <Box
+        {/* <Box
           display='flex'
           gap={4}
           justifyContent='end'
@@ -89,9 +89,9 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           <Text fontSize='xs'>0 Retweets</Text>
           <Text fontSize='xs'>0 Likes</Text>
           <Text fontSize='xs'>0 Saved</Text>
-        </Box>
+        </Box> */}
         <Divider opacity={0.1} />
-        <Box
+        {/* <Box
           alignItems='center'
           columnGap='10px'
           display='flex'
@@ -110,7 +110,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           <ButtonIconContainer isDisabled colorScheme='cyan'>
             <Icon as={BsBookmark} boxSize={5} />
           </ButtonIconContainer>
-        </Box>
+        </Box> */}
       </Box>
       <Divider opacity={0.1} />
       {/* {true && <CommentInput />}
