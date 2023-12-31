@@ -9,6 +9,10 @@ export interface Post {
   author: User;
 }
 
+export interface PostRequest {
+  content: string;
+}
+
 const usePost = () => {
   return {
     fetchAllPosts: async () => {
@@ -17,14 +21,20 @@ const usePost = () => {
 
       return posts
     },
-    fetchCreateOnePost: async (postRequest: Post) => {
+    fetchCreateOnePost: async (postRequest: PostRequest) => {
       const response = await protectedInstance.post<Post>("/posts", postRequest);
       const post = response.data;
 
       return post
     },
     fetchDeletePostById: async (postId: string) => {
-      await protectedInstance.delete<Post>(`/posts/${postId}`);
+      await protectedInstance.delete(`/posts/${postId}`);
+    },
+    fetchEditPost: async (postId: string, postRequest: PostRequest) => {
+      const response = await protectedInstance.put<Post>(`/posts/${postId}`, postRequest);
+      const postUpdated = response.data;
+
+      return postUpdated
     }
   }
 }
