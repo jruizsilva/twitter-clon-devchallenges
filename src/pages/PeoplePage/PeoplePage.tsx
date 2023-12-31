@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   InputGroup,
   Input,
@@ -6,13 +6,15 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  Box
+  Box,
+  Spinner,
+  Center
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { ListCardPeople, PeopleContainer } from './components'
 
-import { useUser } from 'business/user/useUser'
+import { type User, useUser } from 'business/user/useUser'
 import { useUserStore } from 'business/user/useUserStore'
 
 interface Props {}
@@ -22,26 +24,38 @@ interface FormValues {
 }
 
 export function PeoplePage(props: Props): JSX.Element {
-  const { fetchAllUsers } = useUser()
+  const { fetchAllUsers, fetchSearchUsersByUsernameOrName } = useUser()
   const { users, setUsers } = useUserStore()
+  const [searchResult, setSearchResult] = useState<User[] | null>(null)
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
-    getValues
+    formState: { errors, isValid, isSubmitting }
   } = useForm<FormValues>({ mode: 'onBlur' })
 
   useEffect(() => {
     fetchAllUsers()
       .then((users) => {
         setUsers(users)
+        setSearchResult(users)
       })
       .catch((err: any) => {
         console.log(err)
       })
   }, [])
   const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
-    console.log(formValues)
+    if (formValues.peapleToSearch.trim().length === 0) {
+      setSearchResult(users)
+
+      return
+    }
+    fetchSearchUsersByUsernameOrName(formValues.peapleToSearch)
+      .then((users) => {
+        setSearchResult(users)
+      })
+      .catch((err: any) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -67,7 +81,7 @@ export function PeoplePage(props: Props): JSX.Element {
             />
             <InputRightElement mr={'4px'} width='80px'>
               <Button
-                isDisabled={!isValid || getValues().peapleToSearch?.length < 2}
+                isDisabled={!isValid}
                 isLoading={isSubmitting}
                 type='submit'
               >
@@ -78,7 +92,13 @@ export function PeoplePage(props: Props): JSX.Element {
           <FormErrorMessage>{errors.peapleToSearch?.message}</FormErrorMessage>
         </FormControl>
       </Box>
-      <ListCardPeople users={users} />
+      {isSubmitting ? (
+        <Center>
+          <Spinner />
+        </Center>
+      ) : (
+        <ListCardPeople users={searchResult} />
+      )}
     </PeopleContainer>
   )
 }

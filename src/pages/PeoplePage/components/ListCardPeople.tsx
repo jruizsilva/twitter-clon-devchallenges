@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react'
 
 import { CardPeople } from './CardPeople'
 
@@ -19,6 +19,7 @@ export function ListCardPeople({ users }: Props): JSX.Element {
       pt='48px'
       width={'100%'}
     >
+      {users?.length === 0 && <Center>No se encontraron resultados</Center>}
       {users !== null &&
         users.length > 0 &&
         users.map((user) => <CardPeople key={user.id} user={user} />)}

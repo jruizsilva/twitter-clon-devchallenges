@@ -36,6 +36,12 @@ const useUser = () => {
       const users = response.data;
 
       return users
+    },
+    fetchSearchUsersByUsernameOrName: async (peopleToSearch: string) => {
+      const response = await protectedInstance.get<User[]>(`/users/search/${peopleToSearch}`)
+      const users = response.data
+
+      return users
     }
   }
 }
