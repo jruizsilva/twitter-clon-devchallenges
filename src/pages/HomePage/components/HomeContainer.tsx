@@ -11,6 +11,7 @@ export function HomeContainer({ children }: Props) {
       flexDirection='column'
       margin='auto'
       maxWidth='745px'
+      pb={'72px'}
       width={{ base: '95%' }}
     >
       {children}

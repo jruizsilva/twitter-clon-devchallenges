@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 
 import { CreatePost, HomeContainer } from './components'
 
-import { ProfileTweet } from 'pages/ProfilePage/components/ProfileTweet'
+import { TweetCard } from 'components/ui/TweetCard'
 import { usePost } from 'business/posts/usePost'
 import { usePostsStore } from 'business/posts/usePostStore'
 
@@ -35,7 +35,7 @@ export function HomePage(props: Props) {
         {posts !== null &&
           posts?.length > 0 &&
           posts.map((post) => (
-            <ProfileTweet key={post.id} author={post.author} post={post} />
+            <TweetCard key={post.id} author={post.author} post={post} />
           ))}
       </Box>
     </HomeContainer>

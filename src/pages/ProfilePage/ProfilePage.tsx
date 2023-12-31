@@ -4,7 +4,7 @@ import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileFilter } from './components/ProfileFilter'
-import { ProfileTweet } from './components/ProfileTweet'
+import { TweetCard } from '../../components/ui/TweetCard'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
 import { useAuthStore } from 'business/auth/useAuthStore'

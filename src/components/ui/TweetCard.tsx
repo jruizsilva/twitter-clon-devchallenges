@@ -32,7 +32,7 @@ interface Props {
   author: User | null
 }
 
-export function ProfileTweet({ urlImage, post, author }: Readonly<Props>) {
+export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
   return (
     <Box
       backgroundColor='gray.700'
