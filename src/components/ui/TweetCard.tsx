@@ -246,8 +246,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
             </Button>
             <Button
               onClick={() => {
-                onClose()
-                reset()
+                setValue('content', post.content)
               }}
             >
               Cancel
