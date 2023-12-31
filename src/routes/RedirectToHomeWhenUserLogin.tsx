@@ -5,5 +5,5 @@ import { useAuthStore } from 'business/auth/useAuthStore'
 export const RedirectToHomeWhenUserLogin = () => {
   const { user } = useAuthStore()
 
-  return user !== null ? <Navigate to='/home' /> : <Outlet />
+  return user !== null ? <Navigate to='/' /> : <Outlet />
 }
