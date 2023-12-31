@@ -12,6 +12,7 @@ import {
   Text
 } from '@chakra-ui/react'
 import { BsBookmark } from 'react-icons/bs'
+import Swal from 'sweetalert2'
 import {
   MdOutlineModeComment,
   MdLoop,
@@ -43,15 +44,26 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
   const { fetchDeletePostById } = usePost()
   const { deletePostById } = usePostsStore()
   const handleDelete = (postId: number) => {
-    console.log('handleDelete')
-    fetchDeletePostById(postId.toString())
-      .then(() => {
-        deletePostById(postId)
-        toast.success('Post deleted')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetchDeletePostById(postId.toString())
+          .then(() => {
+            deletePostById(postId)
+            toast.success('Post deleted')
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    })
   }
 
   return (
