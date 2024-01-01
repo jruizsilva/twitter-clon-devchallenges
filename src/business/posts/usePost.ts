@@ -7,6 +7,7 @@ export interface Post {
   content: string;
   createdAt: string;
   author: User;
+  usersLikes: Record<string, User>
 }
 
 export interface PostRequest {

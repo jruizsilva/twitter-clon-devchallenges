@@ -37,6 +37,7 @@ import {
 import { TbDots } from 'react-icons/tb'
 import toast from 'react-hot-toast'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import { useState } from 'react'
 
 import {
   ButtonIconContainer,
@@ -46,7 +47,7 @@ import {
 } from 'components/ui'
 import { profileBackground } from 'assets'
 import { usePost, type Post, type PostRequest } from 'business/posts/usePost'
-import { type User } from 'business/user/useUser'
+import { useUser, type User } from 'business/user/useUser'
 import { usePostsStore } from 'business/posts/usePostStore'
 
 interface Props {
@@ -57,20 +58,19 @@ interface Props {
 
 export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
   const { fetchDeletePostById, fetchEditPost } = usePost()
-  const { deletePostById, updatePostById, posts } = usePostsStore()
+  const { fetchToggleUserLikeByPostId } = useUser()
+  const { deletePostById, updatePostById } = usePostsStore()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isLoadingLike, setIsLoadingLike] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
-    setValue,
-    reset
+    setValue
   } = useForm<PostRequest>({
     mode: 'onBlur',
     defaultValues: { content: post?.content }
   })
-
-  console.log(posts)
 
   const handleDelete = (postId: number) => {
     Swal.fire({
@@ -112,6 +112,19 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
         toast.error(err.message)
       }
     }
+  }
+
+  const toggleUserLikeByPostId = (postId: string) => {
+    setIsLoadingLike(true)
+    fetchToggleUserLikeByPostId(postId)
+      .then((userUpdated: User) => {
+        setIsLoadingLike(false)
+        console.log(userUpdated)
+      })
+      .catch((err) => {
+        setIsLoadingLike(false)
+        console.log(err)
+      })
   }
 
   return (
@@ -173,7 +186,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           >
             <Text fontSize='xs'>0 Comments</Text>
             <Text fontSize='xs'>0 Retweets</Text>
-            <Text fontSize='xs'>0 Likes</Text>
+            <Text fontSize='xs'>{Object.keys(post.usersLikes)} Likes</Text>
             <Text fontSize='xs'>0 Saved</Text>
           </Box>
           <Divider opacity={0.1} />
@@ -190,7 +203,13 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
             <ButtonIconContainer isActive isDisabled colorScheme='green'>
               <Icon as={MdLoop} boxSize={5} />
             </ButtonIconContainer>
-            <ButtonIconContainer isDisabled colorScheme='red'>
+            <ButtonIconContainer
+              colorScheme='red'
+              isDisabled={isLoadingLike}
+              onClick={() => {
+                toggleUserLikeByPostId(post.id.toString())
+              }}
+            >
               <Icon as={MdFavoriteBorder} boxSize={5} />
             </ButtonIconContainer>
             <ButtonIconContainer isDisabled colorScheme='cyan'>

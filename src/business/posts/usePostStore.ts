@@ -37,5 +37,4 @@ export const usePostsStore = create<PostStore>()((set) => ({
     })
     )
   }
-
 }))

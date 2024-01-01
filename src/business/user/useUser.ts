@@ -8,6 +8,7 @@ export interface User {
   description: string;
   username: string
   posts: Post[];
+  postsLiked: Post[]
 }
 
 export interface UpdateUserRequest {
@@ -42,9 +43,16 @@ const useUser = () => {
       const users = response.data
 
       return users
+    },
+    fetchToggleUserLikeByPostId: async (postId: string) => {
+      const response = await protectedInstance.patch<User>(`/users/like?postId=${postId}`)
+      const users = response.data
+
+      return users
     }
   }
 }
+
 
 
 export { useUser }
