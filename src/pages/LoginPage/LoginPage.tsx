@@ -54,7 +54,7 @@ export function LoginPage() {
       reset()
     } catch (err: any) {
       const errorMessage =
-        err.response.data.message !== null
+        err?.response?.data?.message !== null
           ? err.response.data.message
           : err.message
 

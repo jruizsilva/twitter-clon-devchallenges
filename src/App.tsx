@@ -15,7 +15,7 @@ import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function App() {
   const { fetchUserData } = useUser()
-  const { setUser } = useAuthStore()
+  const { user, setUser } = useAuthStore()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -42,6 +42,31 @@ export function App() {
         localStorage.removeItem('AUTH_TOKEN')
       })
   }, [])
+
+  useEffect(() => {
+    if (user === null) return
+    const socket = new WebSocket('ws://localhost:8080/like') // Reemplaza con la URL correcta del servidor y el endpoint
+
+    socket.addEventListener('open', (event) => {
+      console.log('WebSocket connection opened:', event)
+    })
+
+    socket.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data)
+
+      console.log('Received message:', message)
+      // Procesa el mensaje según tus necesidades
+    })
+
+    socket.addEventListener('close', (event) => {
+      console.log('WebSocket connection closed:', event)
+    })
+
+    return () => {
+      // Cerrar la conexión cuando el componente se desmonta
+      socket.close()
+    }
+  }, [user])
 
   return (
     <ChakraProvider theme={theme}>

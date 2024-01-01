@@ -62,6 +62,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
   const { deletePostById, updatePostById } = usePostsStore()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoadingLike, setIsLoadingLike] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -186,7 +187,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
           >
             <Text fontSize='xs'>0 Comments</Text>
             <Text fontSize='xs'>0 Retweets</Text>
-            <Text fontSize='xs'>{Object.keys(post.usersLikes)} Likes</Text>
+            <Text fontSize='xs'>0 Likes</Text>
             <Text fontSize='xs'>0 Saved</Text>
           </Box>
           <Divider opacity={0.1} />
