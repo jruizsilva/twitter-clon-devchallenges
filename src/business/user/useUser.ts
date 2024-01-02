@@ -8,7 +8,6 @@ export interface User {
   description: string;
   username: string
   posts: Post[];
-  postsLiked: Post[]
 }
 
 export interface UpdateUserRequest {
@@ -40,12 +39,6 @@ const useUser = () => {
     },
     fetchSearchUsersByUsernameOrName: async (peopleToSearch: string) => {
       const response = await protectedInstance.get<User[]>(`/users/search/${peopleToSearch}`)
-      const users = response.data
-
-      return users
-    },
-    fetchToggleUserLikeByPostId: async (postId: string) => {
-      const response = await protectedInstance.patch<User>(`/users/like?postId=${postId}`)
       const users = response.data
 
       return users

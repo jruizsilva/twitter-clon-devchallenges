@@ -49,19 +49,44 @@ import { profileBackground } from 'assets'
 import { usePost, type Post, type PostRequest } from 'business/posts/usePost'
 import { useUser, type User } from 'business/user/useUser'
 import { usePostsStore } from 'business/posts/usePostStore'
+import { useUserStore } from 'business/user/useUserStore'
+import { useAuthStore } from 'business/auth/useAuthStore'
 
 interface Props {
   urlImage?: string
   post: Post
   author: User | null
+  showOptionsMenu: boolean
 }
 
-export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
-  const { fetchDeletePostById, fetchEditPost } = usePost()
-  const { fetchToggleUserLikeByPostId } = useUser()
+const verifyIfPostIsAlreadyLiked = (
+  post: Post,
+  userAuthenticated: User | null
+) => {
+  if (post?.likes?.length === 0) {
+    return false
+  }
+
+  return post.likes?.some((el) => el.id === userAuthenticated?.id)
+}
+
+export function TweetCard({
+  urlImage,
+  post,
+  author,
+  showOptionsMenu
+}: Readonly<Props>) {
+  const {
+    fetchDeletePostById,
+    fetchEditPost,
+    fetchAddLikeToPost,
+    fetchRemoveLikeToPost
+  } = usePost()
   const { deletePostById, updatePostById } = usePostsStore()
+  const { user } = useAuthStore()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoadingLike, setIsLoadingLike] = useState(false)
+  const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
 
   const {
     register,
@@ -96,7 +121,7 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
     })
   }
 
-  const onSubmit: SubmitHandler<PostRequest> = async (
+  const handleEdit: SubmitHandler<PostRequest> = async (
     postRequest: PostRequest
   ) => {
     try {
@@ -115,17 +140,34 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
     }
   }
 
-  const toggleUserLikeByPostId = (postId: string) => {
+  const handleLike = () => {
     setIsLoadingLike(true)
-    fetchToggleUserLikeByPostId(postId)
-      .then((userUpdated: User) => {
-        setIsLoadingLike(false)
-        console.log(userUpdated)
-      })
-      .catch((err) => {
-        setIsLoadingLike(false)
-        console.log(err)
-      })
+    if (isLiked) {
+      fetchRemoveLikeToPost(post.id.toString())
+        .then((postUpdated) => {
+          console.log(postUpdated)
+          updatePostById(post.id, postUpdated)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          setIsLoadingLike(false)
+        })
+    } else {
+      fetchAddLikeToPost(post.id.toString())
+        .then((postUpdated) => {
+          console.log(postUpdated)
+          updatePostById(post.id, postUpdated)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          setIsLoadingLike(false)
+        })
+    }
+    setIsLiked(!isLiked)
   }
 
   return (
@@ -137,35 +179,38 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
             <Heading size='sm'>{author?.name}</Heading>
             <Text fontSize='xs'>{post.createdAt}</Text>
           </Box>
-          <Box mr={'-8px'} mt={'-8px'}>
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                icon={<TbDots fontSize={'20px'} />}
-                rounded={'full'}
-                size={'sm'}
-                variant='ghost'
-              />
-              <MenuList>
-                <MenuItem
-                  icon={<MdOutlineEdit fontSize={'16px'} />}
-                  onClick={() => {
-                    onOpen()
-                  }}
-                >
-                  Edit post
-                </MenuItem>
-                <MenuItem
-                  icon={<MdDelete fontSize={'16px'} />}
-                  onClick={() => {
-                    handleDelete(post.id)
-                  }}
-                >
-                  Delete post
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
+          {showOptionsMenu && author?.id === user?.id && (
+            <Box mr={'-8px'} mt={'-8px'}>
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  icon={<TbDots fontSize={'20px'} />}
+                  isDisabled={isLoadingLike}
+                  rounded={'full'}
+                  size={'sm'}
+                  variant='ghost'
+                />
+                <MenuList>
+                  <MenuItem
+                    icon={<MdOutlineEdit fontSize={'16px'} />}
+                    onClick={() => {
+                      onOpen()
+                    }}
+                  >
+                    Edit post
+                  </MenuItem>
+                  <MenuItem
+                    icon={<MdDelete fontSize={'16px'} />}
+                    onClick={() => {
+                      handleDelete(post.id)
+                    }}
+                  >
+                    Delete post
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
+          )}
         </Box>
         <Box>
           <Text marginBottom='8px'>{post.content}</Text>
@@ -178,102 +223,108 @@ export function TweetCard({ urlImage, post, author }: Readonly<Props>) {
               width='100%'
             />
           )}
-          <Box
-            display='flex'
-            gap={4}
-            justifyContent='end'
-            marginBottom={2}
-            marginTop={3}
-          >
-            <Text fontSize='xs'>0 Comments</Text>
-            <Text fontSize='xs'>0 Retweets</Text>
-            <Text fontSize='xs'>0 Likes</Text>
-            <Text fontSize='xs'>0 Saved</Text>
-          </Box>
-          <Divider opacity={0.1} />
-          <Box
-            alignItems='center'
-            columnGap='10px'
-            display='flex'
-            height='50px'
-            justifyContent='center'
-          >
-            <ButtonIconContainer isDisabled>
-              <Icon as={MdOutlineModeComment} boxSize={5} />
-            </ButtonIconContainer>
-            <ButtonIconContainer isActive isDisabled colorScheme='green'>
-              <Icon as={MdLoop} boxSize={5} />
-            </ButtonIconContainer>
-            <ButtonIconContainer
-              colorScheme='red'
-              isDisabled={isLoadingLike}
-              onClick={() => {
-                toggleUserLikeByPostId(post.id.toString())
-              }}
-            >
-              <Icon as={MdFavoriteBorder} boxSize={5} />
-            </ButtonIconContainer>
-            <ButtonIconContainer isDisabled colorScheme='cyan'>
-              <Icon as={BsBookmark} boxSize={5} />
-            </ButtonIconContainer>
-          </Box>
+          {user !== null && (
+            <>
+              <Box
+                display='flex'
+                gap={4}
+                justifyContent='end'
+                marginBottom={2}
+                marginTop={3}
+              >
+                <Text fontSize='xs'>0 Comments</Text>
+                <Text fontSize='xs'>0 Retweets</Text>
+                <Text fontSize='xs'>{post?.likes?.length} Likes</Text>
+                <Text fontSize='xs'>0 Saved</Text>
+              </Box>
+              <Divider opacity={0.1} />
+              <Box
+                alignItems='center'
+                columnGap='10px'
+                display='flex'
+                height='50px'
+                justifyContent='center'
+              >
+                <ButtonIconContainer isDisabled>
+                  <Icon as={MdOutlineModeComment} boxSize={5} />
+                </ButtonIconContainer>
+                <ButtonIconContainer isDisabled colorScheme='green'>
+                  <Icon as={MdLoop} boxSize={5} />
+                </ButtonIconContainer>
+                <ButtonIconContainer
+                  colorScheme='red'
+                  isActive={isLiked}
+                  onClick={() => {
+                    handleLike()
+                  }}
+                >
+                  <Icon as={MdFavoriteBorder} boxSize={5} />
+                </ButtonIconContainer>
+                <ButtonIconContainer isDisabled colorScheme='cyan'>
+                  <Icon as={BsBookmark} boxSize={5} />
+                </ButtonIconContainer>
+              </Box>
+            </>
+          )}
         </Box>
-        <Divider opacity={0.1} />
+        {/* <Divider opacity={0.1} /> */}
         {/* {true && <CommentInput />}
       <Divider opacity={0.1} />
       <Comment />
       <Comment /> */}
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent as={'form'} onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader>Edit Post</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl
-              isRequired
-              id='content'
-              isInvalid={Boolean(errors.content)}
-            >
-              <FormLabel>Content</FormLabel>
-              <Textarea
-                placeholder='What’s happening?'
-                resize='vertical'
-                {...register('content', {
-                  required: {
-                    value: true,
-                    message: 'el tweet no debe estar vacio'
-                  },
-                  minLength: {
-                    value: 4,
-                    message: 'el tweet debe tener 4 o mas caracteres'
-                  }
-                })}
-              />
-              <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
-            </FormControl>
-          </ModalBody>
+      {showOptionsMenu && (
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent as={'form'} onSubmit={handleSubmit(handleEdit)}>
+            <ModalHeader>Edit Post</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl
+                isRequired
+                id='content'
+                isInvalid={Boolean(errors.content)}
+              >
+                <FormLabel>Content</FormLabel>
+                <Textarea
+                  placeholder='What’s happening?'
+                  resize='vertical'
+                  {...register('content', {
+                    required: {
+                      value: true,
+                      message: 'el tweet no debe estar vacio'
+                    },
+                    minLength: {
+                      value: 4,
+                      message: 'el tweet debe tener 4 o mas caracteres'
+                    }
+                  })}
+                />
+                <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
+              </FormControl>
+            </ModalBody>
 
-          <ModalFooter>
-            <Button
-              colorScheme='blue'
-              isDisabled={!isValid}
-              isLoading={isSubmitting}
-              mr={3}
-              type='submit'
-            >
-              Save
-            </Button>
-            <Button
-              onClick={() => {
-                setValue('content', post.content)
-              }}
-            >
-              Cancel
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <ModalFooter>
+              <Button
+                colorScheme='blue'
+                isDisabled={!isValid}
+                isLoading={isSubmitting}
+                mr={3}
+                type='submit'
+              >
+                Save
+              </Button>
+              <Button
+                onClick={() => {
+                  setValue('content', post.content)
+                }}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      )}
     </>
   )
 }

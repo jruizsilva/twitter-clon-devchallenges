@@ -7,7 +7,7 @@ export interface Post {
   content: string;
   createdAt: string;
   author: User;
-  usersLikes: Record<string, User>
+  likes: User[]
 }
 
 export interface PostRequest {
@@ -36,6 +36,24 @@ const usePost = () => {
       const postUpdated = response.data;
 
       return postUpdated
+    },
+    fetchAddLikeToPost: async (postId: string) => {
+      const response = await protectedInstance.patch<Post>(`/posts/${postId}/like`);
+      const postUpdated = response.data;
+
+      return postUpdated
+    },
+    fetchRemoveLikeToPost: async (postId: string) => {
+      const response = await protectedInstance.patch<Post>(`/posts/${postId}/removeLike`);
+      const postUpdated = response.data;
+
+      return postUpdated
+    },
+    fetchAllPostOfCurrentUser: async () => {
+      const response = await protectedInstance.get<Post[]>(`/posts/user`);
+      const posts = response.data;
+
+      return posts
     }
   }
 }

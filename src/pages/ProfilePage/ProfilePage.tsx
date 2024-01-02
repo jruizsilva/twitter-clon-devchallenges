@@ -1,18 +1,34 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Center, Text } from '@chakra-ui/react'
+import { useEffect } from 'react'
 
 import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileFilter } from './components/ProfileFilter'
-import { TweetCard } from '../../components/ui/TweetCard'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
 import { useAuthStore } from 'business/auth/useAuthStore'
+import { usePostsStore } from 'business/posts/usePostStore'
+import { usePost } from 'business/posts/usePost'
+import { CreatePost } from 'components/ui/CreatePost'
 
 interface Props {}
 
 export function ProfilePage(props: Props) {
   const { user } = useAuthStore()
+  const { fetchAllPostOfCurrentUser } = usePost()
+  const { userPosts, setUserPosts } = usePostsStore()
+
+  useEffect(() => {
+    fetchAllPostOfCurrentUser()
+      .then((userPosts) => {
+        console.log(userPosts)
+        setUserPosts(userPosts)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
 
   return (
     <ProfileLayout>
@@ -38,7 +54,14 @@ export function ProfilePage(props: Props) {
           marginTop={{ base: '-30px' }}
         >
           <ProfileFilter />
-          <ProfileTweetList author={user} posts={user?.posts} />
+
+          {userPosts?.length === 0 ? (
+            <Box w={'full'}>
+              <Center>No se encontraron posts que mostrar</Center>
+            </Box>
+          ) : (
+            <ProfileTweetList author={user} posts={userPosts} />
+          )}
         </Box>
       </ProfileContainer>
     </ProfileLayout>
