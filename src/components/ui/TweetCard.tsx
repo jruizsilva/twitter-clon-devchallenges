@@ -38,6 +38,7 @@ import { TbDots } from 'react-icons/tb'
 import toast from 'react-hot-toast'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import {
   ButtonIconContainer,
@@ -249,12 +250,11 @@ export function TweetCard({
                 </ButtonIconContainer>
                 <ButtonIconContainer
                   colorScheme='red'
-                  isActive={isLiked}
                   onClick={() => {
                     handleLike()
                   }}
                 >
-                  <Icon as={MdFavoriteBorder} boxSize={5} />
+                  <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />
                 </ButtonIconContainer>
                 <ButtonIconContainer isDisabled colorScheme='cyan'>
                   <Icon as={BsBookmark} boxSize={5} />

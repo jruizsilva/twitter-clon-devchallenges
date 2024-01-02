@@ -1,4 +1,4 @@
-import { Box, Center, Text } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
 import { ProfileDescription, ProfileImage } from './components'
@@ -10,7 +10,6 @@ import { ProfileTweetList } from './components/ProfileTweetList'
 import { useAuthStore } from 'business/auth/useAuthStore'
 import { usePostsStore } from 'business/posts/usePostStore'
 import { usePost } from 'business/posts/usePost'
-import { CreatePost } from 'components/ui/CreatePost'
 
 interface Props {}
 
