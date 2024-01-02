@@ -57,7 +57,7 @@ export function ProfileEditPage() {
           : err.message
 
       toast.error(errorMessage)
-      console.log(err)
+      console.error(err)
     }
   }
   const onCancel = () => {

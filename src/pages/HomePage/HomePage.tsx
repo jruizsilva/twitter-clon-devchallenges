@@ -21,7 +21,7 @@ export function HomePage(props: Props) {
         setLoading(false)
       })
       .catch((err) => {
-        console.log(err)
+        console.error(err)
         setLoading(false)
       })
   }, [])

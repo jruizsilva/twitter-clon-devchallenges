@@ -38,7 +38,7 @@ export function App() {
       })
       .catch((err) => {
         setLoading(false)
-        console.log(err)
+        console.error(err)
         localStorage.removeItem('AUTH_TOKEN')
       })
   }, [])

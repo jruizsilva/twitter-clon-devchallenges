@@ -26,7 +26,6 @@ const useUser = () => {
     updateUser: async (updateUserRequest: UpdateUserRequest) => {
       const response = await protectedInstance.patch<User>("/users", updateUserRequest)
 
-      console.log(response)
       const userUpdated = response.data;
 
       return userUpdated

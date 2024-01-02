@@ -60,7 +60,7 @@ export function LoginPage() {
 
       toast.error(errorMessage)
       localStorage.removeItem('AUTH_TOKEN')
-      console.log(err)
+      console.error(err)
     }
   }
 

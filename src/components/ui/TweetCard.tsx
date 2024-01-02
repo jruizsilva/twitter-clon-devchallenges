@@ -115,7 +115,7 @@ export function TweetCard({
             toast.success('Post deleted')
           })
           .catch((err) => {
-            console.log(err)
+            console.error(err)
           })
       }
     })
@@ -126,8 +126,6 @@ export function TweetCard({
   ) => {
     try {
       const postUpdated = await fetchEditPost(post.id.toString(), postRequest)
-
-      console.log(postUpdated)
 
       updatePostById(post.id, postUpdated)
 
@@ -145,11 +143,10 @@ export function TweetCard({
     if (isLiked) {
       fetchRemoveLikeToPost(post.id.toString())
         .then((postUpdated) => {
-          console.log(postUpdated)
           updatePostById(post.id, postUpdated)
         })
         .catch((err) => {
-          console.log(err)
+          console.error(err)
         })
         .finally(() => {
           setIsLoadingLike(false)
@@ -157,11 +154,10 @@ export function TweetCard({
     } else {
       fetchAddLikeToPost(post.id.toString())
         .then((postUpdated) => {
-          console.log(postUpdated)
           updatePostById(post.id, postUpdated)
         })
         .catch((err) => {
-          console.log(err)
+          console.error(err)
         })
         .finally(() => {
           setIsLoadingLike(false)

@@ -40,7 +40,7 @@ export function PeoplePage(props: Props): JSX.Element {
         setSearchResult(users)
       })
       .catch((err: any) => {
-        console.log(err)
+        console.error(err)
       })
   }, [])
   const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
@@ -54,7 +54,7 @@ export function PeoplePage(props: Props): JSX.Element {
         setSearchResult(users)
       })
       .catch((err: any) => {
-        console.log(err)
+        console.error(err)
       })
   }
 

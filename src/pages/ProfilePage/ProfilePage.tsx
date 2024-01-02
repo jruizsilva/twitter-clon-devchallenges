@@ -22,11 +22,10 @@ export function ProfilePage(props: Props) {
   useEffect(() => {
     fetchAllPostOfCurrentUser()
       .then((userPosts) => {
-        console.log(userPosts)
         setUserPosts(userPosts)
       })
       .catch((err) => {
-        console.log(err)
+        console.error(err)
       })
   }, [])
 
@@ -57,7 +56,7 @@ export function ProfilePage(props: Props) {
 
           {userPosts?.length === 0 ? (
             <Box w={'full'}>
-              <Center>No se encontraron posts que mostrar</Center>
+              <Center>No se encontraron posts</Center>
             </Box>
           ) : (
             <ProfileTweetList author={user} posts={userPosts} />

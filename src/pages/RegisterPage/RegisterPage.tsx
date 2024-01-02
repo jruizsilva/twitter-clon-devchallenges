@@ -54,7 +54,7 @@ export function RegisterPage() {
     } catch (err: any) {
       toast.error(err.response.data.message)
       localStorage.removeItem('AUTH_TOKEN')
-      console.log(err)
+      console.error(err)
     }
   }
 
