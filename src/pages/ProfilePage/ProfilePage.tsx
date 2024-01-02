@@ -33,7 +33,7 @@ export function ProfilePage(props: Props) {
       .catch((err) => {
         console.error(err)
       })
-  }, [])
+  }, [fetchAllPostOfCurrentUser, setUserPosts])
 
   return (
     <ProfileLayout>

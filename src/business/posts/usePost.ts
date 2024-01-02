@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { type User } from '../user/useUser';
 
 import { protectedInstance, publicInstance } from 'business/api/axiosInstances';
@@ -16,12 +18,12 @@ export interface PostRequest {
 
 const usePost = () => {
   return {
-    fetchAllPosts: async () => {
+    fetchAllPosts: useCallback(async () => {
       const response = await publicInstance.get<Post[]>("/posts");
       const posts = response.data;
 
       return posts
-    },
+    }, []),
     fetchCreateOnePost: async (postRequest: PostRequest) => {
       const response = await protectedInstance.post<Post>("/posts", postRequest);
       const post = response.data;
@@ -49,12 +51,12 @@ const usePost = () => {
 
       return postUpdated
     },
-    fetchAllPostOfCurrentUser: async () => {
+    fetchAllPostOfCurrentUser: useCallback(async () => {
       const response = await protectedInstance.get<Post[]>(`/posts/user`);
       const posts = response.data;
 
       return posts
-    }
+    }, [])
   }
 }
 

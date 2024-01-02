@@ -42,7 +42,7 @@ export function PeoplePage(props: Props): JSX.Element {
       .catch((err: any) => {
         console.error(err)
       })
-  }, [])
+  }, [fetchAllUsers, setUsers, setSearchResult])
   const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
     if (formValues.peapleToSearch.trim().length === 0) {
       setSearchResult(users)

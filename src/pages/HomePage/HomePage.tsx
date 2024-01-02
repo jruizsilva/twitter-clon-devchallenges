@@ -24,7 +24,7 @@ export function HomePage(props: Props) {
         console.error(err)
         setLoading(false)
       })
-  }, [])
+  }, [fetchAllPosts, setPosts, setLoading])
 
   return (
     <HomeContainer>

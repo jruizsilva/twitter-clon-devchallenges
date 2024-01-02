@@ -15,7 +15,7 @@ import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function App() {
   const { fetchUserData } = useUser()
-  const { user, setUser } = useAuthStore()
+  const { setUser } = useAuthStore()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export function App() {
         console.error(err)
         localStorage.removeItem('AUTH_TOKEN')
       })
-  }, [])
+  }, [fetchUserData, setUser, setLoading])
 
   return (
     <ChakraProvider theme={theme}>

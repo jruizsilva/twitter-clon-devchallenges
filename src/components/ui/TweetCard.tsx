@@ -9,7 +9,6 @@ import {
   Icon,
   IconButton,
   Image,
-  Input,
   Menu,
   MenuButton,
   MenuItem,
@@ -30,7 +29,6 @@ import Swal from 'sweetalert2'
 import {
   MdOutlineModeComment,
   MdLoop,
-  MdFavoriteBorder,
   MdOutlineEdit,
   MdDelete
 } from 'react-icons/md'
@@ -40,17 +38,11 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
-import {
-  ButtonIconContainer,
-  Comment,
-  CommentInput,
-  UserLogo
-} from 'components/ui'
+import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
 import { usePost, type Post, type PostRequest } from 'business/posts/usePost'
-import { useUser, type User } from 'business/user/useUser'
+import { type User } from 'business/user/useUser'
 import { usePostsStore } from 'business/posts/usePostStore'
-import { useUserStore } from 'business/user/useUserStore'
 import { useAuthStore } from 'business/auth/useAuthStore'
 
 interface Props {
