@@ -27,6 +27,7 @@ export function CreatePost(props: Props) {
   const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<Post> = async (post: Post) => {
+    console.log(post)
     try {
       const postCreated = await fetchCreateOnePost(post)
 
@@ -69,13 +70,9 @@ export function CreatePost(props: Props) {
             resize='vertical'
             variant='unstyled'
             {...register('content', {
-              required: {
-                value: true,
-                message: 'el tweet no debe estar vacio'
-              },
               minLength: {
                 value: 4,
-                message: 'el tweet debe tener 4 o mas caracteres'
+                message: 'El tweet debe tener 4 o mas caracteres'
               }
             })}
           />

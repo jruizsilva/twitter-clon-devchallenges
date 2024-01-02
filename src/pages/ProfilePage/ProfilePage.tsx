@@ -1,10 +1,17 @@
-import { Box, Center } from '@chakra-ui/react'
+import {
+  Box,
+  Center,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs
+} from '@chakra-ui/react'
 import { useEffect } from 'react'
 
 import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
-import { ProfileFilter } from './components/ProfileFilter'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
 import { useAuthStore } from 'business/auth/useAuthStore'
@@ -43,24 +50,35 @@ export function ProfilePage(props: Props) {
           <ProfileImage />
           <ProfileDescription />
         </Box>
-        <Box
-          alignItems='start'
-          display='flex'
-          flexDirection={{ base: 'column', md: 'row' }}
-          gap={4}
-          justifyContent='space-between'
-          marginTop={{ base: '-30px' }}
-        >
-          <ProfileFilter />
-
-          {userPosts?.length === 0 ? (
-            <Box w={'full'}>
-              <Center>No se encontraron posts</Center>
-            </Box>
-          ) : (
-            <ProfileTweetList author={user} posts={userPosts} />
-          )}
-        </Box>
+        <Tabs isFitted isLazy size={'md'}>
+          <TabList mb='42px'>
+            <Tab>Tweets</Tab>
+            <Tab>Likes</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Box
+                alignItems='start'
+                display='flex'
+                flexDirection={{ base: 'column', md: 'row' }}
+                gap={4}
+                justifyContent='space-between'
+                marginTop={{ base: '-30px' }}
+              >
+                {userPosts?.length === 0 ? (
+                  <Box w={'full'}>
+                    <Center>No se encontraron posts</Center>
+                  </Box>
+                ) : (
+                  <ProfileTweetList author={user} posts={userPosts} />
+                )}
+              </Box>
+            </TabPanel>
+            <TabPanel>
+              <p>likes</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </ProfileContainer>
     </ProfileLayout>
   )
