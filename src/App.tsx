@@ -23,7 +23,6 @@ export function App() {
       .then((data) => {
         if (data !== undefined) {
           setUser(data)
-          console.log('Datos obtenidos:', data)
           toast.success('Successfully login!', {
             id: 'login',
             position: 'bottom-right'

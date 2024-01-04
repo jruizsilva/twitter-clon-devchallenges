@@ -134,10 +134,11 @@ export function TweetCard({
     if (isLiked) {
       fetchRemoveLikeToPost(post.id.toString())
         .then((postUpdated) => {
+          console.log('RemoveLikeToPost', postUpdated)
           updatePostById(post.id, postUpdated)
         })
         .catch((err) => {
-          console.error(err)
+          console.dir(err)
         })
         .finally(() => {
           setIsLoadingLike(false)
@@ -145,6 +146,7 @@ export function TweetCard({
     } else {
       fetchAddLikeToPost(post.id.toString())
         .then((postUpdated) => {
+          console.log('AddLikeToPost', postUpdated)
           updatePostById(post.id, postUpdated)
         })
         .catch((err) => {
@@ -221,7 +223,7 @@ export function TweetCard({
               >
                 <Text fontSize='xs'>0 Comments</Text>
                 <Text fontSize='xs'>0 Retweets</Text>
-                <Text fontSize='xs'>{post?.likes?.length} Likes</Text>
+                <Text fontSize='xs'>{post.likes?.length} Likes</Text>
                 <Text fontSize='xs'>0 Saved</Text>
               </Box>
               <Divider opacity={0.1} />

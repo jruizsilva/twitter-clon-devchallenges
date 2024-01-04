@@ -48,11 +48,12 @@ export const usePostsStore = create<PostStore>((set) => ({
           ? post
           : postUpdated
       ),
-      userPosts: state.posts?.map(post =>
+      userPosts: state.userPosts?.map(post =>
         post.id !== postId
           ? post
           : postUpdated
-      ), isFetching: false
+      ),
+      isFetching: false
     })
     )
   }

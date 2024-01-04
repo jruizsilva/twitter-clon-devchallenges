@@ -19,12 +19,7 @@ export function ProfileTweetList({
       {posts != null &&
         posts.length > 0 &&
         posts.map((post) => (
-          <TweetCard
-            key={post.id}
-            showOptionsMenu
-            author={author}
-            post={post}
-          />
+          <TweetCard key={post.id} showOptionsMenu post={post} />
         ))}
     </Box>
   )
