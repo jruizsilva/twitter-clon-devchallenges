@@ -12,7 +12,7 @@ protectedInstance.interceptors.request.use(
     const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
 
     if (AUTH_TOKEN === null) {
-      throw new Error('Sign in before')
+      throw new Error('Token expired')
     }
 
     config.headers.Authorization = 'Bearer ' + AUTH_TOKEN

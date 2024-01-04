@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { devtools } from "zustand/middleware"
 
 import { type User } from "./useUser"
 
@@ -7,18 +8,22 @@ import { type Post } from "business/posts/usePost"
 
 interface UserStore {
   users: User[] | null
+  postsLiked: Post[] | null,
+  searchUserResult: User[] | null
   setUsers: (users: User[] | null) => void
   addUser: (user: User) => void,
-  postsLiked: Post[] | null,
   setPostsLiked: (posts: Post[] | null) => void
-  searchUserResult: User[] | null
   setSearchUserResult: (searchUserResult: User[] | null) => void
 }
 
-export const useUserStore = create<UserStore>()((set) => ({
+const initialState = {
   users: null,
   postsLiked: null,
-  searchUserResult: null,
+  searchUserResult: null
+}
+
+export const useUserStore = create(devtools<UserStore>(((set) => ({
+  ...initialState,
   setUsers: (users: User[] | null) => {
     set(() => ({ users, searchUserResult: users }))
   },
@@ -35,4 +40,4 @@ export const useUserStore = create<UserStore>()((set) => ({
     set(() => ({ postsLiked }))
   },
 
-}))
+}))))

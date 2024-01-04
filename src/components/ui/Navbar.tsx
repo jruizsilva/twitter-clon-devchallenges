@@ -51,27 +51,31 @@ export function Navbar(props: Props) {
           display={{ base: 'none', md: 'flex' }}
           spacing={{ base: '0', md: '32px', lg: '64px', xl: '80px' }}
         >
-          <Heading size='xs'>
-            <Button
-              as={NavLink}
-              isActive={pathname === '/'}
-              to='/'
-              variant='link'
-            >
-              Home
-            </Button>
-          </Heading>
+          {user !== null && (
+            <>
+              <Heading size='xs'>
+                <Button
+                  as={NavLink}
+                  isActive={pathname === '/'}
+                  to='/'
+                  variant='link'
+                >
+                  Home
+                </Button>
+              </Heading>
 
-          <Heading size='xs'>
-            <Button
-              as={NavLink}
-              isActive={pathname === '/people'}
-              to='/people'
-              variant='link'
-            >
-              People
-            </Button>
-          </Heading>
+              <Heading size='xs'>
+                <Button
+                  as={NavLink}
+                  isActive={pathname === '/people'}
+                  to='/people'
+                  variant='link'
+                >
+                  People
+                </Button>
+              </Heading>
+            </>
+          )}
         </HStack>
 
         <Box display={'flex'}>

@@ -24,12 +24,12 @@ export function MainRouter(props: Props) {
             <Route element={<ProfilePage />} path='/profile' />
             <Route element={<ProfileEditPage />} path='/profile/edit' />
             <Route element={<PeoplePage />} path='/people' />
+            <Route element={<HomePage />} path='/' />
           </Route>
           <Route element={<RedirectToHomeWhenUserLogin />}>
             <Route element={<LoginPage />} path='/login' />
             <Route element={<RegisterPage />} path='/register' />
           </Route>
-          <Route element={<HomePage />} path='/' />
 
           <Route element={<Navigate replace to='/' />} path='*' />
         </Routes>

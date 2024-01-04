@@ -14,7 +14,7 @@ interface PostStore {
   updatePostById: (postId: number, postUpdated: Post) => void
 }
 
-export const usePostsStore = create<PostStore>()((set) => ({
+export const usePostsStore = create<PostStore>((set) => ({
   posts: null,
   userPosts: null,
   isFetching: true,

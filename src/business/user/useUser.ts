@@ -22,12 +22,12 @@ export interface UpdateUserRequest {
 
 const useUser = () => {
   return {
-    fetchUserData: async () => {
+    fetchUserData: useCallback(async () => {
       const response = await protectedInstance.get<User>("/users/profile")
       const user = response.data;
 
       return user
-    },
+    }, []),
     updateUser: async (updateUserRequest: UpdateUserRequest) => {
       const response = await protectedInstance.patch<User>("/users", updateUserRequest)
 
