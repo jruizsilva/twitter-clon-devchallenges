@@ -15,14 +15,12 @@ import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
-import { useAuthStore } from 'business/auth/useAuthStore'
 import { usePostsStore } from 'business/posts/usePostStore'
 import { usePost } from 'business/posts/usePost'
 
 interface Props {}
 
 export function ProfilePage(props: Props) {
-  const { user } = useAuthStore()
   const { fetchAllPostOfCurrentUser } = usePost()
   const { userPosts, setUserPosts, setIsFetching, isFetching } = usePostsStore()
 
@@ -81,7 +79,7 @@ export function ProfilePage(props: Props) {
                       <Center>No se encontraron posts</Center>
                     </Box>
                   ) : (
-                    <ProfileTweetList author={user} posts={userPosts} />
+                    <ProfileTweetList posts={userPosts} />
                   )}
                 </Box>
               </TabPanel>
