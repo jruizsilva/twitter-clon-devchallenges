@@ -13,8 +13,6 @@ export function HomePage(props: Props) {
   const { fetchAllPosts } = usePost()
   const { posts, setPosts, isFetching } = usePostsStore()
 
-  console.log(posts)
-
   useEffect(() => {
     fetchAllPosts()
       .then((postsData) => {

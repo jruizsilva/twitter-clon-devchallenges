@@ -15,9 +15,7 @@ import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function App() {
   const { fetchUserData } = useUser()
-  const { setUser, user, isFetching, setIsFetching } = useAuthStore()
-
-  console.log(user)
+  const { setUser, isFetching, setIsFetching } = useAuthStore()
 
   useEffect(() => {
     const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')

@@ -33,8 +33,6 @@ export function PeoplePage(props: Props): JSX.Element {
     formState: { errors, isValid, isSubmitting }
   } = useForm<SearchUserRequest>({ mode: 'onBlur' })
 
-  console.log(searchUserResult)
-
   useEffect(() => {
     fetchAllUsers()
       .then((users) => {
