@@ -41,14 +41,13 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
 import { usePost, type Post, type PostRequest } from 'business/posts/usePost'
-import { type User } from 'business/user/useUser'
+import { type UserWithOutChildren, type User } from 'business/user/useUser'
 import { usePostsStore } from 'business/posts/usePostStore'
 import { useAuthStore } from 'business/auth/useAuthStore'
 
 interface Props {
   urlImage?: string
   post: Post
-  author: User | null
   showOptionsMenu: boolean
 }
 
@@ -60,13 +59,12 @@ const verifyIfPostIsAlreadyLiked = (
     return false
   }
 
-  return post.likes?.some((el) => el.id === userAuthenticated?.id)
+  return post.likes?.some((el) => el.user.id === userAuthenticated?.id)
 }
 
 export function TweetCard({
   urlImage,
   post,
-  author,
   showOptionsMenu
 }: Readonly<Props>) {
   const {
@@ -165,10 +163,10 @@ export function TweetCard({
         <Box display='flex' gap={3} marginBottom={4}>
           <UserLogo imageSize='40' />
           <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
-            <Heading size='sm'>{author?.name}</Heading>
+            <Heading size='sm'>{post?.author?.name}</Heading>
             <Text fontSize='xs'>{post.createdAt}</Text>
           </Box>
-          {showOptionsMenu && author?.id === user?.id && (
+          {showOptionsMenu && post?.author?.id === user?.id && (
             <Box mr={'-8px'} mt={'-8px'}>
               <Menu>
                 <MenuButton

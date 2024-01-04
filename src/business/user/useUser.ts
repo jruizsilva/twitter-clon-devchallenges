@@ -1,16 +1,19 @@
 import { useCallback } from 'react';
 
-import { type Post } from '../posts/usePost';
+import { type PostWithoutChildren, type LikeWithoutChildren } from '../posts/usePost';
 
 import { protectedInstance } from 'business/api/axiosInstances';
 
 export interface User {
-  id: number;
-  name: string;
-  description: string;
+  id: number
+  name: string
+  description: string
   username: string
-  posts: Post[];
+  postsCreated: PostWithoutChildren[]
+  postsLiked: LikeWithoutChildren[]
 }
+
+export type UserWithOutChildren = Omit<User, "posts" | "postsLiked">
 
 export interface UpdateUserRequest {
   name?: string

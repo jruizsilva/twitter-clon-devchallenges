@@ -27,7 +27,6 @@ export function CreatePost(props: Props) {
   const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<Post> = async (post: Post) => {
-    console.log(post)
     try {
       const postCreated = await fetchCreateOnePost(post)
 
@@ -35,7 +34,7 @@ export function CreatePost(props: Props) {
 
       reset()
     } catch (err) {
-      console.error(err)
+      console.dir(err)
       if (err instanceof Error) {
         toast.error(err.message)
       }

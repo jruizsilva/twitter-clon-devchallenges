@@ -39,7 +39,7 @@ export function PeoplePage(props: Props): JSX.Element {
         setUsers(users)
         setSearchResult(users)
       })
-      .catch((err: any) => {
+      .catch((err: unknown) => {
         console.error(err)
       })
   }, [fetchAllUsers, setUsers, setSearchResult])
@@ -53,7 +53,7 @@ export function PeoplePage(props: Props): JSX.Element {
       .then((users) => {
         setSearchResult(users)
       })
-      .catch((err: any) => {
+      .catch((err: unknown) => {
         console.error(err)
       })
   }

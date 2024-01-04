@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { type User } from '../user/useUser';
+import { type UserWithOutChildren } from '../user/useUser';
 
 import { protectedInstance, publicInstance } from 'business/api/axiosInstances';
 
@@ -8,13 +8,19 @@ export interface Post {
   id: number;
   content: string;
   createdAt: string;
-  author: User;
-  likes: User[]
+  author: UserWithOutChildren;
+  likes: LikeWithoutChildren[]
+}
+export interface LikeWithoutChildren {
+  post: PostWithoutChildren,
+  user: UserWithOutChildren
 }
 
 export interface PostRequest {
   content: string;
 }
+
+export type PostWithoutChildren = Omit<Post, "author" | "likes">;
 
 const usePost = () => {
   return {

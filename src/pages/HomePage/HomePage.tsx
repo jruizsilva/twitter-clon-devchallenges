@@ -1,5 +1,5 @@
 import { Box, Center, Spinner } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { CreatePost, HomeContainer } from './components'
 
@@ -11,20 +11,19 @@ interface Props {}
 
 export function HomePage(props: Props) {
   const { fetchAllPosts } = usePost()
-  const { posts, setPosts } = usePostsStore()
-  const [loading, setLoading] = useState(true)
+  const { posts, setPosts, isFetching } = usePostsStore()
+
+  console.log(posts)
 
   useEffect(() => {
     fetchAllPosts()
       .then((postsData) => {
         setPosts(postsData)
-        setLoading(false)
       })
       .catch((err) => {
         console.error(err)
-        setLoading(false)
       })
-  }, [fetchAllPosts, setPosts, setLoading])
+  }, [fetchAllPosts, setPosts])
 
   return (
     <HomeContainer>
@@ -35,7 +34,7 @@ export function HomePage(props: Props) {
         marginTop={'24px'}
       >
         <CreatePost />
-        {loading ? (
+        {isFetching ? (
           <Center
             display={'flex'}
             flexDirection={'column'}
@@ -48,12 +47,7 @@ export function HomePage(props: Props) {
           posts !== null &&
           posts?.length > 0 &&
           posts.map((post) => (
-            <TweetCard
-              key={post.id}
-              author={post.author}
-              post={post}
-              showOptionsMenu={false}
-            />
+            <TweetCard key={post.id} post={post} showOptionsMenu={false} />
           ))
         )}
       </Box>
