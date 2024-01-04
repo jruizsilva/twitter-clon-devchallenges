@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { type UserWithOutChildren } from '../user/useUser';
 
-import { protectedInstance, publicInstance } from 'business/api/axiosInstances';
+import { protectedInstance } from 'business/api/axiosInstances';
 
 export interface Post {
   id: number;
@@ -25,7 +25,7 @@ export type PostWithoutChildren = Omit<Post, "author" | "likes">;
 const usePost = () => {
   return {
     fetchAllPosts: useCallback(async () => {
-      const response = await publicInstance.get<Post[]>("/posts");
+      const response = await protectedInstance.get<Post[]>("/posts");
       const posts = response.data;
 
       return posts
