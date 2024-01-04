@@ -1,6 +1,7 @@
 import {
   Box,
   Center,
+  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -23,7 +24,7 @@ interface Props {}
 export function ProfilePage(props: Props) {
   const { user } = useAuthStore()
   const { fetchAllPostOfCurrentUser } = usePost()
-  const { userPosts, setUserPosts } = usePostsStore()
+  const { userPosts, setUserPosts, setIsFetching, isFetching } = usePostsStore()
 
   useEffect(() => {
     fetchAllPostOfCurrentUser()
@@ -33,7 +34,7 @@ export function ProfilePage(props: Props) {
       .catch((err) => {
         console.error(err)
       })
-  }, [fetchAllPostOfCurrentUser, setUserPosts])
+  }, [fetchAllPostOfCurrentUser, setUserPosts, setIsFetching])
 
   return (
     <ProfileLayout>
@@ -50,35 +51,46 @@ export function ProfilePage(props: Props) {
           <ProfileImage />
           <ProfileDescription />
         </Box>
-        <Tabs isFitted isLazy size={'md'}>
-          <TabList mb='42px'>
-            <Tab>Tweets</Tab>
-            <Tab>Likes</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Box
-                alignItems='start'
-                display='flex'
-                flexDirection={{ base: 'column', md: 'row' }}
-                gap={4}
-                justifyContent='space-between'
-                marginTop={{ base: '-30px' }}
-              >
-                {userPosts?.length === 0 ? (
-                  <Box w={'full'}>
-                    <Center>No se encontraron posts</Center>
-                  </Box>
-                ) : (
-                  <ProfileTweetList author={user} posts={userPosts} />
-                )}
-              </Box>
-            </TabPanel>
-            <TabPanel>
-              <p>likes</p>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        {isFetching ? (
+          <Center
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'24px'}
+            height={'100px'}
+          >
+            <Spinner size={'md'} />
+          </Center>
+        ) : (
+          <Tabs isFitted size={'md'}>
+            <TabList mb='42px'>
+              <Tab>Tweets</Tab>
+              <Tab>Likes</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Box
+                  alignItems='start'
+                  display='flex'
+                  flexDirection={{ base: 'column', md: 'row' }}
+                  gap={4}
+                  justifyContent='space-between'
+                  marginTop={{ base: '-30px' }}
+                >
+                  {userPosts?.length === 0 ? (
+                    <Box w={'full'}>
+                      <Center>No se encontraron posts</Center>
+                    </Box>
+                  ) : (
+                    <ProfileTweetList author={user} posts={userPosts} />
+                  )}
+                </Box>
+              </TabPanel>
+              <TabPanel>
+                <p>likes</p>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        )}
       </ProfileContainer>
     </ProfileLayout>
   )

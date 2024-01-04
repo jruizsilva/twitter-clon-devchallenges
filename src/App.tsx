@@ -4,7 +4,7 @@ import {
   ColorModeScript,
   Spinner
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 import theme from './theme/theme'
@@ -15,21 +15,21 @@ import { useAuthStore } from 'business/auth/useAuthStore'
 
 export function App() {
   const { fetchUserData } = useUser()
-  const { setUser } = useAuthStore()
-  const [loading, setLoading] = useState(true)
+  const { setUser, user, isFetching, setIsFetching } = useAuthStore()
+
+  console.log(user)
 
   useEffect(() => {
     const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
 
     if (AUTH_TOKEN === null) {
-      setLoading(false)
+      setIsFetching(false)
 
       return
     }
 
     fetchUserData()
       .then((user) => {
-        setLoading(false)
         setUser(user)
         toast.success('Successfully login!', {
           id: 'login',
@@ -37,16 +37,15 @@ export function App() {
         })
       })
       .catch((err) => {
-        setLoading(false)
         console.error(err)
         localStorage.removeItem('AUTH_TOKEN')
       })
-  }, [fetchUserData, setUser, setLoading])
+  }, [fetchUserData, setUser, setIsFetching])
 
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      {loading ? (
+      {isFetching ? (
         <Center height={'100vh'}>
           <Spinner size={'lg'} />
         </Center>

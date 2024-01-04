@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
   InputGroup,
   Input,
@@ -14,44 +14,45 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { ListCardPeople, PeopleContainer } from './components'
 
-import { type User, useUser } from 'business/user/useUser'
+import { useUser } from 'business/user/useUser'
 import { useUserStore } from 'business/user/useUserStore'
 
 interface Props {}
 
-interface FormValues {
+interface SearchUserRequest {
   peapleToSearch: string
 }
 
 export function PeoplePage(props: Props): JSX.Element {
   const { fetchAllUsers, fetchSearchUsersByUsernameOrName } = useUser()
-  const { users, setUsers } = useUserStore()
-  const [searchResult, setSearchResult] = useState<User[] | null>(null)
+  const { users, setUsers, searchUserResult, setSearchUserResult } =
+    useUserStore()
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitting }
-  } = useForm<FormValues>({ mode: 'onBlur' })
+  } = useForm<SearchUserRequest>({ mode: 'onBlur' })
+
+  console.log(searchUserResult)
 
   useEffect(() => {
     fetchAllUsers()
       .then((users) => {
         setUsers(users)
-        setSearchResult(users)
       })
       .catch((err: unknown) => {
         console.error(err)
       })
-  }, [fetchAllUsers, setUsers, setSearchResult])
-  const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
+  }, [fetchAllUsers, setUsers, setSearchUserResult])
+  const onSubmit: SubmitHandler<SearchUserRequest> = async (formValues) => {
     if (formValues.peapleToSearch.trim().length === 0) {
-      setSearchResult(users)
+      setSearchUserResult(users)
 
       return
     }
     fetchSearchUsersByUsernameOrName(formValues.peapleToSearch)
       .then((users) => {
-        setSearchResult(users)
+        setSearchUserResult(users)
       })
       .catch((err: unknown) => {
         console.error(err)
@@ -97,7 +98,7 @@ export function PeoplePage(props: Props): JSX.Element {
           <Spinner />
         </Center>
       ) : (
-        <ListCardPeople users={searchResult} />
+        <ListCardPeople users={searchUserResult} />
       )}
     </PeopleContainer>
   )
