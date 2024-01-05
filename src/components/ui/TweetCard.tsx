@@ -174,7 +174,6 @@ export function TweetCard({
                 <MenuButton
                   as={IconButton}
                   icon={<TbDots fontSize={'20px'} />}
-                  isDisabled={isLoadingLike}
                   rounded={'full'}
                   size={'sm'}
                   variant='ghost'
@@ -242,6 +241,7 @@ export function TweetCard({
                 </ButtonIconContainer>
                 <ButtonIconContainer
                   colorScheme='red'
+                  isDisabled={isLoadingLike}
                   onClick={() => {
                     handleLike()
                   }}
