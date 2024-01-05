@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Center, Spinner } from '@chakra-ui/react'
 
@@ -11,25 +11,11 @@ interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
-export function MainLayout({ children }: Props) {
+export function MainLayout({ children }: Readonly<Props>) {
   const { setUser, isLoading, setIsLoading } = useAuthStore()
   const { fetchUserData } = useUser()
 
-  useEffect(() => {
-    const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
-
-    const theme = localStorage.getItem('chakra-ui-color-mode')
-
-    if (theme != null && theme === 'light') {
-      localStorage.setItem('chakra-ui-color-mode', 'dark')
-    }
-
-    if (AUTH_TOKEN === null) {
-      setIsLoading(false)
-
-      return
-    }
-
+  const fetchDataRequest = useCallback(() => {
     fetchUserData()
       .then((data) => {
         if (data !== undefined) {
@@ -52,7 +38,34 @@ export function MainLayout({ children }: Props) {
       .finally(() => {
         setIsLoading(false)
       })
-  }, [setUser, fetchUserData, setIsLoading])
+  }, [fetchUserData, setIsLoading, setUser])
+
+  useEffect(() => {
+    const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
+
+    const theme = localStorage.getItem('chakra-ui-color-mode')
+
+    if (theme != null && theme === 'light') {
+      localStorage.setItem('chakra-ui-color-mode', 'dark')
+    }
+
+    if (AUTH_TOKEN === null) {
+      setIsLoading(false)
+
+      return
+    }
+    fetchDataRequest()
+  }, [fetchDataRequest, setIsLoading])
+
+  useEffect(() => {
+    // cada 13min
+    const intervalo = 13 * 60 * 1000
+
+    setInterval(() => {
+      console.log('hola')
+      fetchDataRequest()
+    }, intervalo)
+  }, [fetchDataRequest])
 
   return (
     <>
