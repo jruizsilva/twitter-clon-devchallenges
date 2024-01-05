@@ -12,6 +12,7 @@ import {
   RegisterPage
 } from 'pages'
 import { PeoplePage } from 'pages/PeoplePage/PeoplePage'
+import { BookmarksPage } from 'pages/BookmarksPage/BookmarksPage'
 
 interface Props {}
 
@@ -24,6 +25,7 @@ export function MainRouter(props: Props) {
             <Route element={<ProfilePage />} path='/profile' />
             <Route element={<ProfileEditPage />} path='/profile/edit' />
             <Route element={<PeoplePage />} path='/people' />
+            <Route element={<BookmarksPage />} path='/bookmarks' />
             <Route element={<HomePage />} path='/' />
           </Route>
           <Route element={<RedirectToHomeWhenUserLogin />}>

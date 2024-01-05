@@ -4,7 +4,7 @@ interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
-export function PeopleContainer({ children }: Readonly<Props>) {
+export function BookmarksContainer({ children }: Readonly<Props>): JSX.Element {
   return (
     <Box
       display='flex'

@@ -74,6 +74,17 @@ export function Navbar(props: Props) {
                   People
                 </Button>
               </Heading>
+
+              <Heading size='xs'>
+                <Button
+                  as={NavLink}
+                  isActive={pathname === '/bookmarks'}
+                  to='/bookmarks'
+                  variant='link'
+                >
+                  Bookmarks
+                </Button>
+              </Heading>
             </>
           )}
         </HStack>
