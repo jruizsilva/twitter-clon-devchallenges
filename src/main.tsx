@@ -9,10 +9,10 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ChakraProvider theme={theme}>
-    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    <App />
+    {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <App />
       <Toaster />
     </QueryClientProvider>
   </ChakraProvider>
