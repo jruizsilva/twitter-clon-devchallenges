@@ -14,10 +14,14 @@ interface PostStore {
   updatePostById: (postId: number, postUpdated: Post) => void
 }
 
-export const usePostsStore = create<PostStore>((set) => ({
+const initialValues = {
   posts: null,
   userPosts: null,
   isFetching: true,
+}
+
+export const usePostsStore = create<PostStore>((set) => ({
+  ...initialValues,
   setIsFetching: (isFetching: boolean) => {
     set(() => ({ isFetching }))
   },

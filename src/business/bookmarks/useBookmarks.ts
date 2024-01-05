@@ -19,7 +19,7 @@ const useBookmarks = () => {
     },
     fetchAddBookmark: async (postId: string, username: string) => {
       const response = await protectedInstance
-        .post<Bookmark>(`/bookmarks?postId=${postId}&username=${username}`);
+        .post<Post>(`/bookmarks?postId=${postId}&username=${username}`);
       const bookmark = response.data;
 
       return bookmark
