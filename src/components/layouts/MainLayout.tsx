@@ -18,6 +18,12 @@ export function MainLayout({ children }: Props) {
   useEffect(() => {
     const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
 
+    const theme = localStorage.getItem('chakra-ui-color-mode')
+
+    if (theme != null && theme === 'light') {
+      localStorage.setItem('chakra-ui-color-mode', 'dark')
+    }
+
     if (AUTH_TOKEN === null) {
       setIsLoading(false)
 
