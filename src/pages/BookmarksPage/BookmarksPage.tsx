@@ -2,16 +2,13 @@ import { useEffect } from 'react'
 
 import { BookmarksContainer } from './components/BookmarksContainer'
 
-import { useBookmarks } from 'business/bookmarks/useBookmarks'
-import { useBookmarksStore } from 'business/bookmarks/useBookmarksStore'
-import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUserQuery } from 'hooks/useUserQuery'
+import { fetchAllBookmarkedPostsByUsername } from 'services/bookmarks'
 
 interface Props {}
 
 export function BookmarksPage(props: Props): JSX.Element {
-  const { user } = useAuthStore()
-  const { fetchAllBookmarkedPostsByUsername } = useBookmarks()
-  const { setBookmarksSaved, bookmarksSaved } = useBookmarksStore()
+  const { user } = useUserQuery()
 
   useEffect(() => {
     if (user == null) {
@@ -20,16 +17,15 @@ export function BookmarksPage(props: Props): JSX.Element {
     fetchAllBookmarkedPostsByUsername(user?.username)
       .then((bookmarksSaved) => {
         console.log(bookmarksSaved)
-        setBookmarksSaved(bookmarksSaved)
       })
       .catch((err) => {
         console.dir(err)
       })
-  }, [fetchAllBookmarkedPostsByUsername, setBookmarksSaved, user])
+  }, [user])
 
   return (
     <BookmarksContainer>
-      <h1>Bookmarks saved {bookmarksSaved.length}</h1>
+      <h1>Bookmarks saved</h1>
     </BookmarksContainer>
   )
 }

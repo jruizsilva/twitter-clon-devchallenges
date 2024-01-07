@@ -40,14 +40,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
-import { usePost, type Post, type PostRequest } from 'business/posts/usePost'
-import { type User } from 'business/user/useUser'
-import { usePostsStore } from 'business/posts/usePostStore'
-import { useAuthStore } from 'business/auth/useAuthStore'
-import { useBookmarks } from 'business/bookmarks/useBookmarks'
-import { useBookmarksStore } from 'business/bookmarks/useBookmarksStore'
-import { useUserStore } from 'business/user/useUserStore'
-import { useAppStore } from 'business/store/useAppStore'
+import { useUserQuery } from 'hooks/useUserQuery'
 
 interface Props {
   urlImage?: string
@@ -57,7 +50,7 @@ interface Props {
 
 const verifyIfPostIsAlreadyLiked = (
   post: Post,
-  userAuthenticated: User | null
+  userAuthenticated: User | undefined
 ) => {
   if (post?.likes?.length === 0) {
     return false
@@ -71,24 +64,12 @@ export function TweetCard({
   post,
   showOptionsMenu
 }: Readonly<Props>) {
-  const {
-    fetchDeletePostById,
-    fetchEditPost,
-    fetchAddLikeToPost,
-    fetchRemoveLikeToPost
-  } = usePost()
-  const { deletePostById, updatePostById } = usePostsStore()
-  const { user } = useAuthStore()
+  const { user } = useUserQuery()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoadingLike, setIsLoadingLike] = useState(false)
   const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(false)
   const [isLoadingBookmarks, setIsLoadingBookmarks] = useState(false)
-  const { fetchRemoveBookmark, fetchAddBookmark } = useBookmarks()
-  const { addBookmark, removeBookmark } = useUserStore()
-  // const {} = useAppStore()
-
-  console.log(user)
 
   const {
     register,
@@ -170,37 +151,38 @@ export function TweetCard({
     setIsLiked((prev) => !prev)
   }
 
-  const handleBookmark = () => {
-    if (user === null) {
-      return
-    }
-    setIsLoadingBookmarks(true)
-    if (isPostSavedInBookmarks) {
-      fetchRemoveBookmark(post.id.toString(), user.username)
-        .then((bookmarkId) => {
-          setIsPostSavedInBookmarks(true)
-          console.log('fetchRemoveBookmark', bookmarkId)
-        })
-        .catch((err) => {
-          console.dir(err)
-        })
-        .finally(() => {
-          setIsLoadingBookmarks(false)
-        })
-    } else {
-      fetchAddBookmark(post.id.toString(), user.username)
-        .then((bookmarkSaved) => {
-          console.log('fetchAddBookmark', bookmarkSaved)
-        })
-        .catch((err) => {
-          console.dir(err)
-        })
-        .finally(() => {
-          setIsLoadingBookmarks(false)
-        })
-    }
-    setIsPostSavedInBookmarks((prev) => !prev)
-  }
+  // const handleBookmark = () => {
+  //   if (user === null) {
+  //     return
+  //   }
+  //   setIsLoadingBookmarks(true)
+  //   if (user === null) return
+  //   if (isPostSavedInBookmarks) {
+  //     fetchRemoveBookmark(post.id.toString(), user?.username)
+  //       .then((bookmarkId) => {
+  //         setIsPostSavedInBookmarks(true)
+  //         console.log('fetchRemoveBookmark', bookmarkId)
+  //       })
+  //       .catch((err) => {
+  //         console.dir(err)
+  //       })
+  //       .finally(() => {
+  //         setIsLoadingBookmarks(false)
+  //       })
+  //   } else {
+  //     fetchAddBookmark(post.id.toString(), user?.username)
+  //       .then((bookmarkSaved) => {
+  //         console.log('fetchAddBookmark', bookmarkSaved)
+  //       })
+  //       .catch((err) => {
+  //         console.dir(err)
+  //       })
+  //       .finally(() => {
+  //         setIsLoadingBookmarks(false)
+  //       })
+  //   }
+  //   setIsPostSavedInBookmarks((prev) => !prev)
+  // }
 
   return (
     <>
@@ -296,7 +278,7 @@ export function TweetCard({
                   isActive={isPostSavedInBookmarks}
                   isDisabled={isLoadingBookmarks}
                   onClick={() => {
-                    handleBookmark()
+                    // handleBookmark()
                   }}
                 >
                   <Icon as={BsBookmark} boxSize={5} />

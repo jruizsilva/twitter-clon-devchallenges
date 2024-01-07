@@ -4,26 +4,12 @@ import { useEffect } from 'react'
 import { CreatePost, HomeContainer } from './components'
 
 import { TweetCard } from 'components/ui/TweetCard'
-import { usePost } from 'business/posts/usePost'
-import { usePostsStore } from 'business/posts/usePostStore'
-import { useBookmarks } from 'business/bookmarks/useBookmarks'
-import { useBookmarksStore } from 'business/bookmarks/useBookmarksStore'
+import { usePostsQuery } from 'hooks/usePostsQuery'
 
 interface Props {}
 
 export function HomePage(props: Props) {
-  const { fetchAllPosts } = usePost()
-  const { posts, setPosts, isFetching } = usePostsStore()
-
-  useEffect(() => {
-    fetchAllPosts()
-      .then((postsData) => {
-        setPosts(postsData)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [fetchAllPosts, setPosts])
+  const { posts, isLoading } = usePostsQuery()
 
   return (
     <HomeContainer>
@@ -34,7 +20,7 @@ export function HomePage(props: Props) {
         marginTop={'24px'}
       >
         <CreatePost />
-        {isFetching ? (
+        {isLoading ? (
           <Center
             display={'flex'}
             flexDirection={'column'}
@@ -44,7 +30,7 @@ export function HomePage(props: Props) {
             <Spinner size={'md'} />
           </Center>
         ) : (
-          posts !== null &&
+          posts !== undefined &&
           posts?.length > 0 &&
           posts.map((post) => (
             <TweetCard key={post.id} post={post} showOptionsMenu={false} />

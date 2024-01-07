@@ -2,16 +2,14 @@ import { Box } from '@chakra-ui/react'
 
 import { TweetCard } from '../../../components/ui/TweetCard'
 
-import { type Post } from 'business/posts/usePost'
-
 interface Props {
-  posts: Post[] | null
+  posts: Post[] | undefined
 }
 
 export function ProfileTweetList({ posts }: Readonly<Props>): JSX.Element {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={'24px'} width={'100%'}>
-      {posts != null &&
+      {posts !== undefined &&
         posts.length > 0 &&
         posts.map((post) => (
           <TweetCard key={post.id} showOptionsMenu post={post} />

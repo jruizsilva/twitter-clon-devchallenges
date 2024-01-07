@@ -1,12 +1,12 @@
 import { Box, Button, Heading, Text, calc } from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
 
-import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUserQuery } from 'hooks/useUserQuery'
 
 interface Props {}
 
 export function ProfileDescription(props: Props) {
-  const { user } = useAuthStore()
+  const { user } = useUserQuery()
 
   return (
     <Box

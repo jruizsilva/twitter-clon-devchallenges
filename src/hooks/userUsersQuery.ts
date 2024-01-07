@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { fetchUserData } from "services/user"
+import { fetchAllUsers } from "services/user"
 
-const useUserQuery = () => {
-  const queryKey = ["user"]
-  const queryFn = fetchUserData
+const useUsersQuery = () => {
+  const queryKey = ["users"]
+  const queryFn = fetchAllUsers
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey, queryFn, retry: false
   })
 
   return {
-    user: data,
+    users: data,
     isLoading,
     isError,
     error,
@@ -20,5 +20,5 @@ const useUserQuery = () => {
 }
 
 export {
-  useUserQuery
+  useUsersQuery
 }

@@ -17,13 +17,11 @@ import {
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { useUser, type UpdateUserRequest } from '../../business/user/useUser'
-
-import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUserQuery } from 'hooks/useUserQuery'
+import { updateUser } from 'services/user'
 
 export function ProfileEditPage() {
-  const { user, setUser } = useAuthStore()
-  const { updateUser } = useUser()
+  const { user } = useUserQuery()
   const {
     register,
     handleSubmit,
@@ -43,7 +41,6 @@ export function ProfileEditPage() {
     try {
       const userUpdated = await updateUser(updateUserRequest)
 
-      setUser(userUpdated)
       toast.success('Update successfuly!', {
         id: 'update',
         position: 'bottom-right'
@@ -121,7 +118,7 @@ export function ProfileEditPage() {
               }
             })}
           />
-          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
         </FormControl>
         <FormControl id='description' isInvalid={Boolean(errors.description)}>
           <FormLabel>Description</FormLabel>
@@ -136,7 +133,7 @@ export function ProfileEditPage() {
               }
             })}
           />
-          <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors?.description?.message}</FormErrorMessage>
         </FormControl>
         {/* <FormControl isRequired id='password'>
           <FormLabel>Password</FormLabel>

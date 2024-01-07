@@ -8,31 +8,18 @@ import {
   TabPanels,
   Tabs
 } from '@chakra-ui/react'
-import { useEffect } from 'react'
 
 import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
-import { usePostsStore } from 'business/posts/usePostStore'
-import { usePost } from 'business/posts/usePost'
+import { useUserPostsQuery } from 'hooks/useUserPostsQuery'
 
 interface Props {}
 
 export function ProfilePage(props: Props) {
-  const { fetchAllPostOfCurrentUser } = usePost()
-  const { userPosts, setUserPosts, setIsFetching, isFetching } = usePostsStore()
-
-  useEffect(() => {
-    fetchAllPostOfCurrentUser()
-      .then((userPosts) => {
-        setUserPosts(userPosts)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [fetchAllPostOfCurrentUser, setUserPosts, setIsFetching])
+  const { userPosts, isLoading } = useUserPostsQuery()
 
   return (
     <ProfileLayout>
@@ -49,7 +36,7 @@ export function ProfilePage(props: Props) {
           <ProfileImage />
           <ProfileDescription />
         </Box>
-        {isFetching ? (
+        {isLoading ? (
           <Center
             display={'flex'}
             flexDirection={'column'}

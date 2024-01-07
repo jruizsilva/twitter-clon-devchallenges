@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUserQuery } from 'hooks/useUserQuery'
 
 export const PrivateRoutes = () => {
-  const { user } = useAuthStore()
+  const { user } = useUserQuery()
 
   return user !== null ? <Outlet /> : <Navigate to='/login' />
 }

@@ -11,9 +11,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 import { UserLogo } from 'components/ui'
-import { usePost, type PostRequest } from 'business/posts/usePost'
-import { usePostsStore } from 'business/posts/usePostStore'
-
+import { fetchCreateOnePost } from 'services/posts'
 interface Props {}
 
 export function CreatePost(props: Props) {
@@ -23,14 +21,10 @@ export function CreatePost(props: Props) {
     formState: { errors, isValid, isSubmitting },
     reset
   } = useForm<PostRequest>({ mode: 'onBlur' })
-  const { fetchCreateOnePost } = usePost()
-  const { addPost } = usePostsStore()
 
   const onSubmit: SubmitHandler<PostRequest> = async (post: PostRequest) => {
     try {
       const postCreated = await fetchCreateOnePost(post)
-
-      addPost(postCreated)
 
       reset()
     } catch (err) {

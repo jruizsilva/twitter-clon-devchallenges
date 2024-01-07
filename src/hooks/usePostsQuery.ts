@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { fetchUserData } from "services/user"
+import { fetchAllPosts } from "services/posts"
 
-const useUserQuery = () => {
-  const queryKey = ["user"]
-  const queryFn = fetchUserData
+const usePostsQuery = () => {
+  const queryKey = ["posts"]
+  const queryFn = fetchAllPosts
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey, queryFn, retry: false
   })
 
   return {
-    user: data,
+    posts: data,
     isLoading,
     isError,
     error,
@@ -20,5 +20,5 @@ const useUserQuery = () => {
 }
 
 export {
-  useUserQuery
+  usePostsQuery
 }

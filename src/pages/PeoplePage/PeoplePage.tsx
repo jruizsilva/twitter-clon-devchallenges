@@ -14,8 +14,8 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { ListCardPeople, PeopleContainer } from './components'
 
-import { useUser } from 'business/user/useUser'
-import { useUserStore } from 'business/user/useUserStore'
+import { fetchAllUsers, fetchSearchUsersByUsernameOrName } from 'services/user'
+import { useUsersQuery } from 'hooks/userUsersQuery'
 
 interface Props {}
 
@@ -24,33 +24,23 @@ interface SearchUserRequest {
 }
 
 export function PeoplePage(props: Props): JSX.Element {
-  const { fetchAllUsers, fetchSearchUsersByUsernameOrName } = useUser()
-  const { users, setUsers, searchUserResult, setSearchUserResult } =
-    useUserStore()
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitting }
   } = useForm<SearchUserRequest>({ mode: 'onBlur' })
 
-  useEffect(() => {
-    fetchAllUsers()
-      .then((users) => {
-        setUsers(users)
-      })
-      .catch((err: unknown) => {
-        console.error(err)
-      })
-  }, [fetchAllUsers, setUsers, setSearchUserResult])
+  const { users } = useUsersQuery()
+
+  console.log(users)
+
   const onSubmit: SubmitHandler<SearchUserRequest> = async (formValues) => {
     if (formValues.peapleToSearch.trim().length === 0) {
-      setSearchUserResult(users)
-
       return
     }
     fetchSearchUsersByUsernameOrName(formValues.peapleToSearch)
       .then((users) => {
-        setSearchUserResult(users)
+        console.log(users)
       })
       .catch((err: unknown) => {
         console.error(err)
@@ -96,7 +86,7 @@ export function PeoplePage(props: Props): JSX.Element {
           <Spinner />
         </Center>
       ) : (
-        <ListCardPeople users={searchUserResult} />
+        <ListCardPeople users={users} />
       )}
     </PeopleContainer>
   )

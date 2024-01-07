@@ -20,11 +20,7 @@ import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import toast from 'react-hot-toast'
 
-import { type LoginRequest } from '../../business/auth/useAuth'
-
-import { useAuth } from 'business/auth/useAuth'
-import { useAuthStore } from 'business/auth/useAuthStore'
-import { useUser } from 'business/user/useUser'
+import { loginUser } from 'services/auth'
 
 export function LoginPage() {
   const {
@@ -33,9 +29,6 @@ export function LoginPage() {
     formState: { errors, isSubmitting, isValid },
     reset
   } = useForm<LoginRequest>({ mode: 'onBlur' })
-  const { loginUser } = useAuth()
-  const { setUser } = useAuthStore()
-  const { fetchUserData } = useUser()
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit: SubmitHandler<LoginRequest> = async (loginRequest) => {
@@ -43,9 +36,7 @@ export function LoginPage() {
       const AUTH_TOKEN = await loginUser(loginRequest)
 
       localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
-      const user = await fetchUserData()
-
-      setUser(user)
+      // react query request to login
 
       toast.success('Successfully login!', {
         id: 'login',

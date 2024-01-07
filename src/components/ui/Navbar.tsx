@@ -18,13 +18,13 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { UserLogo } from './UserLogo'
 
 import { tweeterSmall } from 'assets'
-import { useAuthStore } from 'business/auth/useAuthStore'
+import { useUserQuery } from 'hooks/useUserQuery'
 
 interface Props {}
 
 export function Navbar(props: Props) {
   const { pathname } = useLocation()
-  const { user, setUser } = useAuthStore()
+  const { user } = useUserQuery()
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN')
@@ -103,7 +103,7 @@ export function Navbar(props: Props) {
                     size='xs'
                     userSelect='none'
                   >
-                    {user.name}
+                    {user?.name}
                   </Heading>
                   <Icon
                     as={AiFillCaretDown}
@@ -127,7 +127,6 @@ export function Navbar(props: Props) {
                 <MenuItem
                   onClick={() => {
                     logout()
-                    setUser(null)
                   }}
                 >
                   Logout

@@ -28,8 +28,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.10.0",
-    "sweetalert2": "^11.10.2",
-    "zustand": "^4.4.7"
+    "sweetalert2": "^11.10.2"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",
