@@ -18,7 +18,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { UserLogo } from './UserLogo'
 
 import { tweeterSmall } from 'assets'
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 interface Props {}
 

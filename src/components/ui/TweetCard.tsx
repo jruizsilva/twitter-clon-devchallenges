@@ -40,7 +40,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 interface Props {
   urlImage?: string

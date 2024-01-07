@@ -3,7 +3,7 @@ import { Center, Spinner } from '@chakra-ui/react'
 
 import { Navbar } from 'components/ui'
 import { Footer } from 'components/ui/Footer'
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 interface Props {
   children: JSX.Element | JSX.Element[]

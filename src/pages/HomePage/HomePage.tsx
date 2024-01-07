@@ -1,10 +1,9 @@
 import { Box, Center, Spinner } from '@chakra-ui/react'
-import { useEffect } from 'react'
 
 import { CreatePost, HomeContainer } from './components'
 
 import { TweetCard } from 'components/ui/TweetCard'
-import { usePostsQuery } from 'hooks/usePostsQuery'
+import { usePostsQuery } from 'hooks/queries/usePostsQuery'
 
 interface Props {}
 

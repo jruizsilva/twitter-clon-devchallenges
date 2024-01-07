@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export const RedirectToHomeWhenUserLogin = () => {
   const { user } = useUserQuery()

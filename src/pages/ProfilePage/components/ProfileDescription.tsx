@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Text, calc } from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
 
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 interface Props {}
 

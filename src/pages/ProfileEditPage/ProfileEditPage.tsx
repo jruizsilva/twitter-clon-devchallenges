@@ -17,7 +17,7 @@ import {
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { updateUser } from 'services/user'
 
 export function ProfileEditPage() {

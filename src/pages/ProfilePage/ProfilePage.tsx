@@ -14,7 +14,7 @@ import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
-import { useUserPostsQuery } from 'hooks/useUserPostsQuery'
+import { useUserPostsQuery } from 'hooks/queries/useUserPostsQuery'
 
 interface Props {}
 

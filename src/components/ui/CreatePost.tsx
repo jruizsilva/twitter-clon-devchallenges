@@ -9,9 +9,10 @@ import {
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { UserLogo } from 'components/ui'
-import { fetchCreateOnePost } from 'services/posts'
+import { useCreatePostMutation } from 'hooks/mutations/useCreatePostMutation'
 interface Props {}
 
 export function CreatePost(props: Props) {
@@ -21,18 +22,20 @@ export function CreatePost(props: Props) {
     formState: { errors, isValid, isSubmitting },
     reset
   } = useForm<PostRequest>({ mode: 'onBlur' })
+  const queryClient = useQueryClient()
+  const onSuccess = () => {
+    toast.success('Post created successfully', {
+      id: 'create-post',
+      position: 'bottom-right'
+    })
+    reset()
+    queryClient.invalidateQueries({ queryKey: ['posts'] })
+  }
 
-  const onSubmit: SubmitHandler<PostRequest> = async (post: PostRequest) => {
-    try {
-      const postCreated = await fetchCreateOnePost(post)
+  const { addPost } = useCreatePostMutation(onSuccess)
 
-      reset()
-    } catch (err) {
-      console.dir(err)
-      if (err instanceof Error) {
-        toast.error(err.message)
-      }
-    }
+  const onSubmit: SubmitHandler<PostRequest> = (post: PostRequest) => {
+    addPost(post)
   }
 
   return (

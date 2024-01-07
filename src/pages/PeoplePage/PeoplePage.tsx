@@ -15,7 +15,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { ListCardPeople, PeopleContainer } from './components'
 
 import { fetchAllUsers, fetchSearchUsersByUsernameOrName } from 'services/user'
-import { useUsersQuery } from 'hooks/userUsersQuery'
+import { useUsersQuery } from 'hooks/queries/userUsersQuery'
 
 interface Props {}
 

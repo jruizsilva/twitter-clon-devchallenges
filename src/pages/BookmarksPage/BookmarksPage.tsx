@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { BookmarksContainer } from './components/BookmarksContainer'
 
-import { useUserQuery } from 'hooks/useUserQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { fetchAllBookmarkedPostsByUsername } from 'services/bookmarks'
 
 interface Props {}
