@@ -3,8 +3,6 @@ import toast from "react-hot-toast";
 
 import { fetchCreateOnePost } from "services/posts";
 
-
-
 const useCreatePostMutation = () => {
   const queryClient = useQueryClient()
   const mutationKey = ['create-post']

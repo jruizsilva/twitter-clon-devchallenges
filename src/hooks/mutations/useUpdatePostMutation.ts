@@ -5,7 +5,7 @@ import { fetchEditPost } from "services/posts";
 
 
 
-const useEditPostMutation = () => {
+const useUpdatePostMutation = () => {
   const queryClient = useQueryClient()
   const mutationKey = ['edit-post']
   const mutationFn: MutationFunction<Post, { postId: string; postRequest: PostRequest }> = async (variables) => {
@@ -32,4 +32,4 @@ const useEditPostMutation = () => {
   return { editPost, ...rest }
 }
 
-export { useEditPostMutation }
+export { useUpdatePostMutation }

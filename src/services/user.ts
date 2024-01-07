@@ -7,7 +7,7 @@ const fetchUserData = async () => {
   return user
 }
 
-const updateUser = async (updateUserRequest: UpdateUserRequest) => {
+const fetchUpdateUser = async (updateUserRequest: UpdateUserRequest) => {
   const response = await protectedInstance.patch<User>("/users", updateUserRequest)
 
   const userUpdated = response.data;
@@ -28,4 +28,4 @@ const fetchSearchUsersByUsernameOrName = async (peopleToSearch: string) => {
   return users
 }
 
-export { fetchUserData, updateUser, fetchAllUsers, fetchSearchUsersByUsernameOrName }
+export { fetchUserData, fetchUpdateUser, fetchAllUsers, fetchSearchUsersByUsernameOrName }

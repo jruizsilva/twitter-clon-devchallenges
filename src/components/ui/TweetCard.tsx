@@ -41,9 +41,8 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
 import { useUserQuery } from 'hooks/queries/useUserQuery'
-import { fetchDeletePostById } from 'services/posts'
 import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
-import { useEditPostMutation } from 'hooks/mutations/useEditPostMutation'
+import { useUpdatePostMutation } from 'hooks/mutations/useUpdatePostMutation'
 
 interface Props {
   urlImage?: string
@@ -74,7 +73,7 @@ export function TweetCard({
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(false)
   const [isLoadingBookmarks, setIsLoadingBookmarks] = useState(false)
   const { deletePost } = useDeletePostMutation()
-  const { editPost, data } = useEditPostMutation()
+  const { editPost, data } = useUpdatePostMutation()
   const {
     register,
     handleSubmit,

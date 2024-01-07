@@ -15,10 +15,9 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
 
 import { useUserQuery } from 'hooks/queries/useUserQuery'
-import { updateUser } from 'services/user'
+import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 
 export function ProfileEditPage() {
   const { user } = useUserQuery()
@@ -34,28 +33,17 @@ export function ProfileEditPage() {
       description: user?.description
     }
   })
+  const { updateUser, data: userUpdated } = useUpdateUserMutation()
+
+  if (userUpdated !== undefined) {
+    setValue('name', userUpdated.name)
+    setValue('description', userUpdated.description)
+  }
 
   const onSubmit: SubmitHandler<UpdateUserRequest> = async (
     updateUserRequest: UpdateUserRequest
   ) => {
-    try {
-      const userUpdated = await updateUser(updateUserRequest)
-
-      toast.success('Update successfuly!', {
-        id: 'update',
-        position: 'bottom-right'
-      })
-      setValue('name', userUpdated.name)
-      setValue('description', userUpdated.description)
-    } catch (err: any) {
-      const errorMessage =
-        err.response.data.message !== null
-          ? err.response.data.message
-          : err.message
-
-      toast.error(errorMessage)
-      console.error(err)
-    }
+    updateUser(updateUserRequest)
   }
   const onCancel = () => {
     setValue('name', user?.name)
