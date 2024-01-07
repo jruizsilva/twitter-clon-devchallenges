@@ -5,5 +5,9 @@ import { useUserQuery } from 'hooks/queries/useUserQuery'
 export const PrivateRoutes = () => {
   const { user } = useUserQuery()
 
-  return user !== null ? <Outlet /> : <Navigate to='/login' />
+  return user !== undefined || user !== null ? (
+    <Outlet />
+  ) : (
+    <Navigate to='/login' />
+  )
 }

@@ -5,5 +5,5 @@ import { useUserQuery } from 'hooks/queries/useUserQuery'
 export const RedirectToHomeWhenUserLogin = () => {
   const { user } = useUserQuery()
 
-  return user !== null ? <Navigate to='/' /> : <Outlet />
+  return user !== undefined || user !== null ? <Navigate to='/' /> : <Outlet />
 }

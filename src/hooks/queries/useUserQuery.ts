@@ -6,16 +6,13 @@ const useUserQuery = () => {
   const queryKey = ["user"]
   const queryFn = fetchUserData
 
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  const { data, ...rest } = useQuery({
     queryKey, queryFn, retry: false
   })
 
   return {
     user: data,
-    isLoading,
-    isError,
-    error,
-    refetch
+    ...rest
   }
 }
 

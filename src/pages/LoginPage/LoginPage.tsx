@@ -18,9 +18,8 @@ import { NavLink } from 'react-router-dom'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import toast from 'react-hot-toast'
 
-import { loginUser } from 'services/auth'
+import { useLoginMutation } from 'hooks/mutations/useLoginMutation'
 
 export function LoginPage() {
   const {
@@ -30,29 +29,11 @@ export function LoginPage() {
     reset
   } = useForm<LoginRequest>({ mode: 'onBlur' })
   const [showPassword, setShowPassword] = useState(false)
+  const { login } = useLoginMutation()
 
   const onSubmit: SubmitHandler<LoginRequest> = async (loginRequest) => {
-    try {
-      const AUTH_TOKEN = await loginUser(loginRequest)
-
-      localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
-      // react query request to login
-
-      toast.success('Successfully login!', {
-        id: 'login',
-        position: 'bottom-right'
-      })
-      reset()
-    } catch (err: any) {
-      const errorMessage =
-        err?.response?.data?.message !== null
-          ? err.response.data.message
-          : err.message
-
-      toast.error(errorMessage)
-      localStorage.removeItem('AUTH_TOKEN')
-      console.error(err)
-    }
+    login(loginRequest)
+    reset()
   }
 
   return (

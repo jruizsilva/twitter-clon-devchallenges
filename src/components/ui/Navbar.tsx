@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { NavLink, useLocation } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { UserLogo } from './UserLogo'
 
@@ -23,11 +24,13 @@ import { useUserQuery } from 'hooks/queries/useUserQuery'
 interface Props {}
 
 export function Navbar(props: Props) {
+  const queryClient = useQueryClient()
   const { pathname } = useLocation()
   const { user } = useUserQuery()
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN')
+    queryClient.setQueryData(['user'], null)
   }
 
   return (
@@ -51,46 +54,47 @@ export function Navbar(props: Props) {
           display={{ base: 'none', md: 'flex' }}
           spacing={{ base: '0', md: '32px', lg: '64px', xl: '80px' }}
         >
-          {user !== null && (
-            <>
-              <Heading size='xs'>
-                <Button
-                  as={NavLink}
-                  isActive={pathname === '/'}
-                  to='/'
-                  variant='link'
-                >
-                  Home
-                </Button>
-              </Heading>
+          {user !== undefined ||
+            (user !== null && (
+              <>
+                <Heading size='xs'>
+                  <Button
+                    as={NavLink}
+                    isActive={pathname === '/'}
+                    to='/'
+                    variant='link'
+                  >
+                    Home
+                  </Button>
+                </Heading>
 
-              <Heading size='xs'>
-                <Button
-                  as={NavLink}
-                  isActive={pathname === '/people'}
-                  to='/people'
-                  variant='link'
-                >
-                  People
-                </Button>
-              </Heading>
+                <Heading size='xs'>
+                  <Button
+                    as={NavLink}
+                    isActive={pathname === '/people'}
+                    to='/people'
+                    variant='link'
+                  >
+                    People
+                  </Button>
+                </Heading>
 
-              <Heading size='xs'>
-                <Button
-                  as={NavLink}
-                  isActive={pathname === '/bookmarks'}
-                  to='/bookmarks'
-                  variant='link'
-                >
-                  Bookmarks
-                </Button>
-              </Heading>
-            </>
-          )}
+                <Heading size='xs'>
+                  <Button
+                    as={NavLink}
+                    isActive={pathname === '/bookmarks'}
+                    to='/bookmarks'
+                    variant='link'
+                  >
+                    Bookmarks
+                  </Button>
+                </Heading>
+              </>
+            ))}
         </HStack>
 
         <Box display={'flex'}>
-          {user !== null ? (
+          {user !== undefined && user !== null ? (
             <Menu>
               <MenuButton>
                 <HStack>

@@ -18,9 +18,8 @@ import {
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
-import toast from 'react-hot-toast'
 
-import { registerUser } from 'services/auth'
+import { useRegisterMutation } from 'hooks/mutations/useRegisterMutation'
 
 export function RegisterPage() {
   const {
@@ -29,26 +28,15 @@ export function RegisterPage() {
     formState: { errors, isSubmitting, isValid },
     reset
   } = useForm<RegisterRequest>({ mode: 'onBlur' })
+  const { registerUser, isSuccess } = useRegisterMutation()
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit: SubmitHandler<RegisterRequest> = async (loginRequest) => {
-    try {
-      const AUTH_TOKEN = await registerUser(loginRequest)
+  if (isSuccess) {
+    reset()
+  }
 
-      localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN)
-      // react query request to register
-
-      toast.success('Successfully login!', {
-        id: 'login',
-        position: 'bottom-right'
-      })
-
-      reset()
-    } catch (err: any) {
-      toast.error(err.response.data.message)
-      localStorage.removeItem('AUTH_TOKEN')
-      console.error(err)
-    }
+  const onSubmit: SubmitHandler<RegisterRequest> = (loginRequest) => {
+    registerUser(loginRequest)
   }
 
   return (
