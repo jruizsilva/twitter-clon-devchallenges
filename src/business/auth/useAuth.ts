@@ -1,18 +1,4 @@
-import { publicInstance } from 'business/api/axiosInstances';
-
-export interface LoginRequest {
-  username: string
-  password: string
-}
-export interface RegisterRequest {
-  username: string
-  password: string
-  name: string
-  description?: string
-}
-interface AuthResponse {
-  jwt: string
-}
+import { publicInstance } from 'api/axiosInstances';
 
 const useAuth = () => {
   return {
@@ -27,7 +13,8 @@ const useAuth = () => {
       const AUTH_TOKEN = response.data.jwt;
 
       return AUTH_TOKEN;
-    }
+    },
+
   }
 }
 

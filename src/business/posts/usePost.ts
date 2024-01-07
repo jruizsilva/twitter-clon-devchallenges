@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { type UserWithOutChildren } from '../user/useUser';
 
-import { protectedInstance } from 'business/api/axiosInstances';
+import { protectedInstance } from 'api/axiosInstances';
 
 export interface Post {
   id: number;

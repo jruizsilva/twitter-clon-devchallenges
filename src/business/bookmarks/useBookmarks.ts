@@ -1,4 +1,6 @@
-import { protectedInstance } from 'business/api/axiosInstances';
+import { useCallback } from 'react';
+
+import { protectedInstance } from 'api/axiosInstances';
 import { type Post, type PostWithoutChildren } from 'business/posts/usePost';
 import { type UserWithOutChildren } from 'business/user/useUser';
 
@@ -19,7 +21,7 @@ const useBookmarks = () => {
     },
     fetchAddBookmark: async (postId: string, username: string) => {
       const response = await protectedInstance
-        .post<Post>(`/bookmarks?postId=${postId}&username=${username}`);
+        .post<Bookmark>(`/bookmarks?postId=${postId}&username=${username}`);
       const bookmark = response.data;
 
       return bookmark
@@ -28,13 +30,13 @@ const useBookmarks = () => {
       await protectedInstance
         .delete<Bookmark>(`/bookmarks?postId=${postId}&username=${username}`);
     },
-    fetchAllBookmarkedPostsByUsername: async (username: string) => {
+    fetchAllBookmarkedPostsByUsername: useCallback(async (username: string) => {
       const response = await protectedInstance
-        .get<Post>(`/bookmarks/posts?username=${username}`);
+        .get<Post[]>(`/bookmarks/posts?username=${username}`);
       const posts = response.data;
 
       return posts
-    }
+    }, [])
 
   }
 }
