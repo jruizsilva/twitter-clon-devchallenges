@@ -223,57 +223,56 @@ export function TweetCard({
               width='100%'
             />
           )}
-          {user !== undefined ||
-            (user !== null && (
-              <>
-                <Box
-                  display='flex'
-                  gap={4}
-                  justifyContent='end'
-                  marginBottom={2}
-                  marginTop={3}
+          {Boolean(user) && (
+            <>
+              <Box
+                display='flex'
+                gap={4}
+                justifyContent='end'
+                marginBottom={2}
+                marginTop={3}
+              >
+                <Text fontSize='xs'>0 Comments</Text>
+                <Text fontSize='xs'>0 Retweets</Text>
+                <Text fontSize='xs'>{post.likes?.length} Likes</Text>
+                <Text fontSize='xs'>0 Saved</Text>
+              </Box>
+              <Divider opacity={0.1} />
+              <Box
+                alignItems='center'
+                columnGap='10px'
+                display='flex'
+                height='50px'
+                justifyContent='center'
+              >
+                <ButtonIconContainer isDisabled>
+                  <Icon as={MdOutlineModeComment} boxSize={5} />
+                </ButtonIconContainer>
+                <ButtonIconContainer isDisabled colorScheme='green'>
+                  <Icon as={MdLoop} boxSize={5} />
+                </ButtonIconContainer>
+                <ButtonIconContainer
+                  colorScheme='red'
+                  isDisabled={isLoadingLike}
+                  onClick={() => {
+                    // handleLike()
+                  }}
                 >
-                  <Text fontSize='xs'>0 Comments</Text>
-                  <Text fontSize='xs'>0 Retweets</Text>
-                  <Text fontSize='xs'>{post.likes?.length} Likes</Text>
-                  <Text fontSize='xs'>0 Saved</Text>
-                </Box>
-                <Divider opacity={0.1} />
-                <Box
-                  alignItems='center'
-                  columnGap='10px'
-                  display='flex'
-                  height='50px'
-                  justifyContent='center'
+                  <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />
+                </ButtonIconContainer>
+                <ButtonIconContainer
+                  colorScheme='cyan'
+                  isActive={isPostSavedInBookmarks}
+                  isDisabled={isLoadingBookmarks}
+                  onClick={() => {
+                    // handleBookmark()
+                  }}
                 >
-                  <ButtonIconContainer isDisabled>
-                    <Icon as={MdOutlineModeComment} boxSize={5} />
-                  </ButtonIconContainer>
-                  <ButtonIconContainer isDisabled colorScheme='green'>
-                    <Icon as={MdLoop} boxSize={5} />
-                  </ButtonIconContainer>
-                  <ButtonIconContainer
-                    colorScheme='red'
-                    isDisabled={isLoadingLike}
-                    onClick={() => {
-                      // handleLike()
-                    }}
-                  >
-                    <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />
-                  </ButtonIconContainer>
-                  <ButtonIconContainer
-                    colorScheme='cyan'
-                    isActive={isPostSavedInBookmarks}
-                    isDisabled={isLoadingBookmarks}
-                    onClick={() => {
-                      // handleBookmark()
-                    }}
-                  >
-                    <Icon as={BsBookmark} boxSize={5} />
-                  </ButtonIconContainer>
-                </Box>
-              </>
-            ))}
+                  <Icon as={BsBookmark} boxSize={5} />
+                </ButtonIconContainer>
+              </Box>
+            </>
+          )}
         </Box>
         {/* <Divider opacity={0.1} /> */}
         {/* {true && <CommentInput />}

@@ -54,47 +54,46 @@ export function Navbar(props: Props) {
           display={{ base: 'none', md: 'flex' }}
           spacing={{ base: '0', md: '32px', lg: '64px', xl: '80px' }}
         >
-          {user !== undefined ||
-            (user !== null && (
-              <>
-                <Heading size='xs'>
-                  <Button
-                    as={NavLink}
-                    isActive={pathname === '/'}
-                    to='/'
-                    variant='link'
-                  >
-                    Home
-                  </Button>
-                </Heading>
+          {Boolean(user) && (
+            <>
+              <Heading size='xs'>
+                <Button
+                  as={NavLink}
+                  isActive={pathname === '/'}
+                  to='/'
+                  variant='link'
+                >
+                  Home
+                </Button>
+              </Heading>
 
-                <Heading size='xs'>
-                  <Button
-                    as={NavLink}
-                    isActive={pathname === '/people'}
-                    to='/people'
-                    variant='link'
-                  >
-                    People
-                  </Button>
-                </Heading>
+              <Heading size='xs'>
+                <Button
+                  as={NavLink}
+                  isActive={pathname === '/people'}
+                  to='/people'
+                  variant='link'
+                >
+                  People
+                </Button>
+              </Heading>
 
-                <Heading size='xs'>
-                  <Button
-                    as={NavLink}
-                    isActive={pathname === '/bookmarks'}
-                    to='/bookmarks'
-                    variant='link'
-                  >
-                    Bookmarks
-                  </Button>
-                </Heading>
-              </>
-            ))}
+              <Heading size='xs'>
+                <Button
+                  as={NavLink}
+                  isActive={pathname === '/bookmarks'}
+                  to='/bookmarks'
+                  variant='link'
+                >
+                  Bookmarks
+                </Button>
+              </Heading>
+            </>
+          )}
         </HStack>
 
         <Box display={'flex'}>
-          {user !== undefined && user !== null ? (
+          {user != null ? (
             <Menu>
               <MenuButton>
                 <HStack>
