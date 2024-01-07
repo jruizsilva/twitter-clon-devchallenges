@@ -82,7 +82,7 @@ export function TweetCard({
   } = useForm<PostRequest>({
     mode: 'onBlur',
     defaultValues: {
-      content: data?.content !== undefined ? data.content : post?.content
+      content: data?.content != null ? data.content : post?.content
     }
   })
 
