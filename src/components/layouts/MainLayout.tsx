@@ -57,16 +57,6 @@ export function MainLayout({ children }: Readonly<Props>) {
     fetchDataRequest()
   }, [fetchDataRequest, setIsLoading])
 
-  useEffect(() => {
-    // cada 13min
-    const intervalo = 13 * 60 * 1000
-
-    setInterval(() => {
-      console.log('hola')
-      fetchDataRequest()
-    }, intervalo)
-  }, [fetchDataRequest])
-
   return (
     <>
       {isLoading ? (
