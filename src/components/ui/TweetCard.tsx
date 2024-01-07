@@ -41,6 +41,9 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
 import { useUserQuery } from 'hooks/queries/useUserQuery'
+import { fetchDeletePostById } from 'services/posts'
+import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
+import { useEditPostMutation } from 'hooks/mutations/useEditPostMutation'
 
 interface Props {
   urlImage?: string
@@ -70,7 +73,8 @@ export function TweetCard({
   const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(false)
   const [isLoadingBookmarks, setIsLoadingBookmarks] = useState(false)
-
+  const { deletePost } = useDeletePostMutation()
+  const { editPost, data } = useEditPostMutation()
   const {
     register,
     handleSubmit,
@@ -78,7 +82,9 @@ export function TweetCard({
     setValue
   } = useForm<PostRequest>({
     mode: 'onBlur',
-    defaultValues: { content: post?.content }
+    defaultValues: {
+      content: data?.content !== undefined ? data.content : post?.content
+    }
   })
 
   const handleDelete = (postId: number) => {
@@ -92,14 +98,7 @@ export function TweetCard({
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        fetchDeletePostById(postId.toString())
-          .then(() => {
-            deletePostById(postId)
-            toast.success('Post deleted')
-          })
-          .catch((err) => {
-            console.error(err)
-          })
+        deletePost(postId.toString())
       }
     })
   }
@@ -107,49 +106,38 @@ export function TweetCard({
   const handleEdit: SubmitHandler<PostRequest> = async (
     postRequest: PostRequest
   ) => {
-    try {
-      const postUpdated = await fetchEditPost(post.id.toString(), postRequest)
-
-      updatePostById(post.id, postUpdated)
-
-      setValue('content', postUpdated.content)
-    } catch (err) {
-      console.error(err)
-      if (err instanceof Error) {
-        toast.error(err.message)
-      }
-    }
+    editPost({ postId: post.id.toString(), postRequest })
   }
 
-  const handleLike = () => {
-    setIsLoadingLike(true)
-    if (isLiked) {
-      fetchRemoveLikeToPost(post.id.toString())
-        .then((postUpdated) => {
-          console.log('RemoveLikeToPost', postUpdated)
-          updatePostById(post.id, postUpdated)
-        })
-        .catch((err) => {
-          console.dir(err)
-        })
-        .finally(() => {
-          setIsLoadingLike(false)
-        })
-    } else {
-      fetchAddLikeToPost(post.id.toString())
-        .then((postUpdated) => {
-          console.log('AddLikeToPost', postUpdated)
-          updatePostById(post.id, postUpdated)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-        .finally(() => {
-          setIsLoadingLike(false)
-        })
-    }
-    setIsLiked((prev) => !prev)
-  }
+  // const handleLike = () => {
+  //   setIsLoadingLike(true)
+  //   if (isLiked) {
+  //     fetchRemoveLikeToPost(post.id.toString())
+  //       .then((postUpdated) => {
+  //         console.log('RemoveLikeToPost', postUpdated)
+  //         updatePostById(post.id, postUpdated)
+  //       })
+  //       .catch((err) => {
+  //         console.dir(err)
+  //       })
+  //       .finally(() => {
+  //         setIsLoadingLike(false)
+  //       })
+  //   } else {
+  //     fetchAddLikeToPost(post.id.toString())
+  //       .then((postUpdated) => {
+  //         console.log('AddLikeToPost', postUpdated)
+  //         updatePostById(post.id, postUpdated)
+  //       })
+  //       .catch((err) => {
+  //         console.error(err)
+  //       })
+  //       .finally(() => {
+  //         setIsLoadingLike(false)
+  //       })
+  //   }
+  //   setIsLiked((prev) => !prev)
+  // }
 
   // const handleBookmark = () => {
   //   if (user === null) {
@@ -268,7 +256,7 @@ export function TweetCard({
                   colorScheme='red'
                   isDisabled={isLoadingLike}
                   onClick={() => {
-                    handleLike()
+                    // handleLike()
                   }}
                 >
                   <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />

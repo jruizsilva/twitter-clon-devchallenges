@@ -19,7 +19,7 @@ const fetchDeletePostById = async (postId: string) => {
 }
 
 const fetchEditPost = async (postId: string, postRequest: PostRequest) => {
-  const response = await protectedInstance.put<Post>(`/posts/${postId}`, postRequest);
+  const response = await protectedInstance.patch<Post>(`/posts/${postId}`, postRequest);
   const postUpdated = response.data;
 
   return postUpdated

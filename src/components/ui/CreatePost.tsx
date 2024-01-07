@@ -22,20 +22,12 @@ export function CreatePost(props: Props) {
     formState: { errors, isValid, isSubmitting },
     reset
   } = useForm<PostRequest>({ mode: 'onBlur' })
-  const queryClient = useQueryClient()
-  const onSuccess = () => {
-    toast.success('Post created successfully', {
-      id: 'create-post',
-      position: 'bottom-right'
-    })
-    reset()
-    queryClient.invalidateQueries({ queryKey: ['posts'] })
-  }
 
-  const { addPost } = useCreatePostMutation(onSuccess)
+  const { addPost } = useCreatePostMutation()
 
   const onSubmit: SubmitHandler<PostRequest> = (post: PostRequest) => {
     addPost(post)
+    reset()
   }
 
   return (

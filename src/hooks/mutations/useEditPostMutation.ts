@@ -1,0 +1,35 @@
+import { type MutationFunction, useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
+import { fetchEditPost } from "services/posts";
+
+
+
+const useEditPostMutation = () => {
+  const queryClient = useQueryClient()
+  const mutationKey = ['edit-post']
+  const mutationFn: MutationFunction<Post, { postId: string; postRequest: PostRequest }> = async (variables) => {
+    const { postId, postRequest } = variables;
+
+    return await fetchEditPost(postId, postRequest);
+  };
+
+  const { mutate: editPost, ...rest } = useMutation({
+    mutationKey, mutationFn, onSuccess: () => {
+      toast.success("Post edited", {
+        id: "edit-post-success",
+        position: "bottom-right",
+      })
+      queryClient.invalidateQueries({ queryKey: ['userPosts'] })
+    }
+    ,
+    onError: (error) => {
+      console.dir(error)
+    },
+
+  })
+
+  return { editPost, ...rest }
+}
+
+export { useEditPostMutation }
