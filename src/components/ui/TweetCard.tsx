@@ -34,9 +34,10 @@ import {
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { BsBookmarkXFill } from 'react-icons/bs'
+import { IoMdHeartDislike } from 'react-icons/io'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
@@ -45,6 +46,8 @@ import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
 import { useUpdatePostMutation } from 'hooks/mutations/useUpdatePostMutation'
 import { useToggleLikeMutation } from 'hooks/mutations/useToggleLikeMutation'
 import { useToggleBookmarkMutation } from 'hooks/mutations/useToggleBookmarkMutation'
+import { useRemoveBookmarkMutation } from 'hooks/mutations/useRemoveBookmarkMutation'
+import { useRemoveLikeMutation } from 'hooks/mutations/useRemoveLikeMutation'
 
 interface Props {
   urlImage?: string
@@ -97,6 +100,8 @@ export function TweetCard({
   )
   const { deletePost } = useDeletePostMutation()
   const { editPost, data } = useUpdatePostMutation()
+  const { removeBookmark } = useRemoveBookmarkMutation(post?.id.toString())
+  const { removeLike } = useRemoveLikeMutation(post?.id.toString())
   const {
     register,
     handleSubmit,
@@ -147,6 +152,17 @@ export function TweetCard({
     setIsPostSavedInBookmarks((prev) => !prev)
   }
 
+  const pathContainsPostsLiked = useMemo(() => {
+    return pathname.includes('postsLiked')
+  }, [pathname])
+
+  const handleRemoveBookmark = () => {
+    removeBookmark()
+  }
+  const handleRemoveLike = () => {
+    removeLike()
+  }
+
   return (
     <>
       <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
@@ -176,8 +192,27 @@ export function TweetCard({
                 />
                 <MenuList>
                   {pathname === '/bookmarks' && (
-                    <MenuItem icon={<BsBookmarkXFill fontSize={'16px'} />}>
+                    <MenuItem
+                      icon={
+                        <BsBookmarkXFill
+                          fontSize={'16px'}
+                          onClick={handleRemoveBookmark}
+                        />
+                      }
+                    >
                       Remove bookmark
+                    </MenuItem>
+                  )}
+                  {pathContainsPostsLiked && (
+                    <MenuItem
+                      icon={
+                        <IoMdHeartDislike
+                          fontSize={'16px'}
+                          onClick={handleRemoveLike}
+                        />
+                      }
+                    >
+                      Remove like
                     </MenuItem>
                   )}
 
