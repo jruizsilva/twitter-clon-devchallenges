@@ -8,18 +8,28 @@ import {
   TabPanels,
   Tabs
 } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
 import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 import { ProfileTweetList } from './components/ProfileTweetList'
 
-import { useUserPostsQuery } from 'hooks/queries/useUserPostsQuery'
+import { usePostsCreatedByUsernameQuery } from 'hooks/queries/usePostsCreatedByUsernameQuery'
+import { usePostsLikedByUsernameQuery } from 'hooks/queries/usePostsLikedByUsernameQuery'
 
 interface Props {}
 
 export function ProfilePage(props: Props) {
-  const { userPosts, isLoading } = useUserPostsQuery()
+  const params = useParams()
+  const { postsCreated, isLoading } = usePostsCreatedByUsernameQuery(
+    params?.username as string
+  )
+  const { postsLiked } = usePostsLikedByUsernameQuery(
+    params?.username as string
+  )
+
+  console.log('postsLiked', postsLiked)
 
   return (
     <ProfileLayout>
@@ -61,17 +71,32 @@ export function ProfilePage(props: Props) {
                   justifyContent='space-between'
                   marginTop={{ base: '-30px' }}
                 >
-                  {userPosts?.length === 0 ? (
+                  {postsCreated?.length === 0 ? (
                     <Box w={'full'}>
                       <Center>No se encontraron posts</Center>
                     </Box>
                   ) : (
-                    <ProfileTweetList posts={userPosts} />
+                    <ProfileTweetList posts={postsCreated} />
                   )}
                 </Box>
               </TabPanel>
               <TabPanel>
-                <p>likes</p>
+                <Box
+                  alignItems='start'
+                  display='flex'
+                  flexDirection={{ base: 'column', md: 'row' }}
+                  gap={4}
+                  justifyContent='space-between'
+                  marginTop={{ base: '-30px' }}
+                >
+                  {postsLiked?.length === 0 ? (
+                    <Box w={'full'}>
+                      <Center>No se encontraron posts</Center>
+                    </Box>
+                  ) : (
+                    <ProfileTweetList posts={postsLiked} />
+                  )}
+                </Box>
               </TabPanel>
             </TabPanels>
           </Tabs>

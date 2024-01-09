@@ -22,7 +22,7 @@ export function MainRouter(props: Props) {
       <MainLayout>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route element={<ProfilePage />} path='/profile' />
+            <Route element={<ProfilePage />} path='/profile/:username' />
             <Route element={<ProfileEditPage />} path='/profile/edit' />
             <Route element={<PeoplePage />} path='/people' />
             <Route element={<BookmarksPage />} path='/bookmarks' />
