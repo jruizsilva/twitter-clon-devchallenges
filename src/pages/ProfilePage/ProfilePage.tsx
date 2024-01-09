@@ -36,12 +36,13 @@ export function ProfilePage(props: Props) {
           <ProfileDescription />
         </Box>
 
-        <Box display={'flex'} gap={'16px'} marginBottom={'42px'}>
+        <Box display={'flex'} gap={'4'} marginBottom={'24px'}>
           <Button
             colorScheme='messenger'
             flexGrow={'1'}
             isActive={pathContainsPostsCreated}
-            variant={'outline'}
+            rounded={'full'}
+            variant={'ghost'}
             onClick={() => {
               navigate(`/profile/${params?.username as string}/postsCreated`)
             }}
@@ -52,7 +53,8 @@ export function ProfilePage(props: Props) {
             colorScheme='messenger'
             flexGrow={'1'}
             isActive={pathContainsPostsLiked}
-            variant={'outline'}
+            rounded={'full'}
+            variant={'ghost'}
             onClick={() => {
               navigate(`/profile/${params?.username as string}/postsLiked`)
             }}
