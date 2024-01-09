@@ -18,11 +18,9 @@ export const UserLogo = ({
       borderRadius='8px'
       height={`${imageSize}px`}
       src={
-        // randomImage === true && imageId !== undefined
-        //   ? `https://i.pravatar.cc/${imageSize}`
-        //   : `https://i.pravatar.cc/${imageSize}?img=${imageId}`
-
-        `https://i.pravatar.cc/${imageSize}`
+        randomImage === true && imageId !== undefined
+          ? `https://i.pravatar.cc/${imageSize}`
+          : `https://i.pravatar.cc/${imageSize}?img=${imageId}`
       }
       width={`${imageSize}px`}
       {...rest}

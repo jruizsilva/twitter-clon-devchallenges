@@ -43,6 +43,7 @@ import { profileBackground } from 'assets'
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
 import { useUpdatePostMutation } from 'hooks/mutations/useUpdatePostMutation'
+import { useToggleLikeMutation } from 'hooks/mutations/useToggleLikeMutation'
 
 interface Props {
   urlImage?: string
@@ -70,7 +71,6 @@ export function TweetCard({
 }: Readonly<Props>) {
   const { user } = useUserQuery()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [isLoadingLike, setIsLoadingLike] = useState(false)
   const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(false)
   const [isLoadingBookmarks, setIsLoadingBookmarks] = useState(false)
@@ -87,6 +87,7 @@ export function TweetCard({
       content: data?.content != null ? data.content : post?.content
     }
   })
+  const { toggleLike, isPending } = useToggleLikeMutation(post?.id.toString())
 
   const handleDelete = (postId: number) => {
     Swal.fire({
@@ -110,35 +111,11 @@ export function TweetCard({
     editPost({ postId: post.id.toString(), postRequest })
   }
 
-  // const handleLike = () => {
-  //   setIsLoadingLike(true)
-  //   if (isLiked) {
-  //     fetchRemoveLikeToPost(post.id.toString())
-  //       .then((postUpdated) => {
-  //         console.log('RemoveLikeToPost', postUpdated)
-  //         updatePostById(post.id, postUpdated)
-  //       })
-  //       .catch((err) => {
-  //         console.dir(err)
-  //       })
-  //       .finally(() => {
-  //         setIsLoadingLike(false)
-  //       })
-  //   } else {
-  //     fetchAddLikeToPost(post.id.toString())
-  //       .then((postUpdated) => {
-  //         console.log('AddLikeToPost', postUpdated)
-  //         updatePostById(post.id, postUpdated)
-  //       })
-  //       .catch((err) => {
-  //         console.error(err)
-  //       })
-  //       .finally(() => {
-  //         setIsLoadingLike(false)
-  //       })
-  //   }
-  //   setIsLiked((prev) => !prev)
-  // }
+  const handleLike = () => {
+    toggleLike(isLiked)
+
+    setIsLiked((prev) => !prev)
+  }
 
   // const handleBookmark = () => {
   //   if (user === null) {
@@ -262,9 +239,9 @@ export function TweetCard({
                 </ButtonIconContainer>
                 <ButtonIconContainer
                   colorScheme='red'
-                  isDisabled={isLoadingLike}
+                  isDisabled={isPending}
                   onClick={() => {
-                    // handleLike()
+                    handleLike()
                   }}
                 >
                   <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />
