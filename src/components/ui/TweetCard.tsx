@@ -33,10 +33,10 @@ import {
   MdDelete
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
-import toast from 'react-hot-toast'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { NavLink } from 'react-router-dom'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
@@ -179,7 +179,14 @@ export function TweetCard({
         <Box display='flex' gap={3} marginBottom={4}>
           <UserLogo imageSize='40' />
           <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
-            <Heading size='sm'>{post?.user?.name}</Heading>
+            <Heading
+              _hover={{ textDecoration: 'underline' }}
+              as={NavLink}
+              size='sm'
+              to={`/profile/${post?.user?.username}`}
+            >
+              {post?.user?.name}
+            </Heading>
             <Text fontSize='xs'>{post.createdAt}</Text>
           </Box>
           {showOptionsMenu && post?.user?.id === user?.id && (

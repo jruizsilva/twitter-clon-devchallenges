@@ -28,4 +28,12 @@ const fetchSearchUsersByUsernameOrName = async (peopleToSearch: string) => {
   return users
 }
 
-export { fetchUserData, fetchUpdateUser, fetchAllUsers, fetchSearchUsersByUsernameOrName }
+const findUserByUsername = async (username: string) => {
+  const response =
+    await protectedInstance.get<User>(`/users/username/${username}`)
+  const user = response.data;
+
+  return user
+};
+
+export { fetchUserData, fetchUpdateUser, fetchAllUsers, fetchSearchUsersByUsernameOrName, findUserByUsername }
