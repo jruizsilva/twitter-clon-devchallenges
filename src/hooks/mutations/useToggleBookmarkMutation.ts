@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 import { fetchAddPostToPostsSaved, fetchRemovePostFromPostsSaved } from "services/posts";
 
@@ -18,6 +17,9 @@ const useToggleBookmarkMutation = (postId: string) => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['posts'] })
+    queryClient.invalidateQueries({ queryKey: ['postsCreated'] })
+    queryClient.invalidateQueries({ queryKey: ['postsLiked'] })
+    queryClient.invalidateQueries({ queryKey: ['postsSaved'] })
   }
 
 

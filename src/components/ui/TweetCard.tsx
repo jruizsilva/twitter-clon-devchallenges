@@ -49,6 +49,7 @@ interface Props {
   urlImage?: string
   post: Post
   showOptionsMenu: boolean
+  showButton?: boolean
 }
 
 const verifyIfPostIsAlreadyLiked = (
@@ -80,7 +81,8 @@ const verifyIfPostIsAlreadySaved = (
 export function TweetCard({
   urlImage,
   post,
-  showOptionsMenu
+  showOptionsMenu,
+  showButton = false
 }: Readonly<Props>) {
   const { user } = useUserQuery()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -215,41 +217,43 @@ export function TweetCard({
                 <Text fontSize='xs'>{post?.savedByUsers?.length} Saved</Text>
               </Box>
               <Divider opacity={0.1} />
-              <Box
-                alignItems='center'
-                columnGap='10px'
-                display='flex'
-                height='50px'
-                justifyContent='center'
-              >
-                <ButtonIconContainer isDisabled>
-                  <Icon as={MdOutlineModeComment} boxSize={5} />
-                </ButtonIconContainer>
-                <ButtonIconContainer isDisabled colorScheme='green'>
-                  <Icon as={MdLoop} boxSize={5} />
-                </ButtonIconContainer>
-                <ButtonIconContainer
-                  colorScheme='red'
-                  isDisabled={isPendingLike}
-                  onClick={() => {
-                    handleLike()
-                  }}
+              {showButton && (
+                <Box
+                  alignItems='center'
+                  columnGap='10px'
+                  display='flex'
+                  height='50px'
+                  justifyContent='center'
                 >
-                  <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />
-                </ButtonIconContainer>
-                <ButtonIconContainer
-                  colorScheme='cyan'
-                  isDisabled={isPendingBookmark}
-                  onClick={() => {
-                    handleBookmark()
-                  }}
-                >
-                  <Icon
-                    as={isPostSavedInBookmarks ? FaBookmark : FaRegBookmark}
-                    boxSize={5}
-                  />
-                </ButtonIconContainer>
-              </Box>
+                  <ButtonIconContainer isDisabled>
+                    <Icon as={MdOutlineModeComment} boxSize={5} />
+                  </ButtonIconContainer>
+                  <ButtonIconContainer isDisabled colorScheme='green'>
+                    <Icon as={MdLoop} boxSize={5} />
+                  </ButtonIconContainer>
+                  <ButtonIconContainer
+                    colorScheme='red'
+                    isDisabled={isPendingLike}
+                    onClick={() => {
+                      handleLike()
+                    }}
+                  >
+                    <Icon as={isLiked ? FaHeart : FaRegHeart} boxSize={5} />
+                  </ButtonIconContainer>
+                  <ButtonIconContainer
+                    colorScheme='cyan'
+                    isDisabled={isPendingBookmark}
+                    onClick={() => {
+                      handleBookmark()
+                    }}
+                  >
+                    <Icon
+                      as={isPostSavedInBookmarks ? FaBookmark : FaRegBookmark}
+                      boxSize={5}
+                    />
+                  </ButtonIconContainer>
+                </Box>
+              )}
             </>
           )}
         </Box>

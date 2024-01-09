@@ -17,6 +17,9 @@ const useToggleLikeMutation = (postId: string) => {
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['posts'] })
+    queryClient.invalidateQueries({ queryKey: ['postsCreated'] })
+    queryClient.invalidateQueries({ queryKey: ['postsLiked'] })
+    queryClient.invalidateQueries({ queryKey: ['postsSaved'] })
   }
 
 
