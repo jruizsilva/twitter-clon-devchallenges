@@ -118,7 +118,10 @@ export function Navbar(props: Props) {
                 </HStack>
               </MenuButton>
               <MenuList>
-                <MenuItem as={NavLink} to={`/profile/${user.username}`}>
+                <MenuItem
+                  as={NavLink}
+                  to={`/profile/${user.username}/postsCreated`}
+                >
                   Profile
                 </MenuItem>
                 <MenuItem as={NavLink} to={'/profile/edit'}>

@@ -32,14 +32,13 @@ export function PostsCreatedList(props: Props): JSX.Element {
           flexDirection={{ base: 'column', md: 'row' }}
           gap={4}
           justifyContent='space-between'
-          marginTop={{ base: '-30px' }}
         >
           {postsCreated?.length === 0 ? (
             <Box w={'full'}>
               <Center>No se encontraron posts</Center>
             </Box>
           ) : (
-            <ProfileTweetList posts={postsCreated} />
+            <ProfileTweetList showCrudButtons posts={postsCreated} />
           )}
         </Box>
       )}

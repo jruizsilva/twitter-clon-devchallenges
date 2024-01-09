@@ -38,7 +38,7 @@ export function BookmarksPage(props: Props): JSX.Element {
           postsSaved !== undefined &&
           postsSaved?.length > 0 &&
           postsSaved.map((post) => (
-            <TweetCard key={post.id} post={post} showOptionsMenu={false} />
+            <TweetCard key={post.id} post={post} showOptionsMenu={true} />
           ))
         )}
       </Box>

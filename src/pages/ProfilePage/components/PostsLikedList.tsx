@@ -31,7 +31,6 @@ export function PostsLikedList(props: Props): JSX.Element {
           flexDirection={{ base: 'column', md: 'row' }}
           gap={4}
           justifyContent='space-between'
-          marginTop={{ base: '-30px' }}
         >
           {postsLiked?.length === 0 ? (
             <Box w={'full'}>

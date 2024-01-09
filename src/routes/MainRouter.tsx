@@ -1,5 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
+import { PostsCreatedList } from '../pages/ProfilePage/components/PostsCreatedList'
+import { PostsLikedList } from '../pages/ProfilePage/components/PostsLikedList'
+
 import { PrivateRoutes } from './PrivateRoutes'
 import { RedirectToHomeWhenUserLogin } from './RedirectToHomeWhenUserLogin'
 
@@ -22,7 +25,10 @@ export function MainRouter(props: Props) {
       <MainLayout>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route element={<ProfilePage />} path='/profile/:username' />
+            <Route element={<ProfilePage />} path='/profile/:username'>
+              <Route element={<PostsCreatedList />} path='postsCreated' />
+              <Route element={<PostsLikedList />} path='postsLiked' />
+            </Route>
             <Route element={<ProfileEditPage />} path='/profile/edit' />
             <Route element={<PeoplePage />} path='/people' />
             <Route element={<BookmarksPage />} path='/bookmarks' />

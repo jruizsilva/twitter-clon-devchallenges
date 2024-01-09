@@ -35,7 +35,8 @@ import {
 import { TbDots } from 'react-icons/tb'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import { BsBookmarkXFill } from 'react-icons/bs'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
@@ -50,6 +51,7 @@ interface Props {
   post: Post
   showOptionsMenu: boolean
   showButton?: boolean
+  showCrudButtons?: boolean
 }
 
 const verifyIfPostIsAlreadyLiked = (
@@ -82,9 +84,12 @@ export function TweetCard({
   urlImage,
   post,
   showOptionsMenu,
-  showButton = false
+  showButton = false,
+  showCrudButtons = false
 }: Readonly<Props>) {
   const { user } = useUserQuery()
+  const { pathname } = useLocation()
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(
@@ -152,14 +157,14 @@ export function TweetCard({
               <Text
                 _hover={{ textDecoration: 'underline' }}
                 as={NavLink}
-                to={`/profile/${post?.user?.username}`}
+                to={`/profile/${post?.user?.username}/postsCreated`}
               >
                 {post?.user?.name}
               </Text>
             </Heading>
             <Text fontSize='xs'>{post.createdAt}</Text>
           </Box>
-          {showOptionsMenu && post?.user?.id === user?.id && (
+          {showOptionsMenu && (
             <Box mr={'-8px'} mt={'-8px'}>
               <Menu>
                 <MenuButton
@@ -170,22 +175,32 @@ export function TweetCard({
                   variant='ghost'
                 />
                 <MenuList>
-                  <MenuItem
-                    icon={<MdOutlineEdit fontSize={'16px'} />}
-                    onClick={() => {
-                      onOpen()
-                    }}
-                  >
-                    Edit post
-                  </MenuItem>
-                  <MenuItem
-                    icon={<MdDelete fontSize={'16px'} />}
-                    onClick={() => {
-                      handleDelete(post.id)
-                    }}
-                  >
-                    Delete post
-                  </MenuItem>
+                  {pathname === '/bookmarks' && (
+                    <MenuItem icon={<BsBookmarkXFill fontSize={'16px'} />}>
+                      Remove bookmark
+                    </MenuItem>
+                  )}
+
+                  {showCrudButtons && post?.user?.id === user?.id && (
+                    <>
+                      <MenuItem
+                        icon={<MdOutlineEdit fontSize={'16px'} />}
+                        onClick={() => {
+                          onOpen()
+                        }}
+                      >
+                        Edit post
+                      </MenuItem>
+                      <MenuItem
+                        icon={<MdDelete fontSize={'16px'} />}
+                        onClick={() => {
+                          handleDelete(post.id)
+                        }}
+                      >
+                        Delete post
+                      </MenuItem>
+                    </>
+                  )}
                 </MenuList>
               </Menu>
             </Box>
