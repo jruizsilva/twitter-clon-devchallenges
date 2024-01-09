@@ -2,7 +2,7 @@ import { Box, FormControl, Input } from '@chakra-ui/react'
 
 import { UserLogo } from './UserLogo'
 
-interface Props { }
+interface Props {}
 
 export function CommentInput(props: Props) {
   return (

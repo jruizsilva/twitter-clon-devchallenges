@@ -5,7 +5,7 @@ import { MdOutlineExplore } from 'react-icons/md'
 
 import { ButtonIconContainer } from './ButtonIconContainer'
 
-interface Props { }
+interface Props {}
 
 export function Footer(props: Props) {
   return (
@@ -20,22 +20,13 @@ export function Footer(props: Props) {
       position='fixed'
       width='100%'
     >
-      <ButtonIconContainer
-        height='41px'
-        width={{ base: '80px', md: '120px' }}
-      >
+      <ButtonIconContainer height='41px' width={{ base: '80px', md: '120px' }}>
         <Icon as={AiFillHome} boxSize={5} />
       </ButtonIconContainer>
-      <ButtonIconContainer
-        height='41px'
-        width={{ base: '80px', md: '120px' }}
-      >
+      <ButtonIconContainer height='41px' width={{ base: '80px', md: '120px' }}>
         <Icon as={MdOutlineExplore} boxSize={6} />
       </ButtonIconContainer>
-      <ButtonIconContainer
-        height='41px'
-        width={{ base: '80px', md: '120px' }}
-      >
+      <ButtonIconContainer height='41px' width={{ base: '80px', md: '120px' }}>
         <Icon as={BsBookmark} boxSize={5} />
       </ButtonIconContainer>
     </Box>

@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
+import toast from 'react-hot-toast'
 
-import { fetchLogin } from "services/auth";
+import { fetchLogin } from 'services/auth'
 
 const useLoginMutation = () => {
   const queryClient = useQueryClient()
@@ -10,22 +10,25 @@ const useLoginMutation = () => {
   const mutationFn = fetchLogin
 
   const { mutate: login, ...rest } = useMutation({
-    mutationKey, mutationFn, onSuccess: (token) => {
+    mutationKey,
+    mutationFn,
+    onSuccess: (token) => {
       toast.success('Login successfuly', {
         id: 'login',
         position: 'bottom-right'
       })
       localStorage.setItem('AUTH_TOKEN', token)
       queryClient.invalidateQueries({ queryKey: ['user'] })
-    }
-    , onError: (error) => {
+    },
+    onError: (error) => {
       console.dir(error)
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data?.backendMessage, { id: 'auth', position: "bottom-right" })
-
+        toast.error(error.response?.data?.backendMessage, {
+          id: 'auth',
+          position: 'bottom-right'
+        })
       }
-    },
-
+    }
   })
 
   return { login, ...rest }

@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query'
 
-import { fetchUserData } from "services/user"
+import { fetchUserData } from 'services/user'
 
 const useUserQuery = () => {
-  const queryKey = ["user"]
+  const queryKey = ['user']
 
   const { data, ...rest } = useQuery({
-    queryKey, queryFn: async () => {
+    queryKey,
+    queryFn: async () => {
       return await fetchUserData()
-    }
-    , retry: false
+    },
+    retry: false
   })
 
   return {
@@ -18,6 +19,4 @@ const useUserQuery = () => {
   }
 }
 
-export {
-  useUserQuery
-}
+export { useUserQuery }

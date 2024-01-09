@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 
-import { fetchCreateOnePost } from "services/posts";
+import { fetchCreateOnePost } from 'services/posts'
 
 const useCreatePostMutation = () => {
   const queryClient = useQueryClient()
@@ -9,17 +9,18 @@ const useCreatePostMutation = () => {
   const mutationFn = fetchCreateOnePost
 
   const { mutate: addPost, ...rest } = useMutation({
-    mutationKey, mutationFn, onSuccess: () => {
+    mutationKey,
+    mutationFn,
+    onSuccess: () => {
       toast.success('Post created successfully', {
         id: 'create-post',
         position: 'bottom-right'
       })
       queryClient.invalidateQueries({ queryKey: ['posts'] })
-    }
-    , onError: (error) => {
-      console.dir(error)
     },
-
+    onError: (error) => {
+      console.dir(error)
+    }
   })
 
   return { addPost, ...rest }

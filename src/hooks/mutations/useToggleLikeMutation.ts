@@ -1,7 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { fetchAddLikeToPost, fetchRemoveLikeToPost } from "services/posts";
-
+import { fetchAddLikeToPost, fetchRemoveLikeToPost } from 'services/posts'
 
 const useToggleLikeMutation = (postId: string) => {
   const queryClient = useQueryClient()
@@ -22,13 +21,13 @@ const useToggleLikeMutation = (postId: string) => {
     queryClient.invalidateQueries({ queryKey: ['postsSaved'] })
   }
 
-
   const { mutate: toggleLike, ...rest } = useMutation({
-    mutationKey, mutationFn, onSuccess,
+    mutationKey,
+    mutationFn,
+    onSuccess,
     onError: (error) => {
       console.dir(error)
-    },
-
+    }
   })
 
   return { toggleLike, ...rest }

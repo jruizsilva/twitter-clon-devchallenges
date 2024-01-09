@@ -3,7 +3,7 @@ import { AiOutlineHeart } from 'react-icons/ai'
 
 import { UserLogo } from './UserLogo'
 
-interface Props { }
+interface Props {}
 
 export function Comment(props: Props) {
   return (

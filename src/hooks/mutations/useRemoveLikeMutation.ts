@@ -1,7 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { fetchRemoveLikeToPost } from "services/posts";
-
+import { fetchRemoveLikeToPost } from 'services/posts'
 
 const useRemoveLikeMutation = (postId: string) => {
   const queryClient = useQueryClient()
@@ -15,13 +14,13 @@ const useRemoveLikeMutation = (postId: string) => {
     queryClient.invalidateQueries({ queryKey: ['postsLiked'] })
   }
 
-
   const { mutate: removeLike, ...rest } = useMutation({
-    mutationKey, mutationFn, onSuccess,
+    mutationKey,
+    mutationFn,
+    onSuccess,
     onError: (error) => {
       console.dir(error)
-    },
-
+    }
   })
 
   return { removeLike, ...rest }

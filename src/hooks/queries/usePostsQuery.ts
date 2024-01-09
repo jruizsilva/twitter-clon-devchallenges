@@ -1,13 +1,15 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query'
 
-import { fetchAllPosts } from "services/posts"
+import { fetchAllPosts } from 'services/posts'
 
 const usePostsQuery = () => {
-  const queryKey = ["posts"]
+  const queryKey = ['posts']
   const queryFn = fetchAllPosts
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey, queryFn, retry: false
+    queryKey,
+    queryFn,
+    retry: false
   })
 
   return {
@@ -19,6 +21,4 @@ const usePostsQuery = () => {
   }
 }
 
-export {
-  usePostsQuery
-}
+export { usePostsQuery }

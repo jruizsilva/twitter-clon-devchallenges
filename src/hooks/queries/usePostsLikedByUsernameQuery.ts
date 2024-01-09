@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query'
 
-import { fetchAllPostsLikedByUsername } from "services/posts"
-
+import { fetchAllPostsLikedByUsername } from 'services/posts'
 
 const usePostsLikedByUsernameQuery = (username: string) => {
-  const queryKey = ["postsLiked"]
+  const queryKey = ['postsLiked']
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey, queryFn: async () => {
+    queryKey,
+    queryFn: async () => {
       return await fetchAllPostsLikedByUsername(username)
     },
     retry: false
@@ -22,6 +22,4 @@ const usePostsLikedByUsernameQuery = (username: string) => {
   }
 }
 
-export {
-  usePostsLikedByUsernameQuery
-}
+export { usePostsLikedByUsernameQuery }

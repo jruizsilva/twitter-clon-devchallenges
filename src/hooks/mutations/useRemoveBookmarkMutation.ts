@@ -1,7 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { fetchRemovePostFromPostsSaved } from "services/posts";
-
+import { fetchRemovePostFromPostsSaved } from 'services/posts'
 
 const useRemoveBookmarkMutation = (postId: string) => {
   const queryClient = useQueryClient()
@@ -15,13 +14,13 @@ const useRemoveBookmarkMutation = (postId: string) => {
     queryClient.invalidateQueries({ queryKey: ['postsSaved'] })
   }
 
-
   const { mutate: removeBookmark, ...rest } = useMutation({
-    mutationKey, mutationFn, onSuccess,
+    mutationKey,
+    mutationFn,
+    onSuccess,
     onError: (error) => {
       console.dir(error)
-    },
-
+    }
   })
 
   return { removeBookmark, ...rest }

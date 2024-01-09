@@ -1,3 +1,3 @@
-export * from './CardPeople';
-export * from './ListCardPeople';
-export * from './PeopleContainer';
+export * from './CardPeople'
+export * from './ListCardPeople'
+export * from './PeopleContainer'

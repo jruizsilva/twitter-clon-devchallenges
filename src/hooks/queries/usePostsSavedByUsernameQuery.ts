@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query'
 
-import { fetchAllPostsSavedByUsername } from "services/posts"
-
+import { fetchAllPostsSavedByUsername } from 'services/posts'
 
 const usePostsSavedByUsernameQuery = (username: string) => {
-  const queryKey = ["postsSaved"]
+  const queryKey = ['postsSaved']
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey, queryFn: async () => {
+    queryKey,
+    queryFn: async () => {
       return await fetchAllPostsSavedByUsername(username)
     },
     retry: false
@@ -22,6 +22,4 @@ const usePostsSavedByUsernameQuery = (username: string) => {
   }
 }
 
-export {
-  usePostsSavedByUsernameQuery
-}
+export { usePostsSavedByUsernameQuery }

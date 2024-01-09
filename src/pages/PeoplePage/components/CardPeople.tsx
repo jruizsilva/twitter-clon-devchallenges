@@ -8,13 +8,11 @@ import {
   Text
 } from '@chakra-ui/react'
 
-import { type User } from 'business/user/useUser'
-
 interface Props {
   user: User | null
 }
 
-export function CardPeople({ user }: Props): JSX.Element {
+export function CardPeople({ user }: Readonly<Props>): JSX.Element {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
