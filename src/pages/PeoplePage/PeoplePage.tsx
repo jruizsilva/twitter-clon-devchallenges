@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   InputGroup,
   Input,
@@ -14,7 +13,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { ListCardPeople, PeopleContainer } from './components'
 
-import { fetchAllUsers, fetchSearchUsersByUsernameOrName } from 'services/user'
+import { fetchSearchUsersByUsernameOrName } from 'services/user'
 import { useUsersQuery } from 'hooks/queries/userUsersQuery'
 
 interface Props {}
@@ -31,8 +30,6 @@ export function PeoplePage(props: Props): JSX.Element {
   } = useForm<SearchUserRequest>({ mode: 'onBlur' })
 
   const { users } = useUsersQuery()
-
-  console.log(users)
 
   const onSubmit: SubmitHandler<SearchUserRequest> = async (formValues) => {
     if (formValues.peapleToSearch.trim().length === 0) {

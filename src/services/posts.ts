@@ -25,13 +25,6 @@ const fetchEditPost = async (postId: string, postRequest: PostRequest) => {
   return postUpdated
 }
 
-const fetchAddLikeToPost = async (postId: string) => {
-  const response = await protectedInstance.patch<Post>(`/posts/${postId}/like`);
-  const postUpdated = response.data;
-
-  return postUpdated
-}
-
 const fetchRemoveLikeToPost = async (postId: string) => {
   const response = await protectedInstance.patch<Post>(`/posts/${postId}/removeLike`);
   const postUpdated = response.data;
@@ -39,11 +32,45 @@ const fetchRemoveLikeToPost = async (postId: string) => {
   return postUpdated
 }
 
-const fetchAllPostOfCurrentUser = async () => {
-  const response = await protectedInstance.get<Post[]>(`/posts/user`);
-  const posts = response.data;
+const fetchAddLikeToPost = async (postId: string) => {
+  const response = await protectedInstance.patch<Post>(`/posts/${postId}/like`);
+  const postUpdated = response.data;
 
-  return posts
+  return postUpdated
+}
+
+const fetchAddPostToPostsSaved = async (postId: string) => {
+  const response = await protectedInstance.patch<Post>(`/posts/${postId}/savePost`);
+  const postUpdated = response.data;
+
+  return postUpdated
+}
+
+const fetchRemovePostFromPostsSaved = async (postId: string) => {
+  const response = await protectedInstance.patch<Post>(`/posts/${postId}/removePostSaved`);
+  const postUpdated = response.data;
+
+  return postUpdated
+}
+
+
+const fetchAllPostsCreatedByUsername = async (username: string) => {
+  const response = await protectedInstance.get<Post[]>(`/posts/username/${username}/postsCreated`);
+  const postsCreated = response.data;
+
+  return postsCreated
+}
+const fetchAllPostsLikedByUsername = async (username: string) => {
+  const response = await protectedInstance.get<Post[]>(`/posts/username/${username}/postsLiked`);
+  const postsLiked = response.data;
+
+  return postsLiked
+}
+const fetchAllPostsSavedByUsername = async (username: string) => {
+  const response = await protectedInstance.get<Post[]>(`/posts/username/${username}/postsSaved`);
+  const postsSaved = response.data;
+
+  return postsSaved
 }
 
 export {
@@ -53,5 +80,9 @@ export {
   fetchEditPost,
   fetchAddLikeToPost,
   fetchRemoveLikeToPost,
-  fetchAllPostOfCurrentUser
+  fetchAddPostToPostsSaved,
+  fetchRemovePostFromPostsSaved,
+  fetchAllPostsCreatedByUsername,
+  fetchAllPostsLikedByUsername,
+  fetchAllPostsSavedByUsername,
 }

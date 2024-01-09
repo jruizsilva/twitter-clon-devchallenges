@@ -7,8 +7,8 @@ const fetchUserData = async () => {
   return user
 }
 
-const fetchUpdateUser = async (updateUserRequest: UpdateUserRequest) => {
-  const response = await protectedInstance.patch<User>("/users", updateUserRequest)
+const fetchUpdateUser = async (username: string, updateUserRequest: UpdateUserRequest) => {
+  const response = await protectedInstance.patch<User>(`/users/username/${username}`, updateUserRequest)
 
   const userUpdated = response.data;
 
