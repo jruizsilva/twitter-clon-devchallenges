@@ -1,12 +1,14 @@
 import { Box, Button, Heading, Text, calc } from '@chakra-ui/react'
 import { MdPersonAdd } from 'react-icons/md'
+import { useParams } from 'react-router-dom'
 
-import { useUserQuery } from 'hooks/queries/useUserQuery'
+import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
 
 interface Props {}
 
 export function ProfileDescription(props: Props) {
-  const { user } = useUserQuery()
+  const params = useParams()
+  const { userProfile } = useFindUserByUsernameQuery(params.username as string)
 
   return (
     <Box
@@ -37,10 +39,10 @@ export function ProfileDescription(props: Props) {
       >
         <Box>
           <Heading display={'inline-block'} size='lg' textAlign='center'>
-            {user?.name}
+            {userProfile?.name}
           </Heading>{' '}
           <Text color={'gray.500'} display={'inline-block'} fontWeight={600}>
-            @{user?.username}
+            @{userProfile?.username}
           </Text>
         </Box>
 
@@ -72,7 +74,7 @@ export function ProfileDescription(props: Props) {
           marginBottom={{ base: 5, md: 0 }}
           textAlign={{ base: 'center', md: 'left' }}
         >
-          {user?.description}
+          {userProfile?.description}
         </Text>
         {/* Agregar funcionalidad seguir usuarios */}
         <Button
