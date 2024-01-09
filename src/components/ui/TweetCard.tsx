@@ -52,8 +52,8 @@ import { useRemoveLikeMutation } from 'hooks/mutations/useRemoveLikeMutation'
 interface Props {
   urlImage?: string
   post: Post
-  showOptionsMenu: boolean
-  showButton?: boolean
+  showOptionsMenu?: boolean
+  showButtons?: boolean
   showCrudButtons?: boolean
 }
 
@@ -86,8 +86,8 @@ const verifyIfPostIsAlreadySaved = (
 export function TweetCard({
   urlImage,
   post,
-  showOptionsMenu,
-  showButton = false,
+  showOptionsMenu = false,
+  showButtons = false,
   showCrudButtons = false
 }: Readonly<Props>) {
   const { user } = useUserQuery()
@@ -193,24 +193,16 @@ export function TweetCard({
                 <MenuList>
                   {pathname === '/bookmarks' && (
                     <MenuItem
-                      icon={
-                        <BsBookmarkXFill
-                          fontSize={'16px'}
-                          onClick={handleRemoveBookmark}
-                        />
-                      }
+                      icon={<BsBookmarkXFill fontSize={'16px'} />}
+                      onClick={handleRemoveBookmark}
                     >
                       Remove bookmark
                     </MenuItem>
                   )}
                   {pathContainsPostsLiked && (
                     <MenuItem
-                      icon={
-                        <IoMdHeartDislike
-                          fontSize={'16px'}
-                          onClick={handleRemoveLike}
-                        />
-                      }
+                      icon={<IoMdHeartDislike fontSize={'16px'} />}
+                      onClick={handleRemoveLike}
                     >
                       Remove like
                     </MenuItem>
@@ -267,7 +259,7 @@ export function TweetCard({
                 <Text fontSize='xs'>{post?.savedByUsers?.length} Saved</Text>
               </Box>
               <Divider opacity={0.1} />
-              {showButton && (
+              {showButtons && (
                 <Box
                   alignItems='center'
                   columnGap='10px'

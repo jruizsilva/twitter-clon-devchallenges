@@ -32,12 +32,7 @@ export function HomePage(props: Props) {
           posts !== undefined &&
           posts?.length > 0 &&
           posts.map((post) => (
-            <TweetCard
-              key={post.id}
-              showButton
-              post={post}
-              showOptionsMenu={false}
-            />
+            <TweetCard key={post.id} showButtons post={post} />
           ))
         )}
       </Box>
