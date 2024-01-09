@@ -20,7 +20,7 @@ const useUpdatePostMutation = () => {
         id: "edit-post-success",
         position: "bottom-right",
       })
-      queryClient.invalidateQueries({ queryKey: ['userPosts'] })
+      queryClient.invalidateQueries({ queryKey: ['postsCreated'] })
     }
     ,
     onError: (error) => {

@@ -15,7 +15,7 @@ const useDeletePostMutation = () => {
         id: "delete-post-success",
         position: "bottom-right",
       })
-      queryClient.invalidateQueries({ queryKey: ["userPosts"] })
+      queryClient.invalidateQueries({ queryKey: ["postsCreated"] })
     }
     , onError: (error) => {
       console.dir(error)
