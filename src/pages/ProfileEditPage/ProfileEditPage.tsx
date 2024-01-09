@@ -33,7 +33,9 @@ export function ProfileEditPage() {
       description: user?.description
     }
   })
-  const { updateUser, data: userUpdated } = useUpdateUserMutation()
+  const { updateUser, data: userUpdated } = useUpdateUserMutation(
+    user?.username as string
+  )
 
   if (userUpdated !== undefined) {
     setValue('name', userUpdated.name)

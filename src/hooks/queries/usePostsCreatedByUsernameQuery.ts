@@ -4,7 +4,7 @@ import { fetchAllPostsCreatedByUsername } from "services/posts"
 
 
 const usePostsCreatedByUsernameQuery = (username: string) => {
-  const queryKey = [`profile/${username}/postsCreated`]
+  const queryKey = ["postsCreated"]
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey, queryFn: async () => {

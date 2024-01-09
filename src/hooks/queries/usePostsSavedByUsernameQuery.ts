@@ -4,7 +4,7 @@ import { fetchAllPostsSavedByUsername } from "services/posts"
 
 
 const usePostsSavedByUsernameQuery = (username: string) => {
-  const queryKey = [`profile/${username}/postsSaved`]
+  const queryKey = ["postsSaved"]
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey, queryFn: async () => {

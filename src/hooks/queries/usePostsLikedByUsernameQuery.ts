@@ -4,7 +4,7 @@ import { fetchAllPostsLikedByUsername } from "services/posts"
 
 
 const usePostsLikedByUsernameQuery = (username: string) => {
-  const queryKey = [`profile/${username}/postsLiked`]
+  const queryKey = ["postsLiked"]
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey, queryFn: async () => {
