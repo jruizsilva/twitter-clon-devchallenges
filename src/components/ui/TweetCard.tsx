@@ -44,6 +44,7 @@ import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
 import { useUpdatePostMutation } from 'hooks/mutations/useUpdatePostMutation'
 import { useToggleLikeMutation } from 'hooks/mutations/useToggleLikeMutation'
+import { useToggleBookmarkMutation } from 'hooks/mutations/useToggleBookmarkMutation'
 
 interface Props {
   urlImage?: string
@@ -64,6 +65,19 @@ const verifyIfPostIsAlreadyLiked = (
   )
 }
 
+const verifyIfPostIsAlreadySaved = (
+  post: Post,
+  userAuthenticated: User | undefined
+) => {
+  if (post?.savedByUsers?.length === 0) {
+    return false
+  }
+
+  return post.savedByUsers?.some(
+    (el) => el.username === userAuthenticated?.username
+  )
+}
+
 export function TweetCard({
   urlImage,
   post,
@@ -72,8 +86,9 @@ export function TweetCard({
   const { user } = useUserQuery()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
-  const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(false)
-  const [isLoadingBookmarks, setIsLoadingBookmarks] = useState(false)
+  const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(
+    verifyIfPostIsAlreadySaved(post, user)
+  )
   const { deletePost } = useDeletePostMutation()
   const { editPost, data } = useUpdatePostMutation()
   const {
@@ -87,7 +102,11 @@ export function TweetCard({
       content: data?.content != null ? data.content : post?.content
     }
   })
-  const { toggleLike, isPending } = useToggleLikeMutation(post?.id.toString())
+  const { toggleLike, isPending: isPendingLike } = useToggleLikeMutation(
+    post?.id.toString()
+  )
+  const { toggleBookmark, isPending: isPendingBookmark } =
+    useToggleBookmarkMutation(post?.id.toString())
 
   const handleDelete = (postId: number) => {
     Swal.fire({
@@ -117,38 +136,10 @@ export function TweetCard({
     setIsLiked((prev) => !prev)
   }
 
-  // const handleBookmark = () => {
-  //   if (user === null) {
-  //     return
-  //   }
-  //   setIsLoadingBookmarks(true)
-  //   if (user === null) return
-  //   if (isPostSavedInBookmarks) {
-  //     fetchRemoveBookmark(post.id.toString(), user?.username)
-  //       .then((bookmarkId) => {
-  //         setIsPostSavedInBookmarks(true)
-  //         console.log('fetchRemoveBookmark', bookmarkId)
-  //       })
-  //       .catch((err) => {
-  //         console.dir(err)
-  //       })
-  //       .finally(() => {
-  //         setIsLoadingBookmarks(false)
-  //       })
-  //   } else {
-  //     fetchAddBookmark(post.id.toString(), user?.username)
-  //       .then((bookmarkSaved) => {
-  //         console.log('fetchAddBookmark', bookmarkSaved)
-  //       })
-  //       .catch((err) => {
-  //         console.dir(err)
-  //       })
-  //       .finally(() => {
-  //         setIsLoadingBookmarks(false)
-  //       })
-  //   }
-  //   setIsPostSavedInBookmarks((prev) => !prev)
-  // }
+  const handleBookmark = () => {
+    toggleBookmark(isPostSavedInBookmarks)
+    setIsPostSavedInBookmarks((prev) => !prev)
+  }
 
   return (
     <>
@@ -156,13 +147,14 @@ export function TweetCard({
         <Box display='flex' gap={3} marginBottom={4}>
           <UserLogo imageSize='40' />
           <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
-            <Heading
-              _hover={{ textDecoration: 'underline' }}
-              as={NavLink}
-              size='sm'
-              to={`/profile/${post?.user?.username}`}
-            >
-              {post?.user?.name}
+            <Heading size='sm'>
+              <Text
+                _hover={{ textDecoration: 'underline' }}
+                as={NavLink}
+                to={`/profile/${post?.user?.username}`}
+              >
+                {post?.user?.name}
+              </Text>
             </Heading>
             <Text fontSize='xs'>{post.createdAt}</Text>
           </Box>
@@ -221,7 +213,7 @@ export function TweetCard({
                 <Text fontSize='xs'>0 Comments</Text>
                 <Text fontSize='xs'>0 Retweets</Text>
                 <Text fontSize='xs'>{post.likedByUsers?.length} Likes</Text>
-                <Text fontSize='xs'>0 Saved</Text>
+                <Text fontSize='xs'>{post?.savedByUsers?.length} Saved</Text>
               </Box>
               <Divider opacity={0.1} />
               <Box
@@ -239,7 +231,7 @@ export function TweetCard({
                 </ButtonIconContainer>
                 <ButtonIconContainer
                   colorScheme='red'
-                  isDisabled={isPending}
+                  isDisabled={isPendingLike}
                   onClick={() => {
                     handleLike()
                   }}
@@ -249,9 +241,9 @@ export function TweetCard({
                 <ButtonIconContainer
                   colorScheme='cyan'
                   isActive={isPostSavedInBookmarks}
-                  isDisabled={isLoadingBookmarks}
+                  isDisabled={isPendingBookmark}
                   onClick={() => {
-                    // handleBookmark()
+                    handleBookmark()
                   }}
                 >
                   <Icon as={BsBookmark} boxSize={5} />

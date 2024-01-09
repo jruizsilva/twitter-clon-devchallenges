@@ -8,8 +8,8 @@ const useToggleLikeMutation = (postId: string) => {
   const queryClient = useQueryClient()
   const mutationKey = ['toggle-like']
 
-  const mutationFn = async (isButtonActive: boolean) => {
-    if (isButtonActive) {
+  const mutationFn = async (isLiked: boolean) => {
+    if (isLiked) {
       return await fetchRemoveLikeToPost(postId)
     }
 
