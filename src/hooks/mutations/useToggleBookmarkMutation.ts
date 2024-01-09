@@ -17,10 +17,6 @@ const useToggleBookmarkMutation = (postId: string) => {
   }
 
   const onSuccess = () => {
-    toast.success('Post updated successfully', {
-      id: 'toggle-bookmark',
-      position: 'bottom-right'
-    })
     queryClient.invalidateQueries({ queryKey: ['posts'] })
   }
 

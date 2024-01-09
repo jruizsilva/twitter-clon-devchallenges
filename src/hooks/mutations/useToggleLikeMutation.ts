@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 import { fetchAddLikeToPost, fetchRemoveLikeToPost } from "services/posts";
 
@@ -17,10 +16,6 @@ const useToggleLikeMutation = (postId: string) => {
   }
 
   const onSuccess = () => {
-    toast.success('Post updated successfully', {
-      id: 'toggle-like',
-      position: 'bottom-right'
-    })
     queryClient.invalidateQueries({ queryKey: ['posts'] })
   }
 
