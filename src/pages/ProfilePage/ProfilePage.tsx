@@ -1,25 +1,24 @@
-import {
-  Box,
-  Button,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs
-} from '@chakra-ui/react'
-import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { Box, Button } from '@chakra-ui/react'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useMemo } from 'react'
 
 import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
-import { PostsCreatedList } from './components/PostsCreatedList'
-import { PostsLikedList } from './components/PostsLikedList'
 
 interface Props {}
 
 export function ProfilePage(props: Props) {
   const params = useParams()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  const pathContainsPostsCreated = useMemo(() => {
+    return pathname.includes('postsCreated')
+  }, [pathname])
+  const pathContainsPostsLiked = useMemo(() => {
+    return pathname.includes('postsLiked')
+  }, [pathname])
 
   return (
     <ProfileLayout>
@@ -37,20 +36,30 @@ export function ProfilePage(props: Props) {
           <ProfileDescription />
         </Box>
 
-        <Button
-          onClick={() => {
-            navigate(`/profile/${params?.username as string}/postsCreated`)
-          }}
-        >
-          Tweets
-        </Button>
-        <Button
-          onClick={() => {
-            navigate(`/profile/${params?.username as string}/postsLiked`)
-          }}
-        >
-          Likes
-        </Button>
+        <Box display={'flex'} gap={'16px'} marginBottom={'42px'}>
+          <Button
+            colorScheme='messenger'
+            flexGrow={'1'}
+            isActive={pathContainsPostsCreated}
+            variant={'outline'}
+            onClick={() => {
+              navigate(`/profile/${params?.username as string}/postsCreated`)
+            }}
+          >
+            Tweets
+          </Button>
+          <Button
+            colorScheme='messenger'
+            flexGrow={'1'}
+            isActive={pathContainsPostsLiked}
+            variant={'outline'}
+            onClick={() => {
+              navigate(`/profile/${params?.username as string}/postsLiked`)
+            }}
+          >
+            Likes
+          </Button>
+        </Box>
 
         <Outlet />
       </ProfileContainer>
