@@ -24,18 +24,19 @@ import {
   Textarea,
   useDisclosure
 } from '@chakra-ui/react'
-import { BsBookmark } from 'react-icons/bs'
+import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from 'react-icons/fa'
 import Swal from 'sweetalert2'
 import {
   MdOutlineModeComment,
   MdLoop,
   MdOutlineEdit,
-  MdDelete
+  MdDelete,
+  MdBookmarkBorder,
+  MdBookmark
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
@@ -240,13 +241,15 @@ export function TweetCard({
                 </ButtonIconContainer>
                 <ButtonIconContainer
                   colorScheme='cyan'
-                  isActive={isPostSavedInBookmarks}
                   isDisabled={isPendingBookmark}
                   onClick={() => {
                     handleBookmark()
                   }}
                 >
-                  <Icon as={BsBookmark} boxSize={5} />
+                  <Icon
+                    as={isPostSavedInBookmarks ? FaBookmark : FaRegBookmark}
+                    boxSize={5}
+                  />
                 </ButtonIconContainer>
               </Box>
             </>
