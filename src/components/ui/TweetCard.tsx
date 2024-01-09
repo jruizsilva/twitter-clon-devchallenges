@@ -54,11 +54,13 @@ const verifyIfPostIsAlreadyLiked = (
   post: Post,
   userAuthenticated: User | undefined
 ) => {
-  if (post?.likes?.length === 0) {
+  if (post?.likedByUsers?.length === 0) {
     return false
   }
 
-  return post.likes?.some((el) => el.user.id === userAuthenticated?.id)
+  return post.likedByUsers?.some(
+    (el) => el.username === userAuthenticated?.username
+  )
 }
 
 export function TweetCard({
@@ -177,10 +179,10 @@ export function TweetCard({
         <Box display='flex' gap={3} marginBottom={4}>
           <UserLogo imageSize='40' />
           <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
-            <Heading size='sm'>{post?.author?.name}</Heading>
+            <Heading size='sm'>{post?.user?.name}</Heading>
             <Text fontSize='xs'>{post.createdAt}</Text>
           </Box>
-          {showOptionsMenu && post?.author?.id === user?.id && (
+          {showOptionsMenu && post?.user?.id === user?.id && (
             <Box mr={'-8px'} mt={'-8px'}>
               <Menu>
                 <MenuButton
@@ -234,7 +236,7 @@ export function TweetCard({
               >
                 <Text fontSize='xs'>0 Comments</Text>
                 <Text fontSize='xs'>0 Retweets</Text>
-                <Text fontSize='xs'>{post.likes?.length} Likes</Text>
+                <Text fontSize='xs'>{post.likedByUsers?.length} Likes</Text>
                 <Text fontSize='xs'>0 Saved</Text>
               </Box>
               <Divider opacity={0.1} />
