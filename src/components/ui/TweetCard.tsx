@@ -30,9 +30,7 @@ import {
   MdOutlineModeComment,
   MdLoop,
   MdOutlineEdit,
-  MdDelete,
-  MdBookmarkBorder,
-  MdBookmark
+  MdDelete
 } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
 import { type SubmitHandler, useForm } from 'react-hook-form'
