@@ -10,7 +10,8 @@ const useUserQuery = () => {
     queryFn: async () => {
       return await fetchUserData()
     },
-    retry: false
+    retry: false,
+    refetchOnWindowFocus: false,
   })
 
   return {

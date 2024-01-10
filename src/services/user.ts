@@ -4,6 +4,8 @@ const fetchUserData = async () => {
   const response = await protectedInstance.get<User>('/users/profile')
   const user = response.data
 
+  console.log(user)
+
   return user
 }
 

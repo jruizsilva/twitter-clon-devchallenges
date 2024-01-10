@@ -9,7 +9,7 @@ export function Comment(props: Props) {
   return (
     <Box display='flex' flexDirection='column' paddingTop='16px' rowGap={1}>
       <Box columnGap={4} display='flex'>
-        <UserLogo randomImage imageSize='40' />
+        <UserLogo imageSize='40' />
 
         <Box
           backgroundColor='whiteAlpha.50'

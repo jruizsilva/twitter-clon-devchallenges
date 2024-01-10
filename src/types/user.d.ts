@@ -3,6 +3,8 @@ interface User {
   name: string
   description: string
   username: string
+  profileImage: string | null
+  backgroundImage: string | null
 }
 
 interface UpdateUserRequest {
