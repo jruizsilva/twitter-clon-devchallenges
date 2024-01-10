@@ -25,11 +25,11 @@ export function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isValid },
     reset
   } = useForm<LoginRequest>({ mode: 'onBlur' })
   const [showPassword, setShowPassword] = useState(false)
-  const { login } = useLoginMutation()
+  const { login, isPending } = useLoginMutation()
 
   const onSubmit: SubmitHandler<LoginRequest> = async (loginRequest) => {
     login(loginRequest)
@@ -125,7 +125,8 @@ export function LoginPage() {
                 bg={'blue.400'}
                 color={'white'}
                 isDisabled={!isValid}
-                isLoading={isSubmitting}
+                isLoading={isPending}
+                loadingText='Signing in'
                 size='lg'
                 type='submit'
               >

@@ -25,10 +25,10 @@ export function RegisterPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isValid },
     reset
   } = useForm<RegisterRequest>({ mode: 'onBlur' })
-  const { registerUser, isSuccess } = useRegisterMutation()
+  const { registerUser, isSuccess, isPending } = useRegisterMutation()
   const [showPassword, setShowPassword] = useState(false)
 
   if (isSuccess) {
@@ -141,8 +141,8 @@ export function RegisterPage() {
                 bg={'blue.400'}
                 color={'white'}
                 isDisabled={!isValid}
-                isLoading={isSubmitting}
-                loadingText='Submitting'
+                isLoading={isPending}
+                loadingText='Signing in'
                 size='lg'
                 type='submit'
               >
