@@ -1,15 +1,4 @@
-import {
-  InputGroup,
-  Input,
-  InputRightElement,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  Box,
-  Spinner,
-  Center
-} from '@chakra-ui/react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+import { InputGroup, Input, FormControl, Box } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 
 import { ListCardPeople, PeopleContainer } from './components'
@@ -18,17 +7,7 @@ import { useUsersQuery } from 'hooks/queries/userUsersQuery'
 
 interface Props {}
 
-interface SearchUserRequest {
-  peapleToSearch: string
-}
-
 export function PeoplePage(props: Props): JSX.Element {
-  const {
-    handleSubmit,
-    register,
-    formState: { isSubmitting }
-  } = useForm<SearchUserRequest>({ mode: 'onBlur' })
-
   const { users } = useUsersQuery()
   const [searchResult, setSearchResult] = useState<User[]>([])
 
@@ -38,36 +17,30 @@ export function PeoplePage(props: Props): JSX.Element {
     originalUsers.current = users
     setSearchResult(users)
   }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value
 
-  const onSubmit: SubmitHandler<SearchUserRequest> = async (formValues) => {
-    if (formValues.peapleToSearch.trim().length === 0 || users === undefined) {
+    if (search.trim().length === 0) {
       setSearchResult(originalUsers.current)
 
       return
     }
-    // :TODO eliminar duplicados
-    const filteredUsers = users.filter((user) => {
-      const result = []
 
-      users.forEach((user) => {
-        result.push(
-          user.name
-            .toLowerCase()
-            .includes(formValues.peapleToSearch.toLowerCase())
-        )
-      })
+    const filteredUsers = users?.filter((user) => {
+      const { username, name } = user
 
-      return user.name
-        .toLowerCase()
-        .includes(formValues.peapleToSearch.toLowerCase())
+      return (
+        username.toLowerCase().includes(search.toLowerCase()) ||
+        name.toLowerCase().includes(search.toLowerCase())
+      )
     })
 
-    setSearchResult(filteredUsers)
+    setSearchResult(filteredUsers ?? [])
   }
 
   return (
     <PeopleContainer>
-      <Box as='form' onSubmit={handleSubmit(onSubmit)}>
+      <Box>
         <FormControl maxWidth={'664px'} mx={'auto'}>
           <InputGroup size='lg'>
             <Input
@@ -75,23 +48,12 @@ export function PeoplePage(props: Props): JSX.Element {
               placeholder='Search people'
               pr='4.5rem'
               type='text'
-              {...register('peapleToSearch')}
+              onChange={handleChange}
             />
-            <InputRightElement mr={'4px'} width='80px'>
-              <Button isLoading={isSubmitting} type='submit'>
-                Search
-              </Button>
-            </InputRightElement>
           </InputGroup>
         </FormControl>
       </Box>
-      {isSubmitting ? (
-        <Center>
-          <Spinner />
-        </Center>
-      ) : (
-        <ListCardPeople users={searchResult} />
-      )}
+      <ListCardPeople users={searchResult} />
     </PeopleContainer>
   )
 }
