@@ -45,10 +45,40 @@ const fetchFindUserByUsername = async (username: string) => {
   return user
 }
 
+const addFollower = async (followerUsername: string) => {
+  const response = await protectedInstance.patch<User>(
+    `/users/addFollower/${followerUsername}`
+  )
+  const user = response.data
+
+  return user
+}
+
+const removeFollower = async (followerUsername: string) => {
+  const response = await protectedInstance.patch<User>(
+    `/users/removeFollower/${followerUsername}`
+  )
+  const user = response.data
+
+  return user
+}
+
+const findAllFollowersByUsername = async (username: string) => {
+  const response = await protectedInstance.patch<User>(
+    `/users/username/${username}/findAllFollowers`
+  )
+  const followers = response.data
+
+  return followers
+}
+
 export {
   fetchUserData,
   fetchUpdateUser,
   fetchAllUsers,
   fetchSearchUsersByUsernameOrName,
-  fetchFindUserByUsername
+  fetchFindUserByUsername,
+  addFollower,
+  removeFollower,
+  findAllFollowersByUsername
 }
