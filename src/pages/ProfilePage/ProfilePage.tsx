@@ -6,20 +6,12 @@ import { ProfileDescription, ProfileImage } from './components'
 import { ProfileContainer } from './components/ProfileContainer'
 import { ProfileLayout } from './layouts'
 
-import { useUserQuery } from 'hooks/queries/useUserQuery'
-import { useFindAllFollowersQuery } from 'hooks/queries/useFindAllFollowersQuery'
-
 interface Props {}
 
 export function ProfilePage(props: Props) {
   const params = useParams()
   const navigate = useNavigate()
-  const { user } = useUserQuery()
   const { pathname } = useLocation()
-
-  const { followers } = useFindAllFollowersQuery(user?.username as string)
-
-  console.log('followers', followers)
 
   const pathContainsPostsCreated = useMemo(() => {
     return pathname.includes('postsCreated')

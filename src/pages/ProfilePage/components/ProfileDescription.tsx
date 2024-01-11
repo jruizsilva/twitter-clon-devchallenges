@@ -1,14 +1,43 @@
 import { Box, Button, Heading, Text, calc } from '@chakra-ui/react'
-import { MdPersonAdd } from 'react-icons/md'
+import { MdPersonAdd, MdPersonRemove } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
+import { useToggleFollowerMutation } from 'hooks/mutations/useToggleFollowerMutation'
+import { useFindAllFollowersQuery } from 'hooks/queries/useFindAllFollowersQuery'
 
 interface Props {}
 
 export function ProfileDescription(props: Props) {
   const params = useParams()
+  const { user } = useUserQuery()
+
   const { userProfile } = useFindUserByUsernameQuery(params.username as string)
+  const { toggleFollow } = useToggleFollowerMutation(params?.username as string)
+  const { followers, isPending } = useFindAllFollowersQuery(
+    params?.username as string
+  )
+  const [isFollowing, setIsFollowing] = useState(false)
+
+  console.log('followers', followers)
+  console.log(isFollowing)
+
+  useEffect(() => {
+    if (user === undefined || followers === undefined) {
+      return
+    }
+
+    const isFollowing = followers.some((follower) => follower.id === user.id)
+
+    setIsFollowing(isFollowing)
+  }, [user, followers])
+
+  const handleFollow = () => {
+    toggleFollow(isFollowing)
+    setIsFollowing((prev) => !prev)
+  }
 
   return (
     <Box
@@ -62,9 +91,9 @@ export function ProfileDescription(props: Props) {
           </Box>
           <Box display='flex' gap={1}>
             <Text as='span' fontWeight='bold'>
-              {0}
+              {followers?.length ?? 0}
             </Text>
-            <Text>Followers</Text>
+            <Text> Followers</Text>
           </Box>
         </Box>
         <Text
@@ -77,16 +106,22 @@ export function ProfileDescription(props: Props) {
           {userProfile?.description}
         </Text>
         {/* Agregar funcionalidad seguir usuarios */}
-        <Button
-          colorScheme='blue'
-          isDisabled={true}
-          leftIcon={<MdPersonAdd />}
-          position={{ lg: 'absolute' }}
-          right={{ lg: 0 }}
-          top={{ lg: '4px' }}
-        >
-          Follow
-        </Button>
+        {user?.username !== userProfile?.username && (
+          <Button
+            colorScheme='blue'
+            isDisabled={isPending}
+            isLoading={isPending}
+            leftIcon={isFollowing ? <MdPersonRemove /> : <MdPersonAdd />}
+            loadingText='Loading'
+            position={{ lg: 'absolute' }}
+            right={{ lg: 0 }}
+            top={{ lg: '4px' }}
+            variant={'outline'}
+            onClick={handleFollow}
+          >
+            {isFollowing ? 'Unfollow' : 'Follow'}
+          </Button>
+        )}
       </Box>
     </Box>
   )
