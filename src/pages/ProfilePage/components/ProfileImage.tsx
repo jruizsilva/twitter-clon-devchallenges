@@ -29,6 +29,8 @@ export function ProfileImage(props: Props) {
       }}
     >
       <UserLogo
+        border={'none'}
+        borderRadius={'8px'}
         height={{
           base: '116px',
           md: '152px'

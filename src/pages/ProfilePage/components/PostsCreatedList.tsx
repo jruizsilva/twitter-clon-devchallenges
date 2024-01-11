@@ -12,8 +12,6 @@ export function PostsCreatedList(props: Props): JSX.Element {
   const { postsCreated, isLoading: isLoadingPostsCreated } =
     usePostsCreatedByUsernameQuery(params?.username as string)
 
-  console.log('isLoadingPostsCreated', isLoadingPostsCreated)
-
   return (
     <>
       {isLoadingPostsCreated ? (

@@ -17,12 +17,16 @@ import {
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRef, useState } from 'react'
 
+import { useProfileImage } from '../../hooks/useProfileImage'
+
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
-import { defaultImageUrl } from 'utils/defaultImageUrl'
+import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
+import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
 
 export function ProfileEditPage() {
   const { user } = useUserQuery()
+  const { uploadProfileImage } = useUploadProfileImage()
   const {
     register,
     handleSubmit,
@@ -35,10 +39,12 @@ export function ProfileEditPage() {
       description: user?.description
     }
   })
+  const profileImageUrl = useProfileImage()
   const { updateUser, data: userUpdated } = useUpdateUserMutation(
     user?.username as string
   )
-  const [file, setFile] = useState<File | null>(null)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
+  const { deleteProfileImage, isPending } = useDeleteProfileImageMutation()
 
   if (userUpdated !== undefined) {
     setValue('name', userUpdated.name)
@@ -66,7 +72,7 @@ export function ProfileEditPage() {
     // Aquí puedes manejar el cambio de archivo según tus necesidades
     const selectedFile = e.target.files?.[0]
 
-    setFile(selectedFile as File)
+    setProfileImage(selectedFile as File)
   }
 
   const handleUploadImageSubmit = async (
@@ -77,13 +83,33 @@ export function ProfileEditPage() {
     try {
       const formData = new FormData()
 
-      if (file === null) {
+      if (profileImage === null) {
+        console.error('No se ha seleccionado ninguna imagen')
+
         return
       }
-      formData.append('profileImage', file)
+      formData.append('profileImage', profileImage)
+      uploadProfileImage(formData)
+      setProfileImage(null)
     } catch (error) {
       console.error('Error al subir la imagen:', error)
     }
+  }
+
+  const resetProfileImage = () => {
+    setProfileImage(null)
+  }
+
+  const showPreviewImage = () => {
+    if (profileImage !== null) {
+      return URL.createObjectURL(profileImage)
+    }
+
+    return undefined
+  }
+
+  const handleDeletImageUploaded = () => {
+    deleteProfileImage()
   }
 
   return (
@@ -112,7 +138,7 @@ export function ProfileEditPage() {
             <FormLabel>User Icon</FormLabel>
             <Stack direction={['column', 'row']} spacing={6}>
               <Center>
-                <Avatar size='xl' src={defaultImageUrl}>
+                <Avatar size='xl' src={showPreviewImage()}>
                   <AvatarBadge
                     aria-label='remove Image'
                     as={IconButton}
@@ -121,21 +147,43 @@ export function ProfileEditPage() {
                     rounded='full'
                     size='sm'
                     top='-10px'
+                    onClick={resetProfileImage}
                   />
                 </Avatar>
               </Center>
-              <Center gap={'8px'} w='full'>
+              <Center flexWrap={'wrap'} gap={'8px'} w='full'>
                 <Input
                   ref={fileInputRef}
                   style={{ display: 'none' }}
                   type='file'
                   onChange={handleFileChange}
                 />
-                <Button w='full' onClick={handleButtonClick}>
+                <Button
+                  colorScheme='whatsapp'
+                  size={'sm'}
+                  w='full'
+                  onClick={handleButtonClick}
+                >
                   Change image
                 </Button>
-                <Button type='submit' w='full'>
+                <Button
+                  colorScheme='messenger'
+                  isDisabled={profileImage === null}
+                  size={'sm'}
+                  type='submit'
+                  w='full'
+                >
                   Upload image
+                </Button>
+                <Button
+                  colorScheme='red'
+                  isDisabled={profileImageUrl === undefined || isPending}
+                  isLoading={isPending}
+                  size={'sm'}
+                  w='full'
+                  onClick={handleDeletImageUploaded}
+                >
+                  Delete image uploaded
                 </Button>
               </Center>
             </Stack>
