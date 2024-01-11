@@ -2,6 +2,7 @@ import { SmallCloseIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   AvatarBadge,
+  Box,
   Button,
   Center,
   Flex,
@@ -151,7 +152,14 @@ export function ProfileEditPage() {
                   />
                 </Avatar>
               </Center>
-              <Center flexWrap={'wrap'} gap={'8px'} w='full'>
+              <Box
+                alignContent={'center'}
+                alignItems={'center'}
+                display={'flex'}
+                flexWrap={'wrap'}
+                gap={'8px'}
+                w='full'
+              >
                 <Input
                   ref={fileInputRef}
                   style={{ display: 'none' }}
@@ -160,18 +168,18 @@ export function ProfileEditPage() {
                 />
                 <Button
                   colorScheme='whatsapp'
+                  flexGrow={'1'}
                   size={'sm'}
-                  w='full'
                   onClick={handleButtonClick}
                 >
                   Change image
                 </Button>
                 <Button
                   colorScheme='messenger'
+                  flexGrow={'1'}
                   isDisabled={profileImage === null}
                   size={'sm'}
                   type='submit'
-                  w='full'
                 >
                   Upload image
                 </Button>
@@ -185,7 +193,7 @@ export function ProfileEditPage() {
                 >
                   Delete image uploaded
                 </Button>
-              </Center>
+              </Box>
             </Stack>
           </FormControl>
         </Stack>
