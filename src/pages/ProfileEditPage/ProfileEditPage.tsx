@@ -15,9 +15,11 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import { useRef, useState } from 'react'
 
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
+import { defaultImageUrl } from 'utils/defaultImageUrl'
 
 export function ProfileEditPage() {
   const { user } = useUserQuery()
@@ -36,6 +38,7 @@ export function ProfileEditPage() {
   const { updateUser, data: userUpdated } = useUpdateUserMutation(
     user?.username as string
   )
+  const [file, setFile] = useState<File | null>(null)
 
   if (userUpdated !== undefined) {
     setValue('name', userUpdated.name)
@@ -52,6 +55,37 @@ export function ProfileEditPage() {
     setValue('description', user?.description)
   }
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleButtonClick = () => {
+    // Simula un clic en el input de tipo archivo cuando se hace clic en el botón
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Aquí puedes manejar el cambio de archivo según tus necesidades
+    const selectedFile = e.target.files?.[0]
+
+    setFile(selectedFile as File)
+  }
+
+  const handleUploadImageSubmit = async (
+    e: React.FormEvent<HTMLDivElement>
+  ) => {
+    e.preventDefault()
+
+    try {
+      const formData = new FormData()
+
+      if (file === null) {
+        return
+      }
+      formData.append('profileImage', file)
+    } catch (error) {
+      console.error('Error al subir la imagen:', error)
+    }
+  }
+
   return (
     <Flex
       align={'center'}
@@ -60,7 +94,6 @@ export function ProfileEditPage() {
       minH={'100vh - 100px'}
     >
       <Stack
-        as={'form'}
         bg={useColorModeValue('white', 'gray.700')}
         boxShadow={'lg'}
         maxW={'md'}
@@ -69,62 +102,78 @@ export function ProfileEditPage() {
         rounded={'xl'}
         spacing={4}
         w={'full'}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleUploadImageSubmit}
       >
         <Heading fontSize={{ base: '2xl', sm: '3xl' }} lineHeight={1.1}>
           User Profile Edit
         </Heading>
-        <FormControl id='userIcon'>
-          <FormLabel>User Icon</FormLabel>
-          <Stack direction={['column', 'row']} spacing={6}>
-            <Center>
-              <Avatar size='xl' src='https://bit.ly/sage-adebayo'>
-                <AvatarBadge
-                  aria-label='remove Image'
-                  as={IconButton}
-                  colorScheme='red'
-                  icon={<SmallCloseIcon />}
-                  rounded='full'
-                  size='sm'
-                  top='-10px'
+        <Stack as={'form'} onSubmit={handleUploadImageSubmit}>
+          <FormControl id='userIcon'>
+            <FormLabel>User Icon</FormLabel>
+            <Stack direction={['column', 'row']} spacing={6}>
+              <Center>
+                <Avatar size='xl' src={defaultImageUrl}>
+                  <AvatarBadge
+                    aria-label='remove Image'
+                    as={IconButton}
+                    colorScheme='red'
+                    icon={<SmallCloseIcon />}
+                    rounded='full'
+                    size='sm'
+                    top='-10px'
+                  />
+                </Avatar>
+              </Center>
+              <Center gap={'8px'} w='full'>
+                <Input
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  type='file'
+                  onChange={handleFileChange}
                 />
-              </Avatar>
-            </Center>
-            <Center w='full'>
-              <Button w='full'>Change Icon</Button>
-            </Center>
-          </Stack>
-        </FormControl>
-        <FormControl id='name' isInvalid={Boolean(errors.name)}>
-          <FormLabel>Name</FormLabel>
-          <Input
-            _placeholder={{ color: 'gray.500' }}
-            placeholder='Name'
-            type='text'
-            {...register('name', {
-              minLength: {
-                value: 4,
-                message: 'name debe tener al menos 4 caracteres'
-              }
-            })}
-          />
-          <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl id='description' isInvalid={Boolean(errors.description)}>
-          <FormLabel>Description</FormLabel>
-          <Input
-            _placeholder={{ color: 'gray.500' }}
-            placeholder='Description'
-            type='text'
-            {...register('description', {
-              minLength: {
-                value: 4,
-                message: 'description debe tener al menos 4 caracteres'
-              }
-            })}
-          />
-          <FormErrorMessage>{errors?.description?.message}</FormErrorMessage>
-        </FormControl>
+                <Button w='full' onClick={handleButtonClick}>
+                  Change image
+                </Button>
+                <Button type='submit' w='full'>
+                  Upload image
+                </Button>
+              </Center>
+            </Stack>
+          </FormControl>
+        </Stack>
+        <Stack as={'form'} onSubmit={handleSubmit(onSubmit)}>
+          <FormControl id='name' isInvalid={Boolean(errors.name)}>
+            <FormLabel>Name</FormLabel>
+            <Input
+              _placeholder={{ color: 'gray.500' }}
+              placeholder='Name'
+              type='text'
+              {...register('name', {
+                minLength: {
+                  value: 4,
+                  message: 'name debe tener al menos 4 caracteres'
+                }
+              })}
+            />
+            <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl id='description' isInvalid={Boolean(errors.description)}>
+            <FormLabel>Description</FormLabel>
+            <Input
+              _placeholder={{ color: 'gray.500' }}
+              placeholder='Description'
+              type='text'
+              {...register('description', {
+                minLength: {
+                  value: 4,
+                  message: 'description debe tener al menos 4 caracteres'
+                }
+              })}
+            />
+            <FormErrorMessage>{errors?.description?.message}</FormErrorMessage>
+          </FormControl>
+        </Stack>
+
         {/* <FormControl isRequired id='password'>
           <FormLabel>Password</FormLabel>
           <Input

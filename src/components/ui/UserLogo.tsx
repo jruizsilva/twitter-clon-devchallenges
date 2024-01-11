@@ -3,9 +3,7 @@ import { useMemo } from 'react'
 
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { baseUrl } from 'utils/baseUrl'
-
-const defaultImageUrl =
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTs4XdD00sHtFKBYeyzKvz1CUHr598N0yrUA&usqp=CAU'
+import { defaultImageUrl } from 'utils/defaultImageUrl'
 
 interface Props {
   imageSize: string
