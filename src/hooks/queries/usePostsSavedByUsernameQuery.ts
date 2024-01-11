@@ -10,7 +10,8 @@ const usePostsSavedByUsernameQuery = (username: string) => {
     queryFn: async () => {
       return await fetchAllPostsSavedByUsername(username)
     },
-    retry: false
+    retry: false,
+    refetchOnWindowFocus: false,
   })
 
   return {

@@ -1,21 +1,21 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchAllPostsCreatedByUsername } from 'services/posts'
+import { fetchAllFollowersByUsername } from 'services/user';
 
-const usePostsCreatedByUsernameQuery = (username: string) => {
-  const queryKey = ['postsCreated']
+const useFindAllFollowersQuery = (username: string) => {
+  const queryKey = ["followers"]
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey,
     queryFn: async () => {
-      return await fetchAllPostsCreatedByUsername(username)
+      return await fetchAllFollowersByUsername(username)
     },
     retry: false,
     refetchOnWindowFocus: false,
   })
 
   return {
-    postsCreated: data,
+    followers: data,
     isLoading,
     isError,
     error,
@@ -23,4 +23,4 @@ const usePostsCreatedByUsernameQuery = (username: string) => {
   }
 }
 
-export { usePostsCreatedByUsernameQuery }
+export { useFindAllFollowersQuery }

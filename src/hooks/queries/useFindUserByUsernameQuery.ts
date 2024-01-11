@@ -10,7 +10,8 @@ const useFindUserByUsernameQuery = (username: string) => {
     queryFn: async () => {
       return await fetchFindUserByUsername(username)
     },
-    retry: false
+    retry: false,
+    refetchOnWindowFocus: false,
   })
 
   return {

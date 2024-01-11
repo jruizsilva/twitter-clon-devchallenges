@@ -45,7 +45,7 @@ const fetchFindUserByUsername = async (username: string) => {
   return user
 }
 
-const addFollower = async (followerUsername: string) => {
+const fetchAddFollower = async (followerUsername: string) => {
   const response = await protectedInstance.patch<User>(
     `/users/addFollower/${followerUsername}`
   )
@@ -54,7 +54,7 @@ const addFollower = async (followerUsername: string) => {
   return user
 }
 
-const removeFollower = async (followerUsername: string) => {
+const fetchRemoveFollower = async (followerUsername: string) => {
   const response = await protectedInstance.patch<User>(
     `/users/removeFollower/${followerUsername}`
   )
@@ -63,8 +63,8 @@ const removeFollower = async (followerUsername: string) => {
   return user
 }
 
-const findAllFollowersByUsername = async (username: string) => {
-  const response = await protectedInstance.patch<User>(
+const fetchAllFollowersByUsername = async (username: string) => {
+  const response = await protectedInstance.get<User[]>(
     `/users/username/${username}/findAllFollowers`
   )
   const followers = response.data
@@ -78,7 +78,7 @@ export {
   fetchAllUsers,
   fetchSearchUsersByUsernameOrName,
   fetchFindUserByUsername,
-  addFollower,
-  removeFollower,
-  findAllFollowersByUsername
+  fetchAddFollower,
+  fetchRemoveFollower,
+  fetchAllFollowersByUsername
 }

@@ -10,7 +10,8 @@ const usePostsLikedByUsernameQuery = (username: string) => {
     queryFn: async () => {
       return await fetchAllPostsLikedByUsername(username)
     },
-    retry: false
+    retry: false,
+    refetchOnWindowFocus: false,
   })
 
   return {
