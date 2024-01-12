@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useUserQuery } from 'hooks/queries/useUserQuery'
+import { useStore } from 'store/useStore'
 
 export const PrivateRoutes = () => {
-  const { user } = useUserQuery()
+  const { user } = useStore()
 
   return user === undefined || user === null ? (
     <Navigate to='/login' />

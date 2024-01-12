@@ -2,14 +2,14 @@ import { Box, Center, Heading, Spinner } from '@chakra-ui/react'
 
 import { BookmarksContainer } from './components/BookmarksContainer'
 
-import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { usePostsSavedByUsernameQuery } from 'hooks/queries/usePostsSavedByUsernameQuery'
 import { TweetCard } from 'components/ui/TweetCard'
+import { useStore } from 'store/useStore'
 
 interface Props {}
 
 export function BookmarksPage(props: Props): JSX.Element {
-  const { user } = useUserQuery()
+  const { user } = useStore()
   const { postsSaved, isLoading } = usePostsSavedByUsernameQuery(
     user?.username as string
   )

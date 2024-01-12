@@ -4,16 +4,16 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
-import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useToggleFollowerMutation } from 'hooks/mutations/useToggleFollowerMutation'
 import { useFindAllFollowersQuery } from 'hooks/queries/useFindAllFollowersQuery'
 import { useFindAllUsersFollowingQuery } from 'hooks/queries/useFindAllUsersFollowingQuery'
+import { useStore } from 'store/useStore'
 
 interface Props {}
 
 export function ProfileDescription(props: Props) {
   const params = useParams()
-  const { user } = useUserQuery()
+  const { user } = useStore()
 
   const { userProfile } = useFindUserByUsernameQuery(params.username as string)
   const { toggleFollow } = useToggleFollowerMutation(params?.username as string)
@@ -30,7 +30,7 @@ export function ProfileDescription(props: Props) {
   console.log('usersFollowing', usersFollowing)
 
   useEffect(() => {
-    if (user === undefined || followers === undefined) {
+    if (user === null || followers === undefined) {
       return
     }
 

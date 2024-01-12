@@ -19,14 +19,14 @@ import { useQueryClient } from '@tanstack/react-query'
 import { UserLogo } from './UserLogo'
 
 import { tweeterSmall } from 'assets'
-import { useUserQuery } from 'hooks/queries/useUserQuery'
+import { useStore } from 'store/useStore'
 
 interface Props {}
 
 export function Navbar(props: Props) {
   const queryClient = useQueryClient()
   const { pathname } = useLocation()
-  const { user } = useUserQuery()
+  const { user } = useStore()
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN')

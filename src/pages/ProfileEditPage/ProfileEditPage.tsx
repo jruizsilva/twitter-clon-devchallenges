@@ -20,13 +20,13 @@ import { useRef, useState } from 'react'
 
 import { useProfileImage } from '../../hooks/useProfileImage'
 
-import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
+import { useStore } from 'store/useStore'
 
 export function ProfileEditPage() {
-  const { user } = useUserQuery()
+  const { user } = useStore()
   const { uploadProfileImage } = useUploadProfileImage()
   const {
     register,

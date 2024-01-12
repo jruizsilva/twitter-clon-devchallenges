@@ -41,13 +41,13 @@ import { IoMdHeartDislike } from 'react-icons/io'
 
 import { ButtonIconContainer, UserLogo } from 'components/ui'
 import { profileBackground } from 'assets'
-import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
 import { useUpdatePostMutation } from 'hooks/mutations/useUpdatePostMutation'
 import { useToggleLikeMutation } from 'hooks/mutations/useToggleLikeMutation'
 import { useToggleBookmarkMutation } from 'hooks/mutations/useToggleBookmarkMutation'
 import { useRemoveBookmarkMutation } from 'hooks/mutations/useRemoveBookmarkMutation'
 import { useRemoveLikeMutation } from 'hooks/mutations/useRemoveLikeMutation'
+import { useStore } from 'store/useStore'
 
 interface Props {
   urlImage?: string
@@ -90,13 +90,15 @@ export function TweetCard({
   showButtons = false,
   showCrudButtons = false
 }: Readonly<Props>) {
-  const { user } = useUserQuery()
+  const { user } = useStore()
   const { pathname } = useLocation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [isLiked, setIsLiked] = useState(verifyIfPostIsAlreadyLiked(post, user))
+  const [isLiked, setIsLiked] = useState(
+    verifyIfPostIsAlreadyLiked(post, user as User)
+  )
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(
-    verifyIfPostIsAlreadySaved(post, user)
+    verifyIfPostIsAlreadySaved(post, user as User)
   )
   const { deletePost } = useDeletePostMutation()
   const { editPost, data } = useUpdatePostMutation()
