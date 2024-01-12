@@ -169,7 +169,7 @@ export function TweetCard({
     <>
       <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
         <Box display='flex' gap={3} marginBottom={4}>
-          <UserLogo imageSize='40' />
+          <UserLogo imageSize='40' user={post?.user} />
           <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
             <Heading size='sm'>
               <Text

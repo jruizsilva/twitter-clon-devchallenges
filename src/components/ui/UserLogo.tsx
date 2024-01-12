@@ -2,15 +2,13 @@ import { Avatar, type AvatarProps } from '@chakra-ui/react'
 
 import { useProfileImage } from '../../hooks/useProfileImage'
 
-import { useUserQuery } from 'hooks/queries/useUserQuery'
-
 interface Props {
   imageSize: string
+  user: User
 }
 
-export const UserLogo = ({ imageSize, ...rest }: AvatarProps & Props) => {
-  const { user } = useUserQuery()
-  const profileImageUrl = useProfileImage(user?.username as string)
+export const UserLogo = ({ imageSize, user, ...rest }: AvatarProps & Props) => {
+  const profileImageUrl = useProfileImage(user?.username)
 
   return (
     <Avatar

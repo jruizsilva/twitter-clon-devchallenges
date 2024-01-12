@@ -97,7 +97,7 @@ export function Navbar(props: Props) {
             <Menu>
               <MenuButton>
                 <HStack>
-                  <UserLogo imageSize='36' />
+                  <UserLogo imageSize='36' user={userAuthenticated} />
                   <Heading
                     display={{
                       base: 'none',

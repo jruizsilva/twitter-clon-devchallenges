@@ -8,11 +8,10 @@ import {
   Textarea
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { useQueryClient } from '@tanstack/react-query'
 
 import { UserLogo } from 'components/ui'
 import { useCreatePostMutation } from 'hooks/mutations/useCreatePostMutation'
+import { useStore } from 'store/useStore'
 interface Props {}
 
 export function CreatePost(props: Props) {
@@ -24,6 +23,7 @@ export function CreatePost(props: Props) {
   } = useForm<PostRequest>({ mode: 'onBlur' })
 
   const { addPost } = useCreatePostMutation()
+  const { userAuthenticated } = useStore()
 
   const onSubmit: SubmitHandler<PostRequest> = (post: PostRequest) => {
     addPost(post)
@@ -46,7 +46,13 @@ export function CreatePost(props: Props) {
       </Text>
       <Divider marginBottom='8px' />
       <Box marginBottom='16px' position='relative'>
-        <UserLogo imageSize='40' left='8px' position='absolute' top='8px' />
+        <UserLogo
+          imageSize='40'
+          left='8px'
+          position='absolute'
+          top='8px'
+          user={userAuthenticated as User}
+        />
         <FormControl
           isRequired
           id='content'
