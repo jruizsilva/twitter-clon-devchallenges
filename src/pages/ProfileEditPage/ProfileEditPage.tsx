@@ -23,11 +23,11 @@ import { useProfileImage } from '../../hooks/useProfileImage'
 import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
-import { useStore } from 'store/useStore'
+import { useAppStore } from 'store/useAppStore'
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function ProfileEditPage() {
-  const { userAuthenticated } = useStore()
+  const { userAuthenticated } = useAppStore()
   const { uploadProfileImage } = useUploadProfileImage()
   const {
     register,

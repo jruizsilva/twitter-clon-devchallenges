@@ -7,13 +7,13 @@ import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQ
 import { useToggleFollowerMutation } from 'hooks/mutations/useToggleFollowerMutation'
 import { useFindAllFollowersQuery } from 'hooks/queries/useFindAllFollowersQuery'
 import { useFindAllUsersFollowingQuery } from 'hooks/queries/useFindAllUsersFollowingQuery'
-import { useStore } from 'store/useStore'
+import { useAppStore } from 'store/useAppStore'
 
 interface Props {}
 
 export function ProfileDescription(props: Props) {
   const params = useParams()
-  const { userAuthenticated } = useStore()
+  const { userAuthenticated } = useAppStore()
 
   const { userProfile } = useFindUserByUsernameQuery(params.username as string)
   const { toggleFollow } = useToggleFollowerMutation(params?.username as string)

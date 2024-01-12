@@ -11,7 +11,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { UserLogo } from 'components/ui'
 import { useCreatePostMutation } from 'hooks/mutations/useCreatePostMutation'
-import { useStore } from 'store/useStore'
+import { useAppStore } from 'store/useAppStore'
 interface Props {}
 
 export function CreatePost(props: Props) {
@@ -23,7 +23,7 @@ export function CreatePost(props: Props) {
   } = useForm<PostRequest>({ mode: 'onBlur' })
 
   const { addPost } = useCreatePostMutation()
-  const { userAuthenticated } = useStore()
+  const { userAuthenticated } = useAppStore()
 
   const onSubmit: SubmitHandler<PostRequest> = (post: PostRequest) => {
     addPost(post)

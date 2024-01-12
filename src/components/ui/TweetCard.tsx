@@ -47,7 +47,7 @@ import { useToggleLikeMutation } from 'hooks/mutations/useToggleLikeMutation'
 import { useToggleBookmarkMutation } from 'hooks/mutations/useToggleBookmarkMutation'
 import { useRemoveBookmarkMutation } from 'hooks/mutations/useRemoveBookmarkMutation'
 import { useRemoveLikeMutation } from 'hooks/mutations/useRemoveLikeMutation'
-import { useStore } from 'store/useStore'
+import { useAppStore } from 'store/useAppStore'
 
 interface Props {
   urlImage?: string
@@ -90,7 +90,7 @@ export function TweetCard({
   showButtons = false,
   showCrudButtons = false
 }: Readonly<Props>) {
-  const { userAuthenticated } = useStore()
+  const { userAuthenticated } = useAppStore()
   const { pathname } = useLocation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()

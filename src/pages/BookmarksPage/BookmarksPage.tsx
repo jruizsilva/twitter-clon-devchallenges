@@ -4,12 +4,12 @@ import { BookmarksContainer } from './components/BookmarksContainer'
 
 import { usePostsSavedByUsernameQuery } from 'hooks/queries/usePostsSavedByUsernameQuery'
 import { TweetCard } from 'components/ui/TweetCard'
-import { useStore } from 'store/useStore'
+import { useAppStore } from 'store/useAppStore'
 
 interface Props {}
 
 export function BookmarksPage(props: Props): JSX.Element {
-  const { userAuthenticated } = useStore()
+  const { userAuthenticated } = useAppStore()
   const { postsSaved, isLoading } = usePostsSavedByUsernameQuery(
     userAuthenticated?.username as string
   )

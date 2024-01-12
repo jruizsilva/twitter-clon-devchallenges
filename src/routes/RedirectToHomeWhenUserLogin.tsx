@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useStore } from 'store/useStore'
+import { useAppStore } from 'store/useAppStore'
 
 export const RedirectToHomeWhenUserLogin = () => {
-  const { userAuthenticated } = useStore()
+  const { userAuthenticated } = useAppStore()
 
   return userAuthenticated === undefined || userAuthenticated === null ? (
     <Outlet />

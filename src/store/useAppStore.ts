@@ -5,7 +5,7 @@ interface Store {
   setUserAuthenticated: (userAuthenticated: User) => void
 }
 
-export const useStore = create<Store>((set) => ({
+export const useAppStore = create<Store>((set) => ({
   userAuthenticated: null,
   setUserAuthenticated: (userAuthenticated: User) => {
     set((state) => ({ userAuthenticated }));

@@ -1,14 +1,14 @@
 import { Center, Spinner } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
-import { useStore } from './store/useStore'
+import { useAppStore } from './store/useAppStore'
 
 import { MainRouter } from 'routes/MainRouter'
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function App() {
   const { user, isPending } = useUserQuery()
-  const { setUserAuthenticated } = useStore()
+  const { setUserAuthenticated } = useAppStore()
 
   useEffect(() => {
     if (user === undefined) {
