@@ -72,6 +72,15 @@ const fetchAllFollowersByUsername = async (username: string) => {
   return followers
 }
 
+const fetchAllUsersFollowing = async (username: string) => {
+  const response = await protectedInstance.get<User[]>(
+    `/users/username/${username}/findAllUsersFollowing`
+  )
+  const followings = response.data
+
+  return followings
+}
+
 export {
   fetchUserData,
   fetchUpdateUser,
@@ -80,5 +89,5 @@ export {
   fetchFindUserByUsername,
   fetchAddFollower,
   fetchRemoveFollower,
-  fetchAllFollowersByUsername
+  fetchAllFollowersByUsername, fetchAllUsersFollowing
 }

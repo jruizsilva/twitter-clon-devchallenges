@@ -7,6 +7,7 @@ import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQ
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 import { useToggleFollowerMutation } from 'hooks/mutations/useToggleFollowerMutation'
 import { useFindAllFollowersQuery } from 'hooks/queries/useFindAllFollowersQuery'
+import { useFindAllUsersFollowingQuery } from 'hooks/queries/useFindAllUsersFollowingQuery'
 
 interface Props {}
 
@@ -20,9 +21,13 @@ export function ProfileDescription(props: Props) {
     params?.username as string
   )
   const [isFollowing, setIsFollowing] = useState(false)
+  const { usersFollowing } = useFindAllUsersFollowingQuery(
+    params?.username as string
+  )
 
   console.log('followers', followers)
-  console.log(isFollowing)
+
+  console.log('usersFollowing', usersFollowing)
 
   useEffect(() => {
     if (user === undefined || followers === undefined) {
@@ -85,7 +90,7 @@ export function ProfileDescription(props: Props) {
         >
           <Box display='flex' gap={1}>
             <Text as='span' fontWeight='bold'>
-              {0}
+              {usersFollowing?.length ?? 0}
             </Text>
             <Text>Following</Text>
           </Box>
@@ -116,7 +121,7 @@ export function ProfileDescription(props: Props) {
             position={{ lg: 'absolute' }}
             right={{ lg: 0 }}
             top={{ lg: '4px' }}
-            variant={'outline'}
+            variant={isFollowing ? 'outline' : 'solid'}
             onClick={handleFollow}
           >
             {isFollowing ? 'Unfollow' : 'Follow'}
