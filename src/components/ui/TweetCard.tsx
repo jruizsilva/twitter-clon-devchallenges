@@ -62,6 +62,7 @@ interface Props {
   showOptionsMenu?: boolean
   showButtons?: boolean
   showCrudButtons?: boolean
+  showCommentForm?: boolean
 }
 
 const verifyIfPostIsAlreadyLiked = (
@@ -95,7 +96,8 @@ export function TweetCard({
   post,
   showOptionsMenu = false,
   showButtons = false,
-  showCrudButtons = false
+  showCrudButtons = false,
+  showCommentForm = false
 }: Readonly<Props>) {
   const { userAuthenticated } = useAppStore()
   const { pathname } = useLocation()
@@ -310,7 +312,9 @@ export function TweetCard({
           )}
         </Box>
         <Divider opacity={0.1} />
-        {true && <CommentInput user={userAuthenticated as User} />}
+        {showCommentForm && (
+          <CommentInput user={userAuthenticated as User} />
+        )}
         <Divider opacity={0.1} />
         <Comment user={post.user} />
         <Comment user={post.user} />

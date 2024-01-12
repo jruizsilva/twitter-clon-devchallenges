@@ -7,7 +7,7 @@ import { MainRouter } from 'routes/MainRouter'
 import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function App() {
-  const { user, isPending } = useUserQuery()
+  const { user, isPending, isError } = useUserQuery()
   const { setUserAuthenticated } = useAppStore()
 
   useEffect(() => {
@@ -23,6 +23,10 @@ export function App() {
         <Spinner />
       </Center>
     )
+  }
+
+  if (isError) {
+    localStorage.removeItem('AUTH_TOKEN')
   }
 
   return <MainRouter />
