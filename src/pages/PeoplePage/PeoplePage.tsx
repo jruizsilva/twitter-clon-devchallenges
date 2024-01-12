@@ -1,4 +1,11 @@
-import { InputGroup, Input, FormControl, Box } from '@chakra-ui/react'
+import {
+  InputGroup,
+  Input,
+  FormControl,
+  Box,
+  Center,
+  Spinner
+} from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 
 import { ListCardPeople, PeopleContainer } from './components'
@@ -8,7 +15,7 @@ import { useUsersQuery } from 'hooks/queries/userUsersQuery'
 interface Props {}
 
 export function PeoplePage(props: Props): JSX.Element {
-  const { users } = useUsersQuery()
+  const { users, isLoading } = useUsersQuery()
   const [searchResult, setSearchResult] = useState<User[]>([])
 
   const originalUsers = useRef<User[]>([])
@@ -53,7 +60,13 @@ export function PeoplePage(props: Props): JSX.Element {
           </InputGroup>
         </FormControl>
       </Box>
-      <ListCardPeople users={searchResult} />
+      {isLoading ? (
+        <Center>
+          <Spinner />
+        </Center>
+      ) : (
+        <ListCardPeople users={searchResult} />
+      )}
     </PeopleContainer>
   )
 }
