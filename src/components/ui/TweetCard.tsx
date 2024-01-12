@@ -39,7 +39,14 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { BsBookmarkXFill } from 'react-icons/bs'
 import { IoMdHeartDislike } from 'react-icons/io'
 
-import { ButtonIconContainer, UserLogo } from 'components/ui'
+import { formatDate } from '../../utils/formatDate'
+
+import {
+  ButtonIconContainer,
+  Comment,
+  CommentInput,
+  UserLogo
+} from 'components/ui'
 import { profileBackground } from 'assets'
 import { useDeletePostMutation } from 'hooks/mutations/useDeletePostMutation'
 import { useUpdatePostMutation } from 'hooks/mutations/useUpdatePostMutation'
@@ -169,7 +176,7 @@ export function TweetCard({
     <>
       <Box backgroundColor='gray.700' borderRadius='8px' padding='16px'>
         <Box display='flex' gap={3} marginBottom={4}>
-          <UserLogo imageSize='40' user={post?.user} />
+          <UserLogo imageSize='40' user={post.user} />
           <Box display='flex' flexDirection='column' flexGrow={1} rowGap={1}>
             <Heading size='sm'>
               <Text
@@ -180,7 +187,7 @@ export function TweetCard({
                 {post?.user?.name}
               </Text>
             </Heading>
-            <Text fontSize='xs'>{post.createdAt}</Text>
+            <Text fontSize='xs'>{formatDate(post.createdAt)}</Text>
           </Box>
           {showOptionsMenu && (
             <Box mr={'-8px'} mt={'-8px'}>
@@ -302,11 +309,11 @@ export function TweetCard({
             </>
           )}
         </Box>
-        {/* <Divider opacity={0.1} /> */}
-        {/* {true && <CommentInput />}
-      <Divider opacity={0.1} />
-      <Comment />
-      <Comment /> */}
+        <Divider opacity={0.1} />
+        {true && <CommentInput user={userAuthenticated as User} />}
+        <Divider opacity={0.1} />
+        <Comment user={post.user} />
+        <Comment user={post.user} />
       </Box>
       {showOptionsMenu && (
         <Modal isOpen={isOpen} onClose={onClose}>

@@ -3,13 +3,15 @@ import { AiOutlineHeart } from 'react-icons/ai'
 
 import { UserLogo } from './UserLogo'
 
-interface Props {}
+interface Props {
+  user: User
+}
 
-export function Comment(props: Props) {
+export function Comment({ user }: Readonly<Props>) {
   return (
     <Box display='flex' flexDirection='column' paddingTop='16px' rowGap={1}>
       <Box columnGap={4} display='flex'>
-        <UserLogo imageSize='40' />
+        <UserLogo imageSize='40' user={user} />
 
         <Box
           backgroundColor='whiteAlpha.50'

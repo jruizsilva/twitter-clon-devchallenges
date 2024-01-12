@@ -19,7 +19,7 @@ export function HomePage(props: Props) {
         marginTop={'24px'}
       >
         <CreatePost />
-        {isLoading ? (
+        {isLoading && (
           <Center
             display={'flex'}
             flexDirection={'column'}
@@ -28,13 +28,13 @@ export function HomePage(props: Props) {
           >
             <Spinner size={'md'} />
           </Center>
-        ) : (
+        )}
+        {!isLoading &&
           posts !== undefined &&
           posts?.length > 0 &&
           posts.map((post) => (
             <TweetCard key={post.id} showButtons post={post} />
-          ))
-        )}
+          ))}
       </Box>
     </HomeContainer>
   )

@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const UserLogo = ({ imageSize, user, ...rest }: AvatarProps & Props) => {
-  const profileImageUrl = useProfileImage(user?.username)
+  const profileImageUrl = useProfileImage(user.username)
 
   return (
     <Avatar
