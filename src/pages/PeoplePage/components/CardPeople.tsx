@@ -7,6 +7,7 @@ import {
   Box,
   Text
 } from '@chakra-ui/react'
+import { NavLink } from 'react-router-dom'
 
 import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
 import { useProfileImage } from 'hooks/useProfileImage'
@@ -47,7 +48,13 @@ export function CardPeople({ user }: Readonly<Props>): JSX.Element {
         src={profileImageUrl}
       />
       <Heading fontFamily={'body'} fontSize={'2xl'}>
-        {user?.name}
+        <Text
+          _hover={{ textDecoration: 'underline' }}
+          as={NavLink}
+          to={`/profile/${user?.username as string}/postsCreated`}
+        >
+          {user?.name}
+        </Text>
       </Heading>
       <Text color={'gray.500'} fontWeight={600} mb={4}>
         @{user?.username}

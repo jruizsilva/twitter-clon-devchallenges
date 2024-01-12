@@ -1,10 +1,15 @@
-import { Image, Stack } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
 import { UserLogo } from 'components/ui'
+import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
 
 interface Props {}
 
 export function ProfileImage(props: Props) {
+  const params = useParams()
+  const { userProfile } = useFindUserByUsernameQuery(params?.username as string)
+
   return (
     <Stack
       alignItems='center'
@@ -36,6 +41,7 @@ export function ProfileImage(props: Props) {
           md: '152px'
         }}
         imageSize='152'
+        user={userProfile as User}
         width={{
           base: '116px',
           md: '152px'
