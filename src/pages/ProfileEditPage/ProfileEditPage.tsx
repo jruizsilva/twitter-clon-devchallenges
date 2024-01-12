@@ -24,9 +24,10 @@ import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
 import { useStore } from 'store/useStore'
+import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function ProfileEditPage() {
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
   const { uploadProfileImage } = useUploadProfileImage()
   const {
     register,
@@ -36,13 +37,14 @@ export function ProfileEditPage() {
   } = useForm<UpdateUserRequest>({
     mode: 'onBlur',
     defaultValues: {
-      name: user?.name,
-      description: user?.description
+      name: userAuthenticated?.name,
+      description: userAuthenticated?.description
     }
   })
-  const profileImageUrl = useProfileImage()
+  const { user } = useUserQuery()
+  const profileImageUrl = useProfileImage(userAuthenticated?.username as string)
   const { updateUser, data: userUpdated } = useUpdateUserMutation(
-    user?.username as string
+    userAuthenticated?.username as string
   )
   const [profileImage, setProfileImage] = useState<File | null>(null)
   const { deleteProfileImage, isPending } = useDeleteProfileImageMutation()

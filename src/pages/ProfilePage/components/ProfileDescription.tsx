@@ -13,7 +13,7 @@ interface Props {}
 
 export function ProfileDescription(props: Props) {
   const params = useParams()
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
 
   const { userProfile } = useFindUserByUsernameQuery(params.username as string)
   const { toggleFollow } = useToggleFollowerMutation(params?.username as string)
@@ -30,14 +30,16 @@ export function ProfileDescription(props: Props) {
   console.log('usersFollowing', usersFollowing)
 
   useEffect(() => {
-    if (user === null || followers === undefined) {
+    if (userAuthenticated === null || followers === undefined) {
       return
     }
 
-    const isFollowing = followers.some((follower) => follower.id === user.id)
+    const isFollowing = followers.some(
+      (follower) => follower.id === userAuthenticated.id
+    )
 
     setIsFollowing(isFollowing)
-  }, [user, followers])
+  }, [userAuthenticated, followers])
 
   const handleFollow = () => {
     toggleFollow(isFollowing)
@@ -111,7 +113,7 @@ export function ProfileDescription(props: Props) {
           {userProfile?.description}
         </Text>
         {/* Agregar funcionalidad seguir usuarios */}
-        {user?.username !== userProfile?.username && (
+        {userAuthenticated?.username !== userProfile?.username && (
           <Button
             colorScheme='blue'
             isDisabled={isPending}

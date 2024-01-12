@@ -1,13 +1,13 @@
 import { create } from 'zustand'
 
 interface Store {
-  user: User | null
-  setUser: (user: User) => void
+  userAuthenticated: User | null
+  setUserAuthenticated: (userAuthenticated: User) => void
 }
 
 export const useStore = create<Store>((set) => ({
-  user: null,
-  setUser: (user: User) => {
-    set((state) => ({ user }));
+  userAuthenticated: null,
+  setUserAuthenticated: (userAuthenticated: User) => {
+    set((state) => ({ userAuthenticated }));
   },
 }))

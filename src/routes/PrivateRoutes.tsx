@@ -3,9 +3,9 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useStore } from 'store/useStore'
 
 export const PrivateRoutes = () => {
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
 
-  return user === undefined || user === null ? (
+  return userAuthenticated === undefined || userAuthenticated === null ? (
     <Navigate to='/login' />
   ) : (
     <Outlet />

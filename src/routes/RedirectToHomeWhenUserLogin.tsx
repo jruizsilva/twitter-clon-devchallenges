@@ -3,7 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useStore } from 'store/useStore'
 
 export const RedirectToHomeWhenUserLogin = () => {
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
 
-  return user === undefined || user === null ? <Outlet /> : <Navigate to='/' />
+  return userAuthenticated === undefined || userAuthenticated === null ? (
+    <Outlet />
+  ) : (
+    <Navigate to='/' />
+  )
 }

@@ -8,14 +8,14 @@ import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function App() {
   const { user, isPending } = useUserQuery()
-  const { setUser } = useStore()
+  const { setUserAuthenticated } = useStore()
 
   useEffect(() => {
     if (user === undefined) {
       return
     }
-    setUser(user)
-  }, [user, setUser])
+    setUserAuthenticated(user)
+  }, [user, setUserAuthenticated])
 
   if (isPending) {
     return (

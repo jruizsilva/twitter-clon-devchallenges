@@ -90,15 +90,15 @@ export function TweetCard({
   showButtons = false,
   showCrudButtons = false
 }: Readonly<Props>) {
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
   const { pathname } = useLocation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLiked, setIsLiked] = useState(
-    verifyIfPostIsAlreadyLiked(post, user as User)
+    verifyIfPostIsAlreadyLiked(post, userAuthenticated as User)
   )
   const [isPostSavedInBookmarks, setIsPostSavedInBookmarks] = useState(
-    verifyIfPostIsAlreadySaved(post, user as User)
+    verifyIfPostIsAlreadySaved(post, userAuthenticated as User)
   )
   const { deletePost } = useDeletePostMutation()
   const { editPost, data } = useUpdatePostMutation()
@@ -210,26 +210,27 @@ export function TweetCard({
                     </MenuItem>
                   )}
 
-                  {showCrudButtons && post?.user?.id === user?.id && (
-                    <>
-                      <MenuItem
-                        icon={<MdOutlineEdit fontSize={'16px'} />}
-                        onClick={() => {
-                          onOpen()
-                        }}
-                      >
-                        Edit post
-                      </MenuItem>
-                      <MenuItem
-                        icon={<MdDelete fontSize={'16px'} />}
-                        onClick={() => {
-                          handleDelete(post.id)
-                        }}
-                      >
-                        Delete post
-                      </MenuItem>
-                    </>
-                  )}
+                  {showCrudButtons &&
+                    post?.user?.id === userAuthenticated?.id && (
+                      <>
+                        <MenuItem
+                          icon={<MdOutlineEdit fontSize={'16px'} />}
+                          onClick={() => {
+                            onOpen()
+                          }}
+                        >
+                          Edit post
+                        </MenuItem>
+                        <MenuItem
+                          icon={<MdDelete fontSize={'16px'} />}
+                          onClick={() => {
+                            handleDelete(post.id)
+                          }}
+                        >
+                          Delete post
+                        </MenuItem>
+                      </>
+                    )}
                 </MenuList>
               </Menu>
             </Box>
@@ -246,7 +247,7 @@ export function TweetCard({
               width='100%'
             />
           )}
-          {Boolean(user) && (
+          {Boolean(userAuthenticated) && (
             <>
               <Box
                 display='flex'

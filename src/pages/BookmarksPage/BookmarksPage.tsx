@@ -9,9 +9,9 @@ import { useStore } from 'store/useStore'
 interface Props {}
 
 export function BookmarksPage(props: Props): JSX.Element {
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
   const { postsSaved, isLoading } = usePostsSavedByUsernameQuery(
-    user?.username as string
+    userAuthenticated?.username as string
   )
 
   console.log('postsSaved', postsSaved)

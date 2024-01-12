@@ -8,11 +8,17 @@ import {
   Text
 } from '@chakra-ui/react'
 
+import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
+import { useProfileImage } from 'hooks/useProfileImage'
+
 interface Props {
   user: User | null
 }
 
 export function CardPeople({ user }: Readonly<Props>): JSX.Element {
+  const { userProfile } = useFindUserByUsernameQuery(user?.username as string)
+  const profileImageUrl = useProfileImage(userProfile?.username as string)
+
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -38,9 +44,7 @@ export function CardPeople({ user }: Readonly<Props>): JSX.Element {
         mb={4}
         pos={'relative'}
         size={'xl'}
-        src={
-          'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
-        }
+        src={profileImageUrl}
       />
       <Heading fontFamily={'body'} fontSize={'2xl'}>
         {user?.name}

@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 
-import { ListCardPeople, PeopleContainer } from './components'
+import { CardPeople, PeopleContainer } from './components'
 
 import { useUsersQuery } from 'hooks/queries/userUsersQuery'
 
@@ -65,7 +65,29 @@ export function PeoplePage(props: Props): JSX.Element {
           <Spinner />
         </Center>
       ) : (
-        <ListCardPeople users={searchResult} />
+        <Box
+          display={'flex'}
+          flexWrap={'wrap'}
+          gap={'24px'}
+          justifyContent={{ base: 'center' }}
+          mx={'auto'}
+          pt='48px'
+          width={'100%'}
+        >
+          {isLoading && (
+            <Center>
+              <Spinner />
+            </Center>
+          )}
+          {!isLoading && searchResult.length === 0 && (
+            <Center>No se encontraron resultados</Center>
+          )}
+          {!isLoading &&
+            searchResult.length > 0 &&
+            searchResult.map((user) => (
+              <CardPeople key={user.id} user={user} />
+            ))}
+        </Box>
       )}
     </PeopleContainer>
   )

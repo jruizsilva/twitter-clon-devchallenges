@@ -1,20 +1,20 @@
 import { useMemo } from 'react';
 
-import { useUserQuery } from 'hooks/queries/useUserQuery';
+import { useFindUserByUsernameQuery } from './queries/useFindUserByUsernameQuery';
+
 import { baseUrl } from 'utils/baseUrl';
-import { useStore } from 'store/useStore';
 
 
-export const useProfileImage = () => {
-  const { user } = useStore()
+export const useProfileImage = (username: string) => {
+  const { userProfile } = useFindUserByUsernameQuery(username)
 
   const profileImageUrl = useMemo(() => {
-    if (user?.profileImage === undefined || user?.profileImage === null) {
+    if (userProfile?.profileImage === undefined || userProfile?.profileImage === null) {
       return undefined
     } else {
-      return `${baseUrl}/${user?.profileImage}`
+      return `${baseUrl}/${userProfile?.profileImage}`
     }
-  }, [user])
+  }, [userProfile])
 
   return profileImageUrl
 }

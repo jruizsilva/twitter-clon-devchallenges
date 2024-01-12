@@ -26,7 +26,7 @@ interface Props {}
 export function Navbar(props: Props) {
   const queryClient = useQueryClient()
   const { pathname } = useLocation()
-  const { user } = useStore()
+  const { userAuthenticated } = useStore()
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN')
@@ -54,7 +54,7 @@ export function Navbar(props: Props) {
           display={{ base: 'none', md: 'flex' }}
           spacing={{ base: '0', md: '32px', lg: '64px', xl: '80px' }}
         >
-          {Boolean(user) && (
+          {Boolean(userAuthenticated) && (
             <>
               <Heading size='xs'>
                 <Button
@@ -93,7 +93,7 @@ export function Navbar(props: Props) {
         </HStack>
 
         <Box display={'flex'}>
-          {user != null ? (
+          {userAuthenticated != null ? (
             <Menu>
               <MenuButton>
                 <HStack>
@@ -106,7 +106,7 @@ export function Navbar(props: Props) {
                     size='xs'
                     userSelect='none'
                   >
-                    {user?.name}
+                    {userAuthenticated?.name}
                   </Heading>
                   <Icon
                     as={AiFillCaretDown}
@@ -120,7 +120,7 @@ export function Navbar(props: Props) {
               <MenuList>
                 <MenuItem
                   as={NavLink}
-                  to={`/profile/${user.username}/postsCreated`}
+                  to={`/profile/${userAuthenticated.username}/postsCreated`}
                 >
                   My profile
                 </MenuItem>
