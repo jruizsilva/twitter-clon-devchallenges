@@ -1,10 +1,12 @@
 import { Box, Button, Heading, Text } from '@chakra-ui/react'
-import { AiOutlineHeart } from 'react-icons/ai'
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+import { useCallback, useState } from 'react'
 
 import { UserLogo } from './UserLogo'
 import { CommentMenuOptions } from './CommentMenuOptions'
 
 import { formatDate } from 'utils/formatDate'
+import { useToggleCommentLikeMutation } from 'hooks/mutations/useToggleCommentLikeMutation'
 
 interface Props {
   post: Post
@@ -12,6 +14,22 @@ interface Props {
 }
 
 export function Comment({ post, comment }: Readonly<Props>) {
+  const likeRequest: LikeRequest = {
+    commentId: comment.id.toString(),
+    postId: post.id.toString()
+  }
+
+  console.log(comment)
+  const [isCommentLiked, setIsCommentLiked] = useState(false)
+
+  const { toggleCommentLike, isPending: isPendingToggleLike } =
+    useToggleCommentLikeMutation(likeRequest)
+
+  const handleToggleCommentLike = useCallback(() => {
+    toggleCommentLike(isCommentLiked)
+    setIsCommentLiked((prev) => !prev)
+  }, [isCommentLiked, toggleCommentLike])
+
   return (
     <Box display='flex' flexDirection='column' paddingTop='16px' rowGap={1}>
       <Box columnGap={4} display='flex'>
@@ -42,10 +60,19 @@ export function Comment({ post, comment }: Readonly<Props>) {
         </Box>
       </Box>
       <Box alignItems='center' columnGap={2} display='flex' marginLeft='56px'>
-        <Button leftIcon={<AiOutlineHeart />} size='sm' variant='ghost'>
-          Like
+        <Button
+          isDisabled={isPendingToggleLike}
+          isLoading={isPendingToggleLike}
+          leftIcon={
+            isCommentLiked ? <AiFillHeart color='red' /> : <AiOutlineHeart />
+          }
+          size='sm'
+          variant='ghost'
+          onClick={handleToggleCommentLike}
+        >
+          {isCommentLiked ? 'Unlike' : 'Like'}
         </Button>
-        <Text fontSize='sm'>12k Likes</Text>
+        <Text fontSize='sm'>{comment.likes?.length ?? 0} Likes</Text>
       </Box>
     </Box>
   )
