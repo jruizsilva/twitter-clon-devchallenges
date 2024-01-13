@@ -9,12 +9,14 @@ export const useProfileImage = (username: string) => {
   const { userProfile } = useFindUserByUsernameQuery(username)
 
   const profileImageUrl = useMemo(() => {
-    if (userProfile?.profileImage === undefined || userProfile?.profileImage === null) {
+    if (userProfile === undefined) {
+      return undefined
+    } else if (userProfile.profileImage === null) {
       return undefined
     } else {
-      return `${baseUrl}/${userProfile?.profileImage}`
+      return `${baseUrl}/${userProfile.profileImage}`
     }
   }, [userProfile])
 
-  return profileImageUrl
+  return { profileImageUrl }
 }

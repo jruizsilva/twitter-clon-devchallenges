@@ -42,7 +42,9 @@ export function ProfileEditPage() {
     }
   })
   const { user } = useUserQuery()
-  const profileImageUrl = useProfileImage(userAuthenticated?.username as string)
+  const { profileImageUrl } = useProfileImage(
+    userAuthenticated?.username as string
+  )
   const { updateUser, data: userUpdated } = useUpdateUserMutation(
     userAuthenticated?.username as string
   )

@@ -4,11 +4,10 @@ import { useFindUserByUsernameQuery } from './queries/useFindUserByUsernameQuery
 
 import { baseUrl } from 'utils/baseUrl';
 
-
 export const useBackgroundProfileImage = (username: string) => {
   const { userProfile } = useFindUserByUsernameQuery(username)
 
-  const profileImageUrl = useMemo(() => {
+  const backgroundProfileImageUrl = useMemo(() => {
     if (userProfile === undefined) {
       return undefined
     } else if (userProfile.backgroundImage === null) {
@@ -18,5 +17,5 @@ export const useBackgroundProfileImage = (username: string) => {
     }
   }, [userProfile])
 
-  return profileImageUrl
+  return { backgroundProfileImageUrl }
 }

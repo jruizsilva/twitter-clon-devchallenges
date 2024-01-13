@@ -1,28 +1,34 @@
 import { Box, Image } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
-import { profileBackground } from 'assets'
+import { useBackgroundProfileImage } from 'hooks/useBackgroundProfileImage'
 
 interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
-export function ProfileLayout({ children }: Props) {
-  return (
-    <>
-      <Box paddingBottom={60}>
-        <Image
-          alt='profile background from unsplash'
-          height={{
-            base: '168px',
-            md: '300px'
-          }}
-          objectFit='cover'
-          src={profileBackground}
-          width='100%'
-        />
+export function ProfileLayout({ children }: Readonly<Props>) {
+  const params = useParams()
+  const { backgroundProfileImageUrl } = useBackgroundProfileImage(
+    params?.username as string
+  )
 
-        {children}
-      </Box>
-    </>
+  console.log(backgroundProfileImageUrl)
+
+  return (
+    <Box paddingBottom={60}>
+      <Image
+        alt='user profilebackground image'
+        height={{
+          base: '168px',
+          md: '300px'
+        }}
+        objectFit='cover'
+        src={backgroundProfileImageUrl}
+        width='100%'
+      />
+
+      {children}
+    </Box>
   )
 }

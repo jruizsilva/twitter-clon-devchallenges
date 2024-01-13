@@ -18,7 +18,7 @@ interface Props {
 
 export function CardPeople({ user }: Readonly<Props>): JSX.Element {
   const { userProfile } = useFindUserByUsernameQuery(user?.username as string)
-  const profileImageUrl = useProfileImage(userProfile?.username as string)
+  const { profileImageUrl } = useProfileImage(userProfile?.username as string)
 
   return (
     <Box
