@@ -15,10 +15,12 @@ import {
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { MdEdit } from 'react-icons/md'
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 
 import { useBackgroundProfileImage } from 'hooks/useBackgroundProfileImage'
 import { profileBackground } from 'assets'
+import { useUploadBackgroundProfileImage } from 'hooks/mutations/useUploadBackgroundProfileImage'
+import { useDeleteBackgroundProfileImageMutation } from 'hooks/mutations/useDeleteBackgroundProfileImageMutation'
 
 interface Props {
   children: JSX.Element | JSX.Element[]
@@ -33,6 +35,12 @@ export function ProfileLayout({ children }: Readonly<Props>) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [profileBackgroundImage, setProfileBackgroundImage] =
     useState<File | null>(null)
+  const { uploadBackgroundProfileImage, isPending: isBackgroundUploadPending } =
+    useUploadBackgroundProfileImage()
+  const { deleteBackgroundProfileImage, isPending: isDeleteBackgroundPending } =
+    useDeleteBackgroundProfileImageMutation()
+
+  console.log(backgroundProfileImageUrl)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
@@ -44,12 +52,32 @@ export function ProfileLayout({ children }: Readonly<Props>) {
     fileInputRef.current?.click()
   }
 
-  const showPreviewImage = () => {
+  const showPreviewImage = useCallback(() => {
     if (profileBackgroundImage !== null) {
       return URL.createObjectURL(profileBackgroundImage)
     }
 
     return undefined
+  }, [profileBackgroundImage])
+
+  const handleUploadImageSubmit = () => {
+    try {
+      const formData = new FormData()
+
+      if (profileBackgroundImage === null) {
+        console.error('No se ha seleccionado ninguna imagen')
+
+        return
+      }
+      formData.append('backgroundImage', profileBackgroundImage)
+      uploadBackgroundProfileImage(formData)
+      setProfileBackgroundImage(null)
+    } catch (error) {
+      console.error('Error al subir la imagen:', error)
+    }
+  }
+  const handleDeleteBackgroundImageUploaded = () => {
+    deleteBackgroundProfileImage()
   }
 
   const handleCloseModal = () => {
@@ -82,7 +110,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
           }}
           objectFit='cover'
           opacity={backgroundProfileImageUrl === undefined ? '0.3' : '0.5'}
-          src={profileBackground}
+          src={backgroundProfileImageUrl ?? profileBackground}
           width='100%'
         />
         {children}
@@ -100,7 +128,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
               src={
                 showPreviewImage() !== undefined
                   ? showPreviewImage()
-                  : profileBackground
+                  : backgroundProfileImageUrl ?? profileBackground
               }
               width={'100%'}
             />
@@ -131,17 +159,25 @@ export function ProfileLayout({ children }: Readonly<Props>) {
             <Button
               colorScheme='messenger'
               flexGrow={'1'}
-              isDisabled={profileBackgroundImage === null}
+              isDisabled={
+                profileBackgroundImage === null || isBackgroundUploadPending
+              }
+              isLoading={isBackgroundUploadPending}
               size={'sm'}
-              type='submit'
+              onClick={handleUploadImageSubmit}
             >
               Upload image
             </Button>
             <Button
               colorScheme='red'
-              isDisabled={backgroundProfileImageUrl === undefined}
+              isDisabled={
+                backgroundProfileImageUrl === undefined ||
+                isDeleteBackgroundPending
+              }
+              isLoading={isDeleteBackgroundPending}
               size={'sm'}
               w='full'
+              onClick={handleDeleteBackgroundImageUploaded}
             >
               Delete image uploaded
             </Button>

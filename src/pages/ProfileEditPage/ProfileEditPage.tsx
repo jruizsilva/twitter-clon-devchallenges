@@ -71,7 +71,6 @@ export function ProfileEditPage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleButtonClick = () => {
-    // Simula un clic en el input de tipo archivo cuando se hace clic en el botón
     fileInputRef.current?.click()
   }
 
