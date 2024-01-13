@@ -3,6 +3,7 @@ import {
   Button,
   IconButton,
   Image,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { MdEdit } from 'react-icons/md'
+import { useRef, useState } from 'react'
 
 import { useBackgroundProfileImage } from 'hooks/useBackgroundProfileImage'
 import { profileBackground } from 'assets'
@@ -28,8 +30,32 @@ export function ProfileLayout({ children }: Readonly<Props>) {
     params?.username as string
   )
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [profileBackgroundImage, setProfileBackgroundImage] =
+    useState<File | null>(null)
 
-  console.log(backgroundProfileImageUrl)
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]
+
+    setProfileBackgroundImage(selectedFile as File)
+  }
+
+  const handleChangeImageClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const showPreviewImage = () => {
+    if (profileBackgroundImage !== null) {
+      return URL.createObjectURL(profileBackgroundImage)
+    }
+
+    return undefined
+  }
+
+  const handleCloseModal = () => {
+    setProfileBackgroundImage(null)
+    onClose()
+  }
 
   return (
     <>
@@ -61,7 +87,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
         />
         {children}
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Profile background image</ModalHeader>
@@ -71,7 +97,11 @@ export function ProfileLayout({ children }: Readonly<Props>) {
               alt='preview background image'
               height={'160px'}
               objectFit={'cover'}
-              src={profileBackground}
+              src={
+                showPreviewImage() !== undefined
+                  ? showPreviewImage()
+                  : profileBackground
+              }
               width={'100%'}
             />
           </ModalBody>
@@ -84,18 +114,35 @@ export function ProfileLayout({ children }: Readonly<Props>) {
             gap={'8px'}
             w='full'
           >
-            <Button colorScheme='whatsapp' flexGrow={'1'} size={'sm'}>
+            <Input
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              type='file'
+              onChange={handleFileChange}
+            />
+            <Button
+              colorScheme='whatsapp'
+              flexGrow={'1'}
+              size={'sm'}
+              onClick={handleChangeImageClick}
+            >
               Change image
             </Button>
             <Button
               colorScheme='messenger'
               flexGrow={'1'}
+              isDisabled={profileBackgroundImage === null}
               size={'sm'}
               type='submit'
             >
               Upload image
             </Button>
-            <Button colorScheme='red' size={'sm'} w='full'>
+            <Button
+              colorScheme='red'
+              isDisabled={backgroundProfileImageUrl === undefined}
+              size={'sm'}
+              w='full'
+            >
               Delete image uploaded
             </Button>
           </ModalFooter>

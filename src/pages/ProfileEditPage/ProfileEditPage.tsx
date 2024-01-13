@@ -28,7 +28,8 @@ import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function ProfileEditPage() {
   const { userAuthenticated } = useAppStore()
-  const { uploadProfileImage } = useUploadProfileImage()
+  const { uploadProfileImage, isPending: isUploadPending } =
+    useUploadProfileImage()
   const {
     register,
     handleSubmit,
@@ -49,7 +50,8 @@ export function ProfileEditPage() {
     userAuthenticated?.username as string
   )
   const [profileImage, setProfileImage] = useState<File | null>(null)
-  const { deleteProfileImage, isPending } = useDeleteProfileImageMutation()
+  const { deleteProfileImage, isPending: isDeletePending } =
+    useDeleteProfileImageMutation()
 
   if (userUpdated !== undefined) {
     setValue('name', userUpdated.name)
@@ -181,7 +183,8 @@ export function ProfileEditPage() {
                 <Button
                   colorScheme='messenger'
                   flexGrow={'1'}
-                  isDisabled={profileImage === null}
+                  isDisabled={profileImage === null || isUploadPending}
+                  isLoading={isUploadPending}
                   size={'sm'}
                   type='submit'
                 >
@@ -189,8 +192,8 @@ export function ProfileEditPage() {
                 </Button>
                 <Button
                   colorScheme='red'
-                  isDisabled={profileImageUrl === undefined || isPending}
-                  isLoading={isPending}
+                  isDisabled={profileImageUrl === undefined || isDeletePending}
+                  isLoading={isDeletePending}
                   size={'sm'}
                   w='full'
                   onClick={handleDeletImageUploaded}
