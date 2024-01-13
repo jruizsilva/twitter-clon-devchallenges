@@ -17,10 +17,10 @@ import { useParams } from 'react-router-dom'
 import { MdEdit } from 'react-icons/md'
 import { useRef, useState, useCallback } from 'react'
 
-import { useBackgroundProfileImage } from 'hooks/useBackgroundProfileImage'
 import { profileBackground } from 'assets'
 import { useUploadBackgroundProfileImage } from 'hooks/mutations/useUploadBackgroundProfileImage'
 import { useDeleteBackgroundProfileImageMutation } from 'hooks/mutations/useDeleteBackgroundProfileImageMutation'
+import { useUserImages } from 'hooks/useUserImages'
 
 interface Props {
   children: JSX.Element | JSX.Element[]
@@ -28,9 +28,7 @@ interface Props {
 
 export function ProfileLayout({ children }: Readonly<Props>) {
   const params = useParams()
-  const { backgroundProfileImageUrl } = useBackgroundProfileImage(
-    params?.username as string
-  )
+  const { userBackgroundUrl } = useUserImages(params?.username as string)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [profileBackgroundImage, setProfileBackgroundImage] =
@@ -39,8 +37,6 @@ export function ProfileLayout({ children }: Readonly<Props>) {
     useUploadBackgroundProfileImage()
   const { deleteBackgroundProfileImage, isPending: isDeleteBackgroundPending } =
     useDeleteBackgroundProfileImageMutation()
-
-  console.log('backgroundProfileImageUrl', backgroundProfileImageUrl)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
@@ -109,7 +105,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
           }}
           objectFit='cover'
           opacity={'0.3'}
-          src={backgroundProfileImageUrl ?? profileBackground}
+          src={userBackgroundUrl ?? profileBackground}
           width='100%'
         />
         {children}
@@ -127,7 +123,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
               src={
                 showPreviewImage() !== undefined
                   ? showPreviewImage()
-                  : backgroundProfileImageUrl ?? profileBackground
+                  : userBackgroundUrl ?? profileBackground
               }
               width={'100%'}
             />
@@ -170,8 +166,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
             <Button
               colorScheme='red'
               isDisabled={
-                backgroundProfileImageUrl === undefined ||
-                isDeleteBackgroundPending
+                userBackgroundUrl === undefined || isDeleteBackgroundPending
               }
               isLoading={isDeleteBackgroundPending}
               size={'sm'}

@@ -18,12 +18,11 @@ import {
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRef, useState } from 'react'
 
-import { useProfileImage } from '../../hooks/useProfileImage'
-
 import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
 import { useAppStore } from 'store/useAppStore'
+import { useUserImages } from 'hooks/useUserImages'
 
 export function ProfileEditPage() {
   const userAuthenticated = useAppStore((store) => store.userAuthenticated)
@@ -41,9 +40,7 @@ export function ProfileEditPage() {
       description: userAuthenticated?.description
     }
   })
-  const { profileImageUrl } = useProfileImage(
-    userAuthenticated?.username as string
-  )
+  const { userLogoUrl } = useUserImages(userAuthenticated?.username as string)
   const { updateUser, data: userUpdated } = useUpdateUserMutation(
     userAuthenticated?.username as string
   )
@@ -189,7 +186,7 @@ export function ProfileEditPage() {
                 </Button>
                 <Button
                   colorScheme='red'
-                  isDisabled={profileImageUrl === undefined || isDeletePending}
+                  isDisabled={userLogoUrl === undefined || isDeletePending}
                   isLoading={isDeletePending}
                   size={'sm'}
                   w='full'

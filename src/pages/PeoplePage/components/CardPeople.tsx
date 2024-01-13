@@ -10,7 +10,7 @@ import {
 import { NavLink } from 'react-router-dom'
 
 import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
-import { useProfileImage } from 'hooks/useProfileImage'
+import { useUserImages } from 'hooks/useUserImages'
 
 interface Props {
   user: User | null
@@ -18,7 +18,7 @@ interface Props {
 
 export function CardPeople({ user }: Readonly<Props>): JSX.Element {
   const { userProfile } = useFindUserByUsernameQuery(user?.username as string)
-  const { profileImageUrl } = useProfileImage(userProfile?.username as string)
+  const { userLogoUrl } = useUserImages(userProfile?.username as string)
 
   return (
     <Box
@@ -45,7 +45,7 @@ export function CardPeople({ user }: Readonly<Props>): JSX.Element {
         mb={4}
         pos={'relative'}
         size={'xl'}
-        src={profileImageUrl}
+        src={userLogoUrl}
       />
       <Heading fontFamily={'body'} fontSize={'2xl'}>
         <Text

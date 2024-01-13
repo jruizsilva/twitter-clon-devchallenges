@@ -1,6 +1,6 @@
 import { Avatar, type AvatarProps } from '@chakra-ui/react'
 
-import { useProfileImage } from '../../hooks/useProfileImage'
+import { useUserImages } from 'hooks/useUserImages'
 
 interface Props {
   imageSize: string
@@ -8,14 +8,14 @@ interface Props {
 }
 
 export const UserLogo = ({ imageSize, user, ...rest }: AvatarProps & Props) => {
-  const { profileImageUrl } = useProfileImage(user?.username)
+  const { userLogoUrl } = useUserImages(user?.username)
 
   return (
     <Avatar
       alt='profile photo'
       borderRadius='8px'
       height={`${imageSize}px`}
-      src={profileImageUrl}
+      src={userLogoUrl}
       width={`${imageSize}px`}
       {...rest}
     />

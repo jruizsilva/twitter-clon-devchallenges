@@ -4,7 +4,7 @@ import { baseUrl } from 'utils/baseUrl';
 import { useAppStore } from 'store/useAppStore';
 
 
-export const useImagesUserAuthenticated = () => {
+export const useUserAuthenticatedImages = () => {
   const userAuthenticated = useAppStore(store => store.userAuthenticated)
 
   const profileImageUserAuthenticatedUrl = useMemo(() => {
