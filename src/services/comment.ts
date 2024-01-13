@@ -18,4 +18,22 @@ const fetchDeleteComment = async ({ commentId, postId }: DeleteCommentRequest) =
   return post
 }
 
-export { fetchAddCommentToPost, fetchDeleteComment }
+const fetchLikeComment = async ({ commentId, postId }: LikeRequest) => {
+  const response = await protectedInstance.patch<Post>(
+    `/comments/${commentId}/posts/${postId}/likeComment`
+  )
+  const post = response.data
+
+  return post
+}
+
+const fetchRemoveLikeComment = async ({ commentId, postId }: LikeRequest) => {
+  const response = await protectedInstance.patch<Post>(
+    `/comments/${commentId}/posts/${postId}/removeLikeComment`
+  )
+  const post = response.data
+
+  return post
+}
+
+export { fetchAddCommentToPost, fetchDeleteComment, fetchLikeComment, fetchRemoveLikeComment }
