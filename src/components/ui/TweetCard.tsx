@@ -26,12 +26,7 @@ import {
 } from '@chakra-ui/react'
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from 'react-icons/fa'
 import Swal from 'sweetalert2'
-import {
-  MdOutlineModeComment,
-  MdLoop,
-  MdOutlineEdit,
-  MdDelete
-} from 'react-icons/md'
+import { MdOutlineEdit, MdDelete } from 'react-icons/md'
 import { TbDots } from 'react-icons/tb'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useMemo, useState } from 'react'
@@ -293,12 +288,6 @@ export function TweetCard({
                   height='50px'
                   justifyContent='center'
                 >
-                  <ButtonIconContainer isDisabled>
-                    <Icon as={MdOutlineModeComment} boxSize={5} />
-                  </ButtonIconContainer>
-                  <ButtonIconContainer isDisabled colorScheme='green'>
-                    <Icon as={MdLoop} boxSize={5} />
-                  </ButtonIconContainer>
                   <ButtonIconContainer
                     colorScheme='red'
                     isDisabled={isPendingLike}
