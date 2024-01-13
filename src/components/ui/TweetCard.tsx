@@ -55,6 +55,7 @@ import { useToggleBookmarkMutation } from 'hooks/mutations/useToggleBookmarkMuta
 import { useRemoveBookmarkMutation } from 'hooks/mutations/useRemoveBookmarkMutation'
 import { useRemoveLikeMutation } from 'hooks/mutations/useRemoveLikeMutation'
 import { useAppStore } from 'store/useAppStore'
+import { useAddCommentToPostMutation } from 'hooks/mutations/useAddCommentToPostMutation'
 
 interface Props {
   urlImage?: string
@@ -110,7 +111,7 @@ export function TweetCard({
     verifyIfPostIsAlreadySaved(post, userAuthenticated as User)
   )
   const { deletePost } = useDeletePostMutation()
-  const { editPost, data } = useUpdatePostMutation()
+  const { editPost, data: postUpdated } = useUpdatePostMutation()
   const { removeBookmark } = useRemoveBookmarkMutation(post?.id.toString())
   const { removeLike } = useRemoveLikeMutation(post?.id.toString())
   const {
@@ -121,7 +122,8 @@ export function TweetCard({
   } = useForm<PostRequest>({
     mode: 'onBlur',
     defaultValues: {
-      content: data?.content != null ? data.content : post?.content
+      content:
+        postUpdated?.content != null ? postUpdated.content : post?.content
     }
   })
   const { toggleLike, isPending: isPendingLike } = useToggleLikeMutation(
@@ -129,6 +131,18 @@ export function TweetCard({
   )
   const { toggleBookmark, isPending: isPendingBookmark } =
     useToggleBookmarkMutation(post?.id.toString())
+  const { addComment, isPending: isPendingComment } =
+    useAddCommentToPostMutation()
+
+  const sortedComments = useMemo(() => {
+    return post?.comments !== undefined
+      ? [...post.comments].sort((a, b) => {
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        })
+      : []
+  }, [post])
 
   const handleDelete = (postId: number) => {
     Swal.fire({
@@ -313,11 +327,18 @@ export function TweetCard({
         </Box>
         <Divider opacity={0.1} />
         {showCommentForm && (
-          <CommentInput user={userAuthenticated as User} />
+          <CommentInput
+            addComment={addComment}
+            isPendingComment={isPendingComment}
+            post={post}
+            user={userAuthenticated as User}
+          />
         )}
         <Divider opacity={0.1} />
-        <Comment user={post.user} />
-        <Comment user={post.user} />
+        {sortedComments.length > 0 &&
+          sortedComments.map((comment) => (
+            <Comment key={comment.id} comment={comment} user={post.user} />
+          ))}
       </Box>
       {showOptionsMenu && (
         <Modal isOpen={isOpen} onClose={onClose}>

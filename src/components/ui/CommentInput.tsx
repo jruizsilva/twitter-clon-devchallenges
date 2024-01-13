@@ -12,9 +12,17 @@ import { UserLogo } from './UserLogo'
 
 interface Props {
   user: User
+  post: Post
+  addComment: (commentRequest: CommentRequest) => void
+  isPendingComment: boolean
 }
 
-export function CommentInput({ user }: Readonly<Props>) {
+export function CommentInput({
+  user,
+  post,
+  addComment,
+  isPendingComment
+}: Readonly<Props>) {
   const [commentValue, setCommentValue] = useState('')
 
   const handleAddComment = (e: React.FormEvent<HTMLDivElement>) => {
@@ -23,10 +31,12 @@ export function CommentInput({ user }: Readonly<Props>) {
     const formData = new FormData(form)
     const comment = formData.get('comment') as string
     const commentRequest = {
-      content: comment
+      content: comment,
+      postId: post.id.toString()
     }
 
-    console.log(commentRequest)
+    addComment(commentRequest)
+    setCommentValue('')
   }
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentValue(e.target.value)
@@ -49,7 +59,9 @@ export function CommentInput({ user }: Readonly<Props>) {
             <InputRightElement mr={'4px'} width='4.5rem'>
               <Button
                 h='1.75rem'
-                isDisabled={commentValue.length < 2}
+                isDisabled={commentValue.length < 2 || isPendingComment}
+                isLoading={isPendingComment}
+                loadingText='Submitting'
                 size='sm'
                 type='submit'
               >

@@ -5,6 +5,7 @@ interface Post {
   user: User
   likedByUsers: User[]
   savedByUsers: User[]
+  comments: IComment[]
 }
 
 interface PostRequest {
