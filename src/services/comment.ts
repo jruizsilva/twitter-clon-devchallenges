@@ -15,8 +15,6 @@ const fetchDeleteComment = async ({ commentId, postId }: DeleteCommentRequest) =
   )
   const post = response.data
 
-  console.log(post)
-
   return post
 }
 

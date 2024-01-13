@@ -54,12 +54,7 @@ export function CommentMenuOptions({
         <PopoverContent _focus={{ boxShadow: 'none' }} w='fit-content'>
           <PopoverArrow />
           <PopoverBody>
-            <Stack
-              onClick={() => {
-                console.log('commentId', comment.id)
-                console.log('postId', post.id)
-              }}
-            >
+            <Stack>
               <Button
                 colorScheme='orange'
                 fontSize='sm'
