@@ -274,8 +274,7 @@ export function TweetCard({
                 marginBottom={2}
                 marginTop={3}
               >
-                <Text fontSize='xs'>0 Comments</Text>
-                <Text fontSize='xs'>0 Retweets</Text>
+                <Text fontSize='xs'>{post.comments.length} Comments</Text>
                 <Text fontSize='xs'>{post.likedByUsers?.length} Likes</Text>
                 <Text fontSize='xs'>{post?.savedByUsers?.length} Saved</Text>
               </Box>
