@@ -12,6 +12,9 @@ export function App() {
     (state) => state.setUserAuthenticated
   )
 
+  console.log('isPending', isPending)
+  console.log('userFetch', user)
+
   useEffect(() => {
     if (user === undefined) {
       return

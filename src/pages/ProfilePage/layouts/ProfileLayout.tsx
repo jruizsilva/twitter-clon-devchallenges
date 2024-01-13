@@ -40,7 +40,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
   const { deleteBackgroundProfileImage, isPending: isDeleteBackgroundPending } =
     useDeleteBackgroundProfileImageMutation()
 
-  console.log(backgroundProfileImageUrl)
+  console.log('backgroundProfileImageUrl', backgroundProfileImageUrl)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]

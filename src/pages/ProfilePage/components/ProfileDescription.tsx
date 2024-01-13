@@ -25,10 +25,6 @@ export function ProfileDescription(props: Props) {
     params?.username as string
   )
 
-  console.log('followers', followers)
-
-  console.log('usersFollowing', usersFollowing)
-
   useEffect(() => {
     if (userAuthenticated === null || followers === undefined) {
       return
