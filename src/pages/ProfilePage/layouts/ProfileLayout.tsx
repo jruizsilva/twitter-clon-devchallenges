@@ -76,11 +76,28 @@ export function ProfileLayout({ children }: Readonly<Props>) {
             />
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
+          <ModalFooter
+            alignContent={'center'}
+            alignItems={'center'}
+            display={'flex'}
+            flexWrap={'wrap'}
+            gap={'8px'}
+            w='full'
+          >
+            <Button colorScheme='whatsapp' flexGrow={'1'} size={'sm'}>
+              Change image
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <Button
+              colorScheme='messenger'
+              flexGrow={'1'}
+              size={'sm'}
+              type='submit'
+            >
+              Upload image
+            </Button>
+            <Button colorScheme='red' size={'sm'} w='full'>
+              Delete image uploaded
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
