@@ -34,7 +34,7 @@ export function ProfileLayout({ children }: Readonly<Props>) {
   const [profileBackgroundImage, setProfileBackgroundImage] =
     useState<File | null>(null)
   const { uploadBackgroundProfileImage, isPending: isBackgroundUploadPending } =
-    useUploadBackgroundProfileImage()
+    useUploadBackgroundProfileImage(params?.username as string)
   const { deleteBackgroundProfileImage, isPending: isDeleteBackgroundPending } =
     useDeleteBackgroundProfileImageMutation()
 

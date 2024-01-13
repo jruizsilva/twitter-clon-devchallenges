@@ -5,7 +5,7 @@ import { fetchFindUserByUsername } from 'services/user'
 const useFindUserByUsernameQuery = (username: string) => {
   const queryKey = [`profile/${username}`]
 
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  const { data, ...rest } = useQuery({
     queryKey,
     queryFn: async () => {
       return await fetchFindUserByUsername(username)
@@ -16,10 +16,7 @@ const useFindUserByUsernameQuery = (username: string) => {
 
   return {
     userProfile: data,
-    isLoading,
-    isError,
-    error,
-    refetch
+    ...rest
   }
 }
 

@@ -16,7 +16,6 @@ import { AiFillCaretDown } from 'react-icons/ai'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 
-import { UserLogo } from './UserLogo'
 import { UserAuthenticatedLogo } from './UserAuthenticatedLogo'
 
 import { tweeterSmall } from 'assets'
@@ -28,8 +27,6 @@ export function Navbar(props: Props) {
   const queryClient = useQueryClient()
   const { pathname } = useLocation()
   const userAuthenticated = useAppStore((store) => store.userAuthenticated)
-
-  console.log('userAuthenticated', userAuthenticated)
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN')

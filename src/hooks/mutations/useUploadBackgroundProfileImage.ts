@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { fetchUploadBackgroundProfileImage } from 'services/upload'
 
 
-export const useUploadBackgroundProfileImage = () => {
+export const useUploadBackgroundProfileImage = (username: string) => {
   const queryClient = useQueryClient()
   const mutationKey = ['upload-background-image']
 
@@ -19,6 +19,7 @@ export const useUploadBackgroundProfileImage = () => {
         position: 'bottom-right'
       })
       queryClient.invalidateQueries({ queryKey: ['user'] })
+      queryClient.invalidateQueries({ queryKey: [`profile/${username}`] })
     },
     onError: (error) => {
       console.dir(error)
