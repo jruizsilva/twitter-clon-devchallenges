@@ -19,7 +19,6 @@ export function Comment({ post, comment }: Readonly<Props>) {
     postId: post.id.toString()
   }
 
-  console.log(comment)
   const [isCommentLiked, setIsCommentLiked] = useState(false)
 
   const { toggleCommentLike, isPending: isPendingToggleLike } =
