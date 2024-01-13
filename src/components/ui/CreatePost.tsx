@@ -23,7 +23,7 @@ export function CreatePost(props: Props) {
   } = useForm<PostRequest>({ mode: 'onBlur' })
 
   const { addPost } = useCreatePostMutation()
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
 
   const onSubmit: SubmitHandler<PostRequest> = (post: PostRequest) => {
     addPost(post)

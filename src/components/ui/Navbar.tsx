@@ -26,7 +26,7 @@ interface Props {}
 export function Navbar(props: Props) {
   const queryClient = useQueryClient()
   const { pathname } = useLocation()
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
 
   const logout = () => {
     localStorage.removeItem('AUTH_TOKEN')

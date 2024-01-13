@@ -13,7 +13,7 @@ interface Props {}
 
 export function ProfileDescription(props: Props) {
   const params = useParams()
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
 
   const { userProfile } = useFindUserByUsernameQuery(params.username as string)
   const { toggleFollow } = useToggleFollowerMutation(params?.username as string)

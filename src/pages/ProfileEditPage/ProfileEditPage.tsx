@@ -24,10 +24,9 @@ import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
 import { useAppStore } from 'store/useAppStore'
-import { useUserQuery } from 'hooks/queries/useUserQuery'
 
 export function ProfileEditPage() {
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
   const { uploadProfileImage, isPending: isUploadPending } =
     useUploadProfileImage()
   const {
@@ -42,7 +41,6 @@ export function ProfileEditPage() {
       description: userAuthenticated?.description
     }
   })
-  const { user } = useUserQuery()
   const { profileImageUrl } = useProfileImage(
     userAuthenticated?.username as string
   )
@@ -64,8 +62,8 @@ export function ProfileEditPage() {
     updateUser(updateUserRequest)
   }
   const onCancel = () => {
-    setValue('name', user?.name)
-    setValue('description', user?.description)
+    setValue('name', userAuthenticated?.name)
+    setValue('description', userAuthenticated?.description)
   }
 
   const fileInputRef = useRef<HTMLInputElement>(null)

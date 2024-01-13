@@ -24,7 +24,7 @@ export function CommentInput({
   isPendingComment
 }: Readonly<Props>) {
   const [commentValue, setCommentValue] = useState('')
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
 
   const handleAddComment = (e: React.FormEvent<HTMLDivElement>) => {
     e.preventDefault()

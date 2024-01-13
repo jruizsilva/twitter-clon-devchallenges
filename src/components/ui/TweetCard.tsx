@@ -95,7 +95,7 @@ export function TweetCard({
   showCrudButtons = false,
   showCommentForm = false
 }: Readonly<Props>) {
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
   const { pathname } = useLocation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()

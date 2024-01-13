@@ -9,7 +9,7 @@ import { useAppStore } from 'store/useAppStore'
 interface Props {}
 
 export function BookmarksPage(props: Props): JSX.Element {
-  const { userAuthenticated } = useAppStore()
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
   const { postsSaved, isLoading } = usePostsSavedByUsernameQuery(
     userAuthenticated?.username as string
   )

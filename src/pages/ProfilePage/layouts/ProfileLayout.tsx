@@ -103,13 +103,12 @@ export function ProfileLayout({ children }: Readonly<Props>) {
         />
         <Image
           alt='user profilebackground image'
-          fallbackSrc={backgroundProfileImageUrl}
           height={{
             base: '168px',
             md: '300px'
           }}
           objectFit='cover'
-          opacity={backgroundProfileImageUrl === undefined ? '0.3' : '0.5'}
+          opacity={'0.3'}
           src={backgroundProfileImageUrl ?? profileBackground}
           width='100%'
         />
