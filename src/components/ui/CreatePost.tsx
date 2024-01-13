@@ -9,6 +9,8 @@ import {
 } from '@chakra-ui/react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
+import { UserAuthenticatedLogo } from './UserAuthenticatedLogo'
+
 import { UserLogo } from 'components/ui'
 import { useCreatePostMutation } from 'hooks/mutations/useCreatePostMutation'
 import { useAppStore } from 'store/useAppStore'
@@ -46,12 +48,11 @@ export function CreatePost(props: Props) {
       </Text>
       <Divider marginBottom='8px' />
       <Box marginBottom='16px' position='relative'>
-        <UserLogo
+        <UserAuthenticatedLogo
           imageSize='40'
           left='8px'
           position='absolute'
           top='8px'
-          user={userAuthenticated as User}
         />
         <FormControl
           isRequired

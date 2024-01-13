@@ -8,9 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import { UserLogo } from './UserLogo'
-
-import { useAppStore } from 'store/useAppStore'
+import { UserAuthenticatedLogo } from './UserAuthenticatedLogo'
 
 interface Props {
   post: Post
@@ -24,7 +22,6 @@ export function CommentInput({
   isPendingComment
 }: Readonly<Props>) {
   const [commentValue, setCommentValue] = useState('')
-  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
 
   const handleAddComment = (e: React.FormEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -46,7 +43,7 @@ export function CommentInput({
   return (
     <Box as={'form'} height='60px' padding='10px 0' onSubmit={handleAddComment}>
       <Box alignItems='center' columnGap={4} display='flex' height='40px'>
-        <UserLogo imageSize='40' user={userAuthenticated as User} />
+        <UserAuthenticatedLogo imageSize='40' />
         <FormControl height='100%'>
           <InputGroup>
             <Input
