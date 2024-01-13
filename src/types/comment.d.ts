@@ -2,6 +2,10 @@ interface CommentRequest {
   content: string
   postId?: string
 }
+interface DeleteCommentRequest {
+  commentId: string
+  postId: string
+}
 interface IComment {
   content: string
   createdAt: string

@@ -8,14 +8,16 @@ const fetchAddCommentToPost = async (postId: string, commentRequest: CommentRequ
 
   return post
 }
-// const fetchRegister = async (registerRequest: RegisterRequest) => {
-//   const response = await protectedInstance.post<AuthResponse>(
-//     '/auth/register',
-//     registerRequest
-//   )
-//   const AUTH_TOKEN = response.data.jwt
 
-//   return AUTH_TOKEN
-// }
+const fetchDeleteComment = async ({ commentId, postId }: DeleteCommentRequest) => {
+  const response = await protectedInstance.delete<Post>(
+    `/comments/${commentId}/posts/${postId}/removeComment`
+  )
+  const post = response.data
 
-export { fetchAddCommentToPost }
+  console.log(post)
+
+  return post
+}
+
+export { fetchAddCommentToPost, fetchDeleteComment }

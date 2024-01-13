@@ -331,13 +331,12 @@ export function TweetCard({
             addComment={addComment}
             isPendingComment={isPendingComment}
             post={post}
-            user={userAuthenticated as User}
           />
         )}
         <Divider opacity={0.1} />
         {sortedComments.length > 0 &&
           sortedComments.map((comment) => (
-            <Comment key={comment.id} comment={comment} user={post.user} />
+            <Comment key={comment.id} comment={comment} post={post} />
           ))}
       </Box>
       {showOptionsMenu && (
