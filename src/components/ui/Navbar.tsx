@@ -42,7 +42,7 @@ export function Navbar(props: Props) {
       paddingX='16px'
       position={'sticky'}
       top={'0'}
-      zIndex={'10'}
+      zIndex={'100'}
     >
       <HStack justifyContent='space-between'>
         <HStack as={NavLink} to={''}>
