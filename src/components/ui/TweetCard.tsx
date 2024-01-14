@@ -106,14 +106,19 @@ export function TweetCard({
     verifyIfPostIsAlreadySaved(post, userAuthenticated as User)
   )
   const { deletePost } = useDeletePostMutation()
-  const { editPost, data: postUpdated } = useUpdatePostMutation()
+  const {
+    editPost,
+    data: postUpdated,
+    isPending: isPendingUpdatePost
+  } = useUpdatePostMutation()
   const { removeBookmark } = useRemoveBookmarkMutation(post?.id.toString())
   const { removeLike } = useRemoveLikeMutation(post?.id.toString())
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
-    setValue
+    setValue,
+    watch
   } = useForm<PostRequest>({
     mode: 'onBlur',
     defaultValues: {
@@ -155,9 +160,7 @@ export function TweetCard({
     })
   }
 
-  const handleEdit: SubmitHandler<PostRequest> = async (
-    postRequest: PostRequest
-  ) => {
+  const handleEdit: SubmitHandler<PostRequest> = (postRequest: PostRequest) => {
     editPost({ postId: post.id.toString(), postRequest })
   }
 
@@ -361,8 +364,14 @@ export function TweetCard({
             <ModalFooter>
               <Button
                 colorScheme='blue'
-                isDisabled={!isValid}
-                isLoading={isSubmitting}
+                isDisabled={
+                  !isValid ||
+                  isSubmitting ||
+                  isPendingUpdatePost ||
+                  post.content === watch('content')
+                }
+                isLoading={isSubmitting || isPendingUpdatePost}
+                loadingText={'Updating post'}
                 mr={3}
                 type='submit'
               >

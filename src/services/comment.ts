@@ -41,7 +41,7 @@ export const fetchRemoveLikeComment =
   }
 
 export const fetchEditComment =
-  async ({ postId, commentId, ...editRequest }: EditCommentRequest) => {
+  async ({ postId, commentId, ...editRequest }: UpdateCommentRequest) => {
     const response = await protectedInstance.patch<Post>(
       `/comments/${commentId}/posts/${postId}/editComment`, editRequest
     )

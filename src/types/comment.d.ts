@@ -6,7 +6,7 @@ interface DeleteCommentRequest {
   commentId: string
   postId: string
 }
-interface EditCommentRequest {
+interface UpdateCommentRequest {
   content: string
   postId: string
   commentId: string

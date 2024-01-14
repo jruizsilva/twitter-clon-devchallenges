@@ -8,13 +8,28 @@ import {
   Button,
   Stack,
   type BoxProps,
-  Box
+  Box,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Divider,
+  FormControl,
+  FormLabel,
+  Textarea,
+  FormErrorMessage
 } from '@chakra-ui/react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import { useCallback } from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { useDeleteCommentMutation } from 'hooks/mutations/useDeleteCommentMutation'
+import { useUpdateCommentMutation } from 'hooks/mutations/useUpdateCommentMutation'
 
 interface Props {
   post: Post
@@ -28,6 +43,27 @@ export function CommentMenuOptions({
 }: Readonly<BoxProps & Props>) {
   const { deleteComment, isPending: isPendingDeleteComment } =
     useDeleteCommentMutation()
+  const {
+    updateComment,
+    data: commentUpdated,
+    isPending: isPendingUpdateComment
+  } = useUpdateCommentMutation()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting },
+    setValue,
+    watch
+  } = useForm<CommentRequest>({
+    mode: 'onBlur',
+    defaultValues: {
+      content:
+        commentUpdated?.content != null
+          ? commentUpdated.content
+          : comment?.content
+    }
+  })
 
   const handleDeleteComment = useCallback(() => {
     const deleteCommentRequest: DeleteCommentRequest = {
@@ -37,6 +73,16 @@ export function CommentMenuOptions({
 
     deleteComment(deleteCommentRequest)
   }, [post, comment, deleteComment])
+
+  const handleUpdate: SubmitHandler<CommentRequest> = ({ content }) => {
+    const updateCommentRequest: UpdateCommentRequest = {
+      commentId: comment.id.toString(),
+      postId: post.id.toString(),
+      content
+    }
+
+    updateComment(updateCommentRequest)
+  }
 
   return (
     <Box {...rest}>
@@ -62,6 +108,7 @@ export function CommentMenuOptions({
                 rightIcon={<MdEdit />}
                 variant='ghost'
                 w='194px'
+                onClick={onOpen}
               >
                 Edit comment
               </Button>
@@ -83,6 +130,63 @@ export function CommentMenuOptions({
           </PopoverBody>
         </PopoverContent>
       </Popover>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent as={'form'} onSubmit={handleSubmit(handleUpdate)}>
+          <ModalHeader>Edit comment</ModalHeader>
+          <Divider />
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl
+              isRequired
+              id='content'
+              isInvalid={Boolean(errors.content)}
+            >
+              <FormLabel>Content</FormLabel>
+              <Textarea
+                placeholder='comment text'
+                resize='vertical'
+                {...register('content', {
+                  required: {
+                    value: true,
+                    message: 'el tweet no debe estar vacio'
+                  },
+                  minLength: {
+                    value: 2,
+                    message: 'el comment debe tener 2 o mas caracteres'
+                  }
+                })}
+              />
+              <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme='blue'
+              isDisabled={
+                !isValid ||
+                isSubmitting ||
+                isPendingUpdateComment ||
+                comment.content === watch('content')
+              }
+              isLoading={isSubmitting || isPendingUpdateComment}
+              loadingText={'updating comment'}
+              mr={3}
+              type='submit'
+            >
+              Submit
+            </Button>
+            <Button
+              onClick={() => {
+                setValue('content', comment.content)
+              }}
+            >
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
