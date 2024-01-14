@@ -1,4 +1,4 @@
-import { Box, Center, Heading, Spinner } from '@chakra-ui/react'
+import { Box, Center, Heading, Spinner, Text } from '@chakra-ui/react'
 
 import { BookmarksContainer } from './components/BookmarksContainer'
 
@@ -14,8 +14,6 @@ export function BookmarksPage(props: Props): JSX.Element {
     userAuthenticated?.username as string
   )
 
-  console.log('postsSaved', postsSaved)
-
   return (
     <BookmarksContainer>
       <Heading textAlign={'center'}>Bookmarks saved</Heading>
@@ -25,7 +23,7 @@ export function BookmarksPage(props: Props): JSX.Element {
         gap={'24px'}
         marginTop={'24px'}
       >
-        {isLoading ? (
+        {isLoading && (
           <Center
             display={'flex'}
             flexDirection={'column'}
@@ -34,13 +32,25 @@ export function BookmarksPage(props: Props): JSX.Element {
           >
             <Spinner size={'md'} />
           </Center>
-        ) : (
+        )}
+
+        {!isLoading && postsSaved?.length === 0 && (
+          <Center
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'24px'}
+            height={'100px'}
+          >
+            <Text>No ha guardado ningun post todavia</Text>
+          </Center>
+        )}
+
+        {!isLoading &&
           postsSaved !== undefined &&
-          postsSaved?.length > 0 &&
+          postsSaved.length > 0 &&
           postsSaved.map((post) => (
             <TweetCard key={post.id} post={post} showOptionsMenu={true} />
-          ))
-        )}
+          ))}
       </Box>
     </BookmarksContainer>
   )
