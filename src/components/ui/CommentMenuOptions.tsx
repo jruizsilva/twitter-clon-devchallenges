@@ -36,7 +36,6 @@ export function CommentMenuOptions({
     }
 
     deleteComment(deleteCommentRequest)
-    console.log('delete', deleteCommentRequest)
   }, [post, comment, deleteComment])
 
   return (

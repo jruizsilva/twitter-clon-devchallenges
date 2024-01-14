@@ -6,6 +6,11 @@ interface DeleteCommentRequest {
   commentId: string
   postId: string
 }
+interface EditCommentRequest {
+  content: string
+  postId: string
+  commentId: string
+}
 interface LikeRequest {
   commentId: string
   postId: string
