@@ -5,10 +5,8 @@ import {
   Box,
   Button,
   Center,
-  Divider,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
   IconButton,
@@ -16,12 +14,10 @@ import {
   Stack,
   useColorModeValue
 } from '@chakra-ui/react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRef, useState } from 'react'
 
 import { UpdateUserForm } from './components/UpdateUserForm'
 
-import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
 import { useAppStore } from 'store/useAppStore'
