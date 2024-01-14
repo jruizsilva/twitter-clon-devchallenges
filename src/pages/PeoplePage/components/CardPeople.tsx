@@ -30,8 +30,6 @@ export function CardPeople({ user }: Readonly<Props>): JSX.Element {
   const { usersFollowing, isPending: isPendingFindAllFollowing } =
     useFindAllUsersFollowingQuery(userAuthenticated?.username as string)
 
-  console.log(user?.username, usersFollowing)
-
   useEffect(() => {
     if (user === null || usersFollowing === undefined) {
       return

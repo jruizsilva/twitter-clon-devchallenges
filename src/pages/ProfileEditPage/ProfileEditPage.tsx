@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -18,6 +19,8 @@ import {
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRef, useState } from 'react'
 
+import { UpdateUserForm } from './components/UpdateUserForm'
+
 import { useUpdateUserMutation } from 'hooks/mutations/useUpdateUserMutation'
 import { useUploadProfileImage } from 'hooks/mutations/useUploadProfileImage'
 import { useDeleteProfileImageMutation } from 'hooks/mutations/useDeleteProfileImageMutation'
@@ -28,40 +31,11 @@ export function ProfileEditPage() {
   const userAuthenticated = useAppStore((store) => store.userAuthenticated)
   const { uploadProfileImage, isPending: isUploadPending } =
     useUploadProfileImage()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-    setValue
-  } = useForm<UpdateUserRequest>({
-    mode: 'onBlur',
-    defaultValues: {
-      name: userAuthenticated?.name,
-      description: userAuthenticated?.description
-    }
-  })
+
   const { userLogoUrl } = useUserImages(userAuthenticated?.username as string)
-  const { updateUser, data: userUpdated } = useUpdateUserMutation(
-    userAuthenticated?.username as string
-  )
   const [profileImage, setProfileImage] = useState<File | null>(null)
   const { deleteProfileImage, isPending: isDeletePending } =
     useDeleteProfileImageMutation()
-
-  if (userUpdated !== undefined) {
-    setValue('name', userUpdated.name)
-    setValue('description', userUpdated.description)
-  }
-
-  const onSubmit: SubmitHandler<UpdateUserRequest> = async (
-    updateUserRequest: UpdateUserRequest
-  ) => {
-    updateUser(updateUserRequest)
-  }
-  const onCancel = () => {
-    setValue('name', userAuthenticated?.name)
-    setValue('description', userAuthenticated?.description)
-  }
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -129,7 +103,6 @@ export function ProfileEditPage() {
         rounded={'xl'}
         spacing={4}
         w={'full'}
-        onSubmit={handleUploadImageSubmit}
       >
         <Heading fontSize={{ base: '2xl', sm: '3xl' }} lineHeight={1.1}>
           User Profile Edit
@@ -198,75 +171,7 @@ export function ProfileEditPage() {
             </Stack>
           </FormControl>
         </Stack>
-        <Stack as={'form'} onSubmit={handleSubmit(onSubmit)}>
-          <FormControl id='name' isInvalid={Boolean(errors.name)}>
-            <FormLabel>Name</FormLabel>
-            <Input
-              _placeholder={{ color: 'gray.500' }}
-              placeholder='Name'
-              type='text'
-              {...register('name', {
-                minLength: {
-                  value: 4,
-                  message: 'name debe tener al menos 4 caracteres'
-                }
-              })}
-            />
-            <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
-          </FormControl>
-          <FormControl id='description' isInvalid={Boolean(errors.description)}>
-            <FormLabel>Description</FormLabel>
-            <Input
-              _placeholder={{ color: 'gray.500' }}
-              placeholder='Description'
-              type='text'
-              {...register('description', {
-                minLength: {
-                  value: 4,
-                  message: 'description debe tener al menos 4 caracteres'
-                }
-              })}
-            />
-            <FormErrorMessage>{errors?.description?.message}</FormErrorMessage>
-          </FormControl>
-        </Stack>
-
-        {/* <FormControl isRequired id='password'>
-          <FormLabel>Password</FormLabel>
-          <Input
-            _placeholder={{ color: 'gray.500' }}
-            placeholder='Password'
-            type='password'
-          />
-        </FormControl> */}
-        <Stack direction={['column', 'row']} spacing={6}>
-          <Button
-            _hover={{
-              bg: 'red.500'
-            }}
-            bg={'red.400'}
-            color={'white'}
-            w='full'
-            onClick={() => {
-              onCancel()
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            _hover={{
-              bg: 'blue.500'
-            }}
-            bg={'blue.400'}
-            color={'white'}
-            isDisabled={!isValid}
-            isLoading={isSubmitting}
-            type='submit'
-            w='full'
-          >
-            Submit
-          </Button>
-        </Stack>
+        <UpdateUserForm />
       </Stack>
     </Flex>
   )
