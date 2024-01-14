@@ -8,17 +8,45 @@ import {
   Text
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 import { useFindUserByUsernameQuery } from 'hooks/queries/useFindUserByUsernameQuery'
 import { useUserImages } from 'hooks/useUserImages'
+import { useToggleFollowerMutation } from 'hooks/mutations/useToggleFollowerMutation'
+import { useAppStore } from 'store/useAppStore'
+import { useFindAllUsersFollowingQuery } from 'hooks/queries/useFindAllUsersFollowingQuery'
 
 interface Props {
   user: User | null
 }
 
 export function CardPeople({ user }: Readonly<Props>): JSX.Element {
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
   const { userProfile } = useFindUserByUsernameQuery(user?.username as string)
   const { userLogoUrl } = useUserImages(userProfile?.username as string)
+  const { toggleFollow, isPending: isPendingToggleFollow } =
+    useToggleFollowerMutation(user?.username as string)
+  const [isFollowing, setIsFollowing] = useState(false)
+  const { usersFollowing, isPending: isPendingFindAllFollowing } =
+    useFindAllUsersFollowingQuery(userAuthenticated?.username as string)
+
+  console.log(user?.username, usersFollowing)
+
+  useEffect(() => {
+    if (user === null || usersFollowing === undefined) {
+      return
+    }
+    const isFollowing = usersFollowing.some(
+      (follower) => follower.id === user.id
+    )
+
+    setIsFollowing(isFollowing)
+  }, [user, usersFollowing])
+
+  const handleFollowButton = () => {
+    toggleFollow(isFollowing)
+    setIsFollowing((prev) => !prev)
+  }
 
   return (
     <Box
@@ -31,17 +59,18 @@ export function CardPeople({ user }: Readonly<Props>): JSX.Element {
       w={'full'}
     >
       <Avatar
-        _after={{
-          content: '""',
-          w: 4,
-          h: 4,
-          bg: 'green.300',
-          border: '2px solid white',
-          rounded: 'full',
-          pos: 'absolute',
-          bottom: 0,
-          right: 3
-        }}
+        // _after={{
+        //   content: '""',
+        //   w: 4,
+        //   h: 4,
+        //   // bg: 'green.300',
+        //   bg: 'gray.300',
+        //   border: '2px solid white',
+        //   rounded: 'full',
+        //   pos: 'absolute',
+        //   bottom: 0,
+        //   right: 3
+        // }}
         mb={4}
         pos={'relative'}
         size={'xl'}
@@ -69,23 +98,20 @@ export function CardPeople({ user }: Readonly<Props>): JSX.Element {
 
       <Stack direction={'row'} mt={8} spacing={4}>
         <Button
-          isDisabled
-          _focus={{
-            bg: 'blue.500'
-          }}
-          _hover={{
-            bg: 'blue.500'
-          }}
-          bg={'blue.400'}
-          boxShadow={
-            '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-          }
-          color={'white'}
-          flex={1}
+          colorScheme='blue'
+          flexGrow={1}
           fontSize={'sm'}
+          isDisabled={
+            isPendingToggleFollow ||
+            isPendingFindAllFollowing ||
+            userAuthenticated?.id === user?.id
+          }
+          isLoading={isPendingToggleFollow || isPendingFindAllFollowing}
           rounded={'full'}
+          variant={isFollowing ? 'outline' : 'solid'}
+          onClick={handleFollowButton}
         >
-          Follow
+          {isFollowing ? 'Following' : 'Follow'}
         </Button>
       </Stack>
     </Box>

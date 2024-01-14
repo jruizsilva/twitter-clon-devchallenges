@@ -11,6 +11,7 @@ const useToggleFollowerMutation = (username: string) => {
     mutationKey,
     mutationFn: async (isFollowing: boolean) => {
       if (isFollowing) {
+
         return await fetchRemoveFollower(username)
       }
 
@@ -22,6 +23,7 @@ const useToggleFollowerMutation = (username: string) => {
         id: 'toggle-follow',
         position: 'bottom-right'
       })
+      queryClient.invalidateQueries({ queryKey: ['users-following'] })
       queryClient.invalidateQueries({ queryKey: ['followers'] })
     },
     onError: (error) => {
