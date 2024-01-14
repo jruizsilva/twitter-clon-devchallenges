@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { fetchEditComment } from "services/comment"
 
-export const useEditCommentMutation = () => {
+export const useUpdateCommentMutation = () => {
   const queryClient = useQueryClient()
   const mutationKey = ['edit-comment']
 
