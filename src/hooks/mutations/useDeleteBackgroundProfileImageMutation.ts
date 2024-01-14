@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 
 import { fetchDeleteBackgroundProfileImage } from 'services/upload'
 
-export const useDeleteBackgroundProfileImageMutation = () => {
+export const useDeleteBackgroundProfileImageMutation = (username: string) => {
   const queryClient = useQueryClient()
   const mutationKey = ['delete-bg-image-uploaded']
 
@@ -18,7 +18,7 @@ export const useDeleteBackgroundProfileImageMutation = () => {
         id: 'delete-bg-image-uploaded',
         position: 'bottom-right'
       })
-      queryClient.invalidateQueries({ queryKey: ['user'] })
+      queryClient.invalidateQueries({ queryKey: [`profile/${username}`] })
     },
     onError: (error) => {
       console.dir(error)
