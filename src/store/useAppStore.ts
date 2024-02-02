@@ -8,6 +8,6 @@ interface Store {
 export const useAppStore = create<Store>((set) => ({
   userAuthenticated: null,
   setUserAuthenticated: (userAuthenticated: User) => {
-    set((state) => ({ userAuthenticated }));
-  },
+    set((state) => ({ userAuthenticated }))
+  }
 }))
