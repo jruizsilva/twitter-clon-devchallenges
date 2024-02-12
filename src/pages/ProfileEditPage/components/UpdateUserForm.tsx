@@ -23,9 +23,8 @@ export function UpdateUserForm(props: Props): JSX.Element {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-    setValue,
-    watch
+    formState: { errors, isValid, isDirty, isSubmitting },
+    setValue
   } = useForm<UpdateUserRequest>({
     mode: 'onBlur',
     defaultValues: {
@@ -42,7 +41,6 @@ export function UpdateUserForm(props: Props): JSX.Element {
   const onSubmit: SubmitHandler<UpdateUserRequest> = (
     updateUserRequest: UpdateUserRequest
   ) => {
-    console.log('test')
     updateUser(updateUserRequest)
   }
   const onCancel = () => {
@@ -102,13 +100,8 @@ export function UpdateUserForm(props: Props): JSX.Element {
           }}
           bg={'blue.400'}
           color={'white'}
-          isDisabled={
-            !isValid ||
-            isUpdatePending ||
-            (watch('name') === userAuthenticated?.name &&
-              watch('description') === userAuthenticated?.description)
-          }
-          isLoading={isSubmitting || isUpdatePending}
+          isDisabled={!isValid || isUpdatePending || !isDirty}
+          isLoading={isUpdatePending || isSubmitting}
           loadingText={'Updating...'}
           type='submit'
           w='full'

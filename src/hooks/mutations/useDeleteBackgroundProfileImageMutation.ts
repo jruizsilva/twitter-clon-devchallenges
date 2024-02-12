@@ -11,12 +11,11 @@ export const useDeleteBackgroundProfileImageMutation = (username: string) => {
     mutationKey,
     mutationFn: async () => {
       return await fetchDeleteBackgroundProfileImage()
-    }
-    ,
+    },
     onSuccess: () => {
       toast.success('Background image deleted successfuly', {
         id: 'delete-bg-image-uploaded',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: [`profile/${username}`] })
     },

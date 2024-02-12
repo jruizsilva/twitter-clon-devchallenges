@@ -11,12 +11,11 @@ const useDeleteProfileImageMutation = () => {
     mutationKey,
     mutationFn: async () => {
       return await fetchDeleteProfileImage()
-    }
-    ,
+    },
     onSuccess: () => {
       toast.success('Image deleted successfuly', {
         id: 'delete-image-uploaded',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['user'] })
     },

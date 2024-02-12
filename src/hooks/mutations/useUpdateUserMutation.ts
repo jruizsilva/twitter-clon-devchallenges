@@ -15,7 +15,7 @@ const useUpdateUserMutation = (username: string) => {
     onSuccess: () => {
       toast.success('User updated successfully', {
         id: 'edit-user',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['user'] })
     },

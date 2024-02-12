@@ -15,7 +15,7 @@ export const useUploadBackgroundProfileImage = (username: string) => {
     onSuccess: () => {
       toast.success('Background image uploaded successfuly', {
         id: 'upload-background-image',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: [`profile/${username}`] })
     },
@@ -26,4 +26,3 @@ export const useUploadBackgroundProfileImage = (username: string) => {
 
   return { uploadBackgroundProfileImage: mutate, ...rest }
 }
-

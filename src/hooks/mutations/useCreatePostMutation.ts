@@ -14,7 +14,7 @@ const useCreatePostMutation = () => {
     onSuccess: () => {
       toast.success('Post created successfully', {
         id: 'create-post',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['posts'] })
     },

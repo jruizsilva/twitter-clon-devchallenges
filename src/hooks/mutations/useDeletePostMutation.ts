@@ -14,7 +14,7 @@ const useDeletePostMutation = () => {
     onSuccess: () => {
       toast.success('Post deleted', {
         id: 'delete-post-success',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['postsCreated'] })
     },

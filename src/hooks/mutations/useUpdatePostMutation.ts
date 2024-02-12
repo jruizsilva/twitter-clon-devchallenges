@@ -25,7 +25,7 @@ const useUpdatePostMutation = () => {
     onSuccess: () => {
       toast.success('Post edited', {
         id: 'edit-post-success',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['postsCreated'] })
     },

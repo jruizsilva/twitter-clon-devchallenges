@@ -14,7 +14,7 @@ const useRegisterMutation = () => {
     onSuccess: (token) => {
       toast.success('Register successfuly', {
         id: 'register',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       localStorage.setItem('AUTH_TOKEN', token)
       queryClient.invalidateQueries({ queryKey: ['user'] })

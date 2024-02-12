@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 
-import { fetchAddFollower, fetchRemoveFollower } from 'services/user';
+import { fetchAddFollower, fetchRemoveFollower } from 'services/user'
 
 const useToggleFollowerMutation = (username: string) => {
   const queryClient = useQueryClient()
@@ -11,17 +11,15 @@ const useToggleFollowerMutation = (username: string) => {
     mutationKey,
     mutationFn: async (isFollowing: boolean) => {
       if (isFollowing) {
-
         return await fetchRemoveFollower(username)
       }
 
       return await fetchAddFollower(username)
-    }
-    ,
+    },
     onSuccess: () => {
       toast.success('Follow updated', {
         id: 'toggle-follow',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['users-following'] })
       queryClient.invalidateQueries({ queryKey: ['followers'] })

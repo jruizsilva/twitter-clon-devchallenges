@@ -15,7 +15,7 @@ const useLoginMutation = () => {
     onSuccess: (token) => {
       toast.success('Login successfuly', {
         id: 'login',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       localStorage.setItem('AUTH_TOKEN', token)
       queryClient.invalidateQueries({ queryKey: ['user'] })
@@ -25,7 +25,7 @@ const useLoginMutation = () => {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data?.backendMessage, {
           id: 'auth',
-          position: 'bottom-right'
+          position: 'bottom-left'
         })
       }
     }

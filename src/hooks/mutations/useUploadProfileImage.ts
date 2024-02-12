@@ -2,13 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 
 import { fetchUploadProfileImage } from 'services/upload'
-import { useAppStore } from 'store/useAppStore';
-
+import { useAppStore } from 'store/useAppStore'
 
 const useUploadProfileImage = () => {
   const queryClient = useQueryClient()
   const mutationKey = ['upload-profile-image']
-  const userAuthenticated = useAppStore(store => store.userAuthenticated)
+  const userAuthenticated = useAppStore((store) => store.userAuthenticated)
 
   const { mutate: uploadProfileImage, ...rest } = useMutation({
     mutationKey,
@@ -18,7 +17,7 @@ const useUploadProfileImage = () => {
     onSuccess: () => {
       toast.success('Image uploaded successfuly', {
         id: 'upload-profile-image',
-        position: 'bottom-right'
+        position: 'bottom-left'
       })
       queryClient.invalidateQueries({ queryKey: ['user'] })
     },
